@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Environment & secrets
+.env
+.env.*
+
+# Editor
+*.swp
+*.swo
+*~
+
+# Claude Code local state
+.claude/projects/
+.claude/todos/
+.claude/settings.local.json
+
+# Generated skill mirror — one pack at a time, see scripts/sync_skills_to_agents_dir.sh
+.agents/skills/

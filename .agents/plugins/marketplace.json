@@ -1,0 +1,32 @@
+{
+  "name": "rails-engineer",
+  "interface": {
+    "displayName": "Rails Engineer"
+  },
+  "plugins": [
+    {
+      "name": "rails-layered",
+      "source": {
+        "source": "local",
+        "path": "./rails-layered"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "rails-37signals",
+      "source": {
+        "source": "local",
+        "path": "./rails-37signals"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Coding"
+    }
+  ]
+}

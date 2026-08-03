@@ -1,0 +1,4 @@
+{
+  "name": "rails-37signals",
+  "description": "Vanilla Rails per the 37signals playbook: rich models, namespaced concerns, state records, Minitest + fixtures, plain CSS, no service layer."
+}

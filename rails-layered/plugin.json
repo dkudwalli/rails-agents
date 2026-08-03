@@ -1,0 +1,4 @@
+{
+  "name": "rails-layered",
+  "description": "Layered Rails 8 architecture: service, query, form, policy and presenter objects, RSpec + FactoryBot, Pundit, ViewComponent, Tailwind, PostgreSQL."
+}
