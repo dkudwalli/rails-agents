@@ -6,8 +6,8 @@
     "name": "Dhishan",
     "url": "https://github.com/dkudwalli"
   },
-  "homepage": "https://github.com/dkudwalli/rails-engineer",
-  "repository": "https://github.com/dkudwalli/rails-engineer",
+  "homepage": "https://github.com/dkudwalli/rails-agents",
+  "repository": "https://github.com/dkudwalli/rails-agents",
   "license": "MIT",
   "keywords": [
     "rails",
@@ -35,7 +35,7 @@
       "Read",
       "Write"
     ],
-    "websiteURL": "https://github.com/dkudwalli/rails-engineer",
+    "websiteURL": "https://github.com/dkudwalli/rails-agents",
     "defaultPrompt": [
       "Extract this controller action into a service object",
       "Review this Rails code for layer violations",

@@ -6,8 +6,8 @@
     "name": "Dhishan",
     "url": "https://github.com/dkudwalli"
   },
-  "homepage": "https://github.com/dkudwalli/rails-engineer",
-  "repository": "https://github.com/dkudwalli/rails-engineer",
+  "homepage": "https://github.com/dkudwalli/rails-agents",
+  "repository": "https://github.com/dkudwalli/rails-agents",
   "license": "MIT",
   "keywords": [
     "rails",
@@ -32,7 +32,7 @@
     "developerName": "Dhishan",
     "category": "Coding",
     "capabilities": ["Read", "Write"],
-    "websiteURL": "https://github.com/dkudwalli/rails-engineer",
+    "websiteURL": "https://github.com/dkudwalli/rails-agents",
     "defaultPrompt": [
       "Model this state change as a CRUD resource",
       "Split this fat model into namespaced concerns",

@@ -17,7 +17,7 @@ its full component inventory.
 ## Quick Start
 
 ```
-/plugin marketplace add dkudwalli/rails-engineer
+/plugin marketplace add dkudwalli/rails-agents
 
 # Then one of — never both:
 /plugin install rails-37signals@rails-engineer
@@ -118,7 +118,7 @@ each tool gets a thin manifest pointing at it — or, for opencode, none at all.
 **OpenAI Codex** — same marketplace:
 
 ```bash
-codex plugin marketplace add dkudwalli/rails-engineer
+codex plugin marketplace add dkudwalli/rails-agents
 codex plugin add rails-layered@rails-engineer      # or rails-37signals, never both
 ```
 
@@ -127,8 +127,8 @@ Skills appear namespaced as `rails-layered:<skill>`, invoked from `/skills` or b
 **Google Antigravity** — no marketplace, `agy` installs from a directory:
 
 ```bash
-git clone https://github.com/dkudwalli/rails-engineer
-agy plugin install ./rails-engineer/rails-layered  # or rails-37signals, never both
+git clone https://github.com/dkudwalli/rails-agents
+agy plugin install ./rails-agents/rails-layered  # or rails-37signals, never both
 ```
 
 It copies into `~/.gemini/config/plugins/`, shared with the Antigravity IDE, so re-run after
@@ -140,7 +140,7 @@ upgrading.
 ```jsonc
 {
   "$schema": "https://opencode.ai/config.json",
-  "skills": { "paths": ["~/src/rails-engineer/rails-layered/skills"] }
+  "skills": { "paths": ["~/src/rails-agents/rails-layered/skills"] }
 }
 ```
 

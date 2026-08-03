@@ -12,7 +12,7 @@ framework, authorization, CSS strategy, and whether a service layer should exist
 ## Install
 
 ```
-/plugin marketplace add dkudwalli/rails-engineer
+/plugin marketplace add dkudwalli/rails-agents
 /plugin install rails-37signals@rails-engineer
 ```
 
