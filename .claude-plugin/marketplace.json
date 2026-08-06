@@ -5,33 +5,21 @@
     "url": "https://github.com/dkudwalli"
   },
   "metadata": {
-    "description": "Two mutually exclusive Rails conventions packs for Claude Code: layered architecture, and vanilla Rails per the 37signals playbook",
-    "version": "1.3.1"
+    "description": "One profile-aware Rails guidance pack for Claude Code: record an application's stack, then route to the matching layered or rich-model conventions.",
+    "version": "2.0.0"
   },
   "plugins": [
     {
-      "name": "rails-layered",
-      "description": "Layered Rails 8 architecture: service, query, form, policy and presenter objects, RSpec + FactoryBot, Pundit, ViewComponent, Tailwind, PostgreSQL. Ships 18 specialist agents and 54 skills, including a spec-driven-development kit.",
-      "version": "1.3.1",
+      "name": "rails-engineer",
+      "description": "Profile-aware Rails guidance with portable skills for layered and rich-model applications. Start with rails-onboard to record the application's deliberate architecture, testing, CSS, database, authorization, runtime, and workflow choices.",
+      "version": "2.0.0",
       "author": {
         "name": "Dhishan",
         "url": "https://github.com/dkudwalli"
       },
       "homepage": "https://github.com/dkudwalli/rails-agents",
-      "tags": ["rails", "ruby", "layered-architecture", "rspec", "tdd", "pundit", "viewcomponent", "sdd"],
-      "source": "./rails-layered"
-    },
-    {
-      "name": "rails-37signals",
-      "description": "Vanilla Rails per the 37signals playbook: rich models, namespaced concerns, state records, CRUD-everything controllers, Minitest + fixtures, plain CSS, no service layer. Extracted from fizzy, once-campfire and writebook with a citation into real code behind each rule.",
-      "version": "1.3.1",
-      "author": {
-        "name": "Dhishan",
-        "url": "https://github.com/dkudwalli"
-      },
-      "homepage": "https://github.com/dkudwalli/rails-agents",
-      "tags": ["rails", "ruby", "37signals", "vanilla-rails", "minitest", "hotwire"],
-      "source": "./rails-37signals"
+      "tags": ["rails", "ruby", "profile", "layered", "rich-models", "rspec", "minitest", "sdd"],
+      "source": "./rails-engineer"
     }
   ]
 }

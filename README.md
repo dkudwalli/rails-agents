@@ -1,217 +1,95 @@
-# Rails AI Agents
+# Rails Engineer
 
-A **plugin marketplace** for Ruby on Rails development, for Claude Code, OpenAI Codex, Google
-Antigravity and opencode. Install one plugin and your AI assistant instantly knows Rails
-conventions, TDD workflows, and production patterns.
+Rails Engineer is one profile-aware plugin marketplace for Ruby on Rails development. It works with Claude Code, OpenAI Codex, Google Antigravity, and opencode. Install it once, then have its `rails-onboard` skill record the conventions your application actually uses before applying any guidance.
 
-Two conventions plugins, and you pick one:
+The pack carries both coherent guidance families:
 
-| Plugin | Profile |
+| Profile | Guidance selected after onboarding |
 |---|---|
-| **[`rails-37signals`](rails-37signals/README.md)** | Vanilla Rails — rich models, namespaced concerns, Minitest + fixtures, plain CSS, no service layer. Rebuilt from a citation-backed extraction of `fizzy`, `once-campfire`, and `writebook`. 3 agents, 24 skills |
-| **[`rails-layered`](rails-layered/README.md)** | Layered architecture — services, queries, forms, policies, presenters, RSpec, Pundit, ViewComponent, Tailwind, PostgreSQL. 18 agents, 54 skills, and the [SDD kit](#spec-driven-development) |
+| **Layered** | Services, queries, forms, policies, presenters, RSpec, Pundit, ViewComponent, Tailwind, PostgreSQL, and the optional SDD workflow |
+| **Rich models** | Rich Active Record models, namespaced concerns, state records, CRUD controllers, Minitest + fixtures, plain CSS, and the conditional 37signals playbook |
 
-They encode opposite architectures and **must not both be installed.** Each plugin's README lists
-its full component inventory.
+The profile is an explicit application decision, not a migration command. Existing applications are observed and confirmed; mixed choices are allowed when recorded as deliberate divergences.
 
-## Quick Start
+## Quick start
 
-```
+```text
 /plugin marketplace add dkudwalli/rails-agents
-
-# Then one of — never both:
-/plugin install rails-37signals@rails-engineer
-/plugin install rails-layered@rails-engineer
+/plugin install rails-engineer@rails-engineer
 ```
 
-Then copy the profile template into your application:
+Then run `/rails-onboard` from the Rails application. It inspects the existing project, asks one profile choice at a time, previews the exact managed section, and changes nothing until you confirm. The resulting section is written to `AGENTS.md` between `rails-engineer:profile` markers.
 
-```bash
-# rails-37signals
-cp ~/.claude/plugins/marketplaces/rails-engineer/rails-37signals/PROFILE_TEMPLATE.md ./CLAUDE.md
-
-# rails-layered
-cp ~/.claude/plugins/marketplaces/rails-engineer/rails-layered/AGENTS.md ./AGENTS.md
-```
-
-Not on Claude Code? See [Other coding agents](#other-coding-agents).
-
-### Choose an application profile first
-
-Both plugins expect a recorded profile at the top of your `CLAUDE.md` / `AGENTS.md`. The 37signals
-profile in particular is derived from three applications that **disagree with each other**, and its
-own guidance forbids averaging them. Record which one you are following and which rows you deviate
-from before writing code — see
-[`21-new-app-decisions.md`](rails-37signals/docs/37signals-playbook/21-new-app-decisions.md).
+To reconfigure later, run onboarding again. It replaces only that marked section and preserves all other `AGENTS.md` content. See the pack's [onboarding guide](rails-engineer/README.md#after-installation) and [profile template](rails-engineer/AGENTS_TEMPLATE.md).
 
 ## What you get
 
-Both plugins ship instructions, per-layer conventions, skills, agents, and hooks.
-`rails-layered` additionally ships the SDD and artifact workflows.
+Rails Engineer ships 90 portable skills, static references, and an optional Spec-Kit seed. It does not ship agents, slash-command shims, hooks, or MCP servers: skills are the portable payload on every supported host.
 
-### Hooks
+Start work through the stable profile-aware routers: `rails-architecture`, `rails-models`, `rails-testing`, `rails-css`, `rails-database`, `rails-access`, `rails-runtime`, `rails-frontend`, `rails-tenancy`, `rails-deployment`, and `rails-workflow`. Each reads the application profile first, then selects the matching detailed skill or convention reference.
 
-Active as soon as the plugin is enabled.
-
-| Hook | Event | What it does |
-|---|---|---|
-| **SessionStart** | Session begins | Injects project context (branch, Ruby/Rails version, pending migrations) |
-| **PostToolUse** | After Edit/Write | Auto-formats Ruby with RuboCop; `rails-layered` also runs ERB Lint |
-| **PreToolUse** | Before Bash | Blocks destructive commands (`rm -rf`, `DROP TABLE`, force push to main); `rails-37signals` also blocks `git reset --hard` |
-| **TaskCompleted** | Task marked done | Quality gate — `rails-layered` reminds you to run RSpec and RuboCop, `rails-37signals` reminds you to run `bin/ci` |
+The Spec Driven Development skills are available only when onboarding selects `Workflow: sdd`. They remain opt-in and never install project files automatically. Run `sdd-init` once before the first `sdd-specify`; [Your First SDD Feature](docs/your-first-sdd-feature.md) walks through the workflow.
 
 ### Conventions
 
-Claude Code auto-loads rules only from a project's own `.claude/rules/` — **plugins cannot ship
-auto-loading rules.** So each plugin packages its per-layer rules as one conventions skill
-(`layered-conventions`, 13 references; `37signals-conventions`, 10), whose `SKILL.md` is a router
-mapping globs to the reference that governs them.
-
-Every reference keeps its original `paths:` frontmatter, so copying them into your project restores
-deterministic, path-triggered loading — no editing needed:
+Claude Code auto-loads rules only from a project's own `.claude/rules/`; a plugin cannot make rules path-triggered automatically. The `layered-conventions` and `37signals-conventions` skills route to the profile-appropriate references when invoked. If you want deterministic path-triggered rules, copy the references for the profile your `AGENTS.md` selects:
 
 ```bash
 mkdir -p .claude/rules
-cp ~/.claude/plugins/marketplaces/rails-engineer/rails-layered/skills/layered-conventions/references/*.md \
-   .claude/rules/
+cp <installed-rails-engineer>/skills/layered-conventions/references/*.md .claude/rules/
+# or, for a rich-models application:
+cp <installed-rails-engineer>/skills/37signals-conventions/references/*.md .claude/rules/
 ```
-
-Without the copy, conventions load when the skill is invoked (description-triggered).
-
-## Spec Driven Development
-
-A specification-to-implementation pipeline shipped with `rails-layered`: define what you're building
-before writing code, validate requirements quality, then implement from a task plan.
-
-Run **`/sdd:init` once per project** before the first `/sdd:specify` — Spec-Kit writes `specs/` into
-your repo and cannot run in place from the plugin. Re-run it after upgrading; it never overwrites
-`.specify/memory/`.
-
-| Claude Code | Skill | Purpose |
-|---|---|---|
-| `/sdd:init` | `sdd-init` | Install or upgrade the `.specify/` scaffolding in your project |
-| `/sdd:constitution` | `sdd-constitution` | Create or update the project constitution — core principles and governance rules |
-| `/sdd:specify` | `sdd-specify` | Generate a feature specification from a natural language description |
-| `/sdd:clarify` | `sdd-clarify` | *(optional)* Ask up to 5 targeted questions to reduce ambiguity in the spec |
-| `/sdd:spec-review` | `sdd-spec-review` | *(optional)* Adversarial review of the spec from security, performance, edge-case, scalability, and compliance perspectives |
-| `/sdd:checklist` | `sdd-checklist` | *(optional)* Generate a requirements quality checklist |
-| `/sdd:plan` | `sdd-plan` | Create a technical implementation plan with research, data model, and contracts |
-| `/sdd:tasks` | `sdd-tasks` | Break the plan into dependency-ordered, executable tasks organized by user story |
-| `/sdd:analyze` | `sdd-analyze` | Read-only consistency analysis across spec, plan, and tasks |
-| `/sdd:implement` | `sdd-implement` | Execute the task plan phase-by-phase, delegating each task to its specialist agent in a fresh context |
-| `/sdd:validate` | `sdd-validate` | Post-implementation drift detection — verifies code implements what the spec promises |
-
-Run them in that order — most take an argument, as in `/sdd:specify user authentication`. Each step
-hands off to the next, and the pipeline collects its artifacts in `specs/<branch-name>/`.
-There is also a lightweight `/sdd-change:*` pipeline for bug fixes and small changes. Both are
-documented in [`rails-layered/README.md`](rails-layered/README.md#spec-driven-development), and
-[Your First SDD Feature](docs/your-first-sdd-feature.md) walks through one end to end.
-
-On Codex, Antigravity and opencode every step is a skill — invoke `sdd-specify` directly instead of
-`/sdd:specify`.
 
 ## Other coding agents
 
-**Skills are the portable payload.** Each pack's `skills/` directory is the one canonical copy, and
-each tool gets a thin manifest pointing at it — or, for opencode, none at all.
-
-**OpenAI Codex** — same marketplace:
+**OpenAI Codex** uses the same marketplace:
 
 ```bash
 codex plugin marketplace add dkudwalli/rails-agents
-codex plugin add rails-layered@rails-engineer      # or rails-37signals, never both
+codex plugin add rails-engineer@rails-engineer
 ```
 
-Skills appear namespaced as `rails-layered:<skill>`, invoked from `/skills` or by typing `$`.
+Skills appear namespaced as `rails-engineer:<skill>`.
 
-**Google Antigravity** — no marketplace, `agy` installs from a directory:
+**Google Antigravity** has no marketplace; install the pack directory:
 
 ```bash
 git clone https://github.com/dkudwalli/rails-agents
-agy plugin install ./rails-agents/rails-layered  # or rails-37signals, never both
+agy plugin install ./rails-agents/rails-engineer
 ```
 
-It copies into `~/.gemini/config/plugins/`, shared with the Antigravity IDE, so re-run after
-upgrading.
+It copies the pack into `~/.gemini/config/plugins/`, so rerun the install after upgrading.
 
-**opencode** — nothing to install. Clone the repo, then merge one key into
-`~/.config/opencode/opencode.json` (that path, not `~/.opencode/`):
+**opencode** needs no plugin install. Point its `skills` array to the canonical tree:
 
 ```jsonc
 {
   "$schema": "https://opencode.ai/config.json",
-  "skills": ["~/src/rails-agents/rails-layered/skills"]
+  "skills": ["~/src/rails-agents/rails-engineer/skills"]
 }
 ```
 
-One entry per pack covers every skill; a leading `~` resolves. Never list both packs. opencode drops
-`user-invocable` frontmatter, so ask for workflow skills by name rather than as `/<name>`. Restart
-after changing an external skill source or upgrading opencode.
-
-### What reaches which tool
-
-| Surface | Claude Code | Codex | Antigravity | opencode |
-|---|---|---|---|---|
-| Skills | yes | yes (plugin `skills/`) | yes (plugin `skills/`) | yes — no install; `skills` array or `.agents/skills/` |
-| Conventions rules | yes | yes, inside the conventions skill | yes, inside the conventions skill | yes, inside the conventions skill |
-| SDD / artifact workflows | yes, as `/sdd:*` etc. | yes — they are skills | yes — they are skills | yes — they are skills; ask by name |
-| Slash commands themselves | yes | no — Codex prompts are `$CODEX_HOME/prompts/` only, and deprecated | top-level ones only, converted to skills | no — not shipped; every workflow is already a skill |
-| Agents | yes | no — Codex subagents are TOML in `.codex/agents/` | ingested at install; not verified as subagents | no — different frontmatter vocabulary |
-| Hooks | yes | manual, see below | no — incompatible schema | no — opencode hooks are JavaScript plugins |
-| MCP servers | none shipped | none shipped | none shipped | none shipped, and unshippable |
-
-Neither pack ships an MCP server. Add whatever servers you want in your own client config;
-[`AGENTS.md`](AGENTS.md) § Portability records how each host spells a remote one.
-
-### Hooks on Codex
-
-Codex removed plugin-shipped hooks, so the packs cannot install them for you. The schema is
-otherwise identical, so copy the file into your own project:
-
-```bash
-mkdir -p .codex
-cp ~/.codex/plugins/cache/rails-engineer/rails-layered/*/hooks/hooks.json .codex/hooks.json
-```
-
-Then edit two entries: the `PostToolUse` matcher `Edit|Write` should be `apply_patch` (Codex's file
-edit tool), and the `TaskCompleted` block never fires because Codex has no such event. The
-`PreToolUse` destructive-command guard works unchanged — it is the one worth keeping.
+Alternatively, inside a clone run `scripts/sync_skills_to_agents_dir.sh`; Antigravity and opencode both discover the resulting workspace `.agents/skills/` mirror. Restart opencode after changing an external skill source or upgrading it.
 
 ## Documentation
 
 | Document | Purpose |
 |---|---|
-| [**The 37signals Rails Playbook**](rails-37signals/docs/37signals-playbook/PLAYBOOK.md) | 23 documents of vanilla-Rails rules extracted from `fizzy`, `once-campfire`, and `writebook`, with a code citation behind each. The source of truth for `rails-37signals` |
-| [Your First SDD Feature](docs/your-first-sdd-feature.md) | Step-by-step onboarding walkthrough for new developers using the SDD kit |
-| [`AGENTS.md`](AGENTS.md) | Repository authoring guide — how to add a skill, agent, command, or convention rule, plus portability rules, verification, and the release checklist |
+| [Rails Engineer pack guide](rails-engineer/README.md) | Onboarding, profile routing, and workflow availability |
+| [37signals Rails Playbook](rails-engineer/docs/37signals-playbook/PLAYBOOK.md) | Conditional rich-model reference extracted from `fizzy`, `once-campfire`, and `writebook` |
+| [Your First SDD Feature](docs/your-first-sdd-feature.md) | Step-by-step onboarding walkthrough for the optional SDD workflow |
+| [`AGENTS.md`](AGENTS.md) | Repository authoring, portability, release, and verification guide |
 
-For prompting technique and Model Context Protocol setup, read the official docs rather than a copy
-here — [Claude Code documentation](https://docs.claude.com/en/docs/claude-code) and the
-[MCP specification](https://modelcontextprotocol.io). Guides that restate them drift silently.
+For prompting technique and Model Context Protocol setup, use the official [Claude Code documentation](https://docs.claude.com/en/docs/claude-code) and [MCP specification](https://modelcontextprotocol.io); copied guidance drifts.
 
 ## Compatibility
 
-Every pull request and a weekly scheduled run validate the portable payload plus the latest Claude
-Code, Codex, Antigravity, and opencode CLIs. Run `scripts/verify_plugins.sh` before a release; it
-checks manifests, version agreement, skill metadata, portability rules, links, and any installed
-host validators.
+Every pull request and a weekly scheduled run validate the portable payload plus the latest Claude Code, Codex, Antigravity, and opencode CLIs. Run `scripts/verify_plugins.sh` before a release; it checks manifests, version agreement, skill metadata, portability rules, links, and installed host validators.
 
 ## Credits
 
-Parts of `rails-layered` adapt material from
-[**palkan/skills**](https://github.com/palkan/skills) by Vladimir Dementyev (MIT), whose `layered-rails`
-plugin draws on *[Layered Design for Ruby on Rails Applications](https://www.packtpub.com/en-us/product/layered-design-for-ruby-on-rails-applications-9781806114221)*.
-Adapted here into this pack's own vocabulary and conventions:
-
-| Where | What was adapted |
-|---|---|
-| [`skills/specification-test/`](rails-layered/skills/specification-test/SKILL.md) | The specification test — deciding layer placement from the shape of the test a piece of code needs |
-| [`skills/extraction-timing/`](rails-layered/skills/extraction-timing/SKILL.md) | The 1–5 callback scoring rubric; the flog and churn thresholds |
-| [`skills/extraction-timing/references/god-objects.md`](rails-layered/skills/extraction-timing/references/god-objects.md) | Churn × complexity god-object detection and the structural threshold matrix |
-| [`skills/behavioral-guidelines/`](rails-layered/skills/behavioral-guidelines/SKILL.md) | The reporting rules — conditional sections, the ban on vague recommendations, the two test-review rules |
-
-`rails-37signals` and the playbook vendored inside it are extracted from 37signals' open-source
-applications — `fizzy`, `once-campfire`, and `writebook` — with a code citation behind each rule.
+Some layered guidance adapts material from [**palkan/skills**](https://github.com/palkan/skills) by Vladimir Dementyev (MIT), including the specification-test, extraction-timing, and behavioral guidelines skills. Rich-model guidance and the vendored playbook are extracted from 37signals' open-source `fizzy`, `once-campfire`, and `writebook` applications, with a code citation behind each playbook rule.
 
 ## License
 

@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
-# Verify the portable plugin payload and every host validator available on PATH.
-#
-# This is the release gate for local development and CI. It intentionally does
-# not install or configure host CLIs; CI owns lifecycle smoke tests in its own
-# disposable runner home.
+# Verify the portable Rails Engineer payload and every host validator available
+# on PATH. This is the release gate for local development and CI.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
+PACK="rails-engineer"
 failures=0
 
 fail() {
@@ -19,56 +17,63 @@ check_json() {
   jq empty \
     .claude-plugin/marketplace.json \
     .agents/plugins/marketplace.json \
-    rails-*/.claude-plugin/plugin.json \
-    rails-*/.codex-plugin/plugin.json \
-    rails-*/plugin.json \
-    rails-*/hooks/hooks.json \
-    rails-layered/specify/init-options.json
+    "$PACK/.claude-plugin/plugin.json" \
+    "$PACK/.codex-plugin/plugin.json" \
+    "$PACK/plugin.json" \
+    "$PACK/specify/init-options.json"
+}
+
+check_marketplaces() {
+  jq -e '
+    (.plugins | length) == 1 and
+    .plugins[0].name == "rails-engineer" and
+    .plugins[0].source == "./rails-engineer"
+  ' .claude-plugin/marketplace.json >/dev/null || fail "Claude marketplace must expose only ./rails-engineer"
+
+  jq -e '
+    (.plugins | length) == 1 and
+    .plugins[0].name == "rails-engineer" and
+    .plugins[0].source.source == "local" and
+    .plugins[0].source.path == "./rails-engineer"
+  ' .agents/plugins/marketplace.json >/dev/null || fail "Codex marketplace must expose only ./rails-engineer"
 }
 
 check_skills() {
-  local pack skill name description names expected actual duplicates
+  local skill name description names actual duplicates
 
-  for pack in rails-layered rails-37signals; do
-    names=""
-    expected=24
-    if [ "$pack" = "rails-layered" ]; then
-      expected=54
+  names=""
+  while IFS= read -r skill; do
+    name=$(sed -n '2,/^---$/p' "$skill" | sed -n 's/^name: *//p' | head -1)
+    description=$(sed -n '2,/^---$/p' "$skill" | rg -m 1 '^description:' || true)
+
+    if [ -z "$name" ]; then
+      fail "$skill is missing frontmatter name"
+    elif [ "$name" != "$(basename "$(dirname "$skill")")" ]; then
+      fail "$skill name '$name' does not match its directory"
     fi
 
-    while IFS= read -r skill; do
-      name=$(sed -n '2,/^---$/p' "$skill" | sed -n 's/^name: *//p' | head -1)
-      description=$(sed -n '2,/^---$/p' "$skill" | rg -m 1 '^description:' || true)
-
-      if [ -z "$name" ]; then
-        fail "$skill is missing frontmatter name"
-      elif [ "$name" != "$(basename "$(dirname "$skill")")" ]; then
-        fail "$skill name '$name' does not match its directory"
-      fi
-
-      if [ -z "$description" ]; then
-        fail "$skill is missing frontmatter description"
-      fi
-
-      names="${names}${name}"$'\n'
-    done < <(find "$pack/skills" -mindepth 2 -maxdepth 2 -type f -name SKILL.md | sort)
-
-    actual=$(printf '%s' "$names" | sed '/^$/d' | wc -l | tr -d ' ')
-    if [ "$actual" -ne "$expected" ]; then
-      fail "$pack has $actual skills; expected $expected"
+    if [ -z "$description" ]; then
+      fail "$skill is missing frontmatter description"
     fi
 
-    duplicates=$(printf '%s' "$names" | sed '/^$/d' | sort | uniq -d)
-    if [ -n "$duplicates" ]; then
-      fail "$pack has duplicate skill names: $(echo "$duplicates" | tr '\n' ' ')"
-    fi
-  done
+    names="${names}${name}"$'\n'
+  done < <(find "$PACK/skills" -mindepth 2 -maxdepth 2 -type f -name SKILL.md | sort)
+
+  actual=$(printf '%s' "$names" | sed '/^$/d' | wc -l | tr -d ' ')
+  if [ "$actual" -eq 0 ]; then
+    fail "$PACK has no skills"
+  fi
+
+  duplicates=$(printf '%s' "$names" | sed '/^$/d' | sort | uniq -d)
+  if [ -n "$duplicates" ]; then
+    fail "$PACK has duplicate skill names: $(echo "$duplicates" | tr '\n' ' ')"
+  fi
 }
 
 check_portability() {
   local matches
 
-  matches=$(rg -n --glob SKILL.md '\$ARGUMENTS|\$\{CLAUDE_PLUGIN_ROOT\}|(^|[[:space:]])!`' rails-layered rails-37signals || true)
+  matches=$(rg -n --glob SKILL.md '\$ARGUMENTS|\$\{CLAUDE_PLUGIN_ROOT\}|(^|[[:space:]])!`' "$PACK" || true)
   if [ -n "$matches" ]; then
     echo "$matches" >&2
     fail "skill bodies contain a non-portable Claude-only substitution or load-time command"
@@ -97,21 +102,20 @@ check_links() {
 
 check_host_validators() {
   if command -v claude >/dev/null 2>&1; then
-    claude plugin validate --strict ./rails-layered
-    claude plugin validate --strict ./rails-37signals
+    claude plugin validate --strict "./$PACK"
   else
     echo "SKIP: Claude Code is not installed"
   fi
 
   if command -v agy >/dev/null 2>&1; then
-    agy plugin validate ./rails-layered
-    agy plugin validate ./rails-37signals
+    agy plugin validate "./$PACK"
   else
     echo "SKIP: Antigravity CLI is not installed"
   fi
 }
 
 check_json
+check_marketplaces
 scripts/check_versions.sh
 check_skills
 check_portability

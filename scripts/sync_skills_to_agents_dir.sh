@@ -1,37 +1,25 @@
 #!/usr/bin/env bash
-# Rebuild .agents/skills as a symlink mirror of ONE pack's skills.
+# Rebuild .agents/skills as symlinks to the portable Rails Engineer skill tree.
 #
-# Usage: scripts/sync_skills_to_agents_dir.sh <layered|37signals>
+# Usage: scripts/sync_skills_to_agents_dir.sh
 #
-# The two packs are mutually exclusive and six skills now exist in both
-# (job-patterns, mailer-patterns, migration-patterns, model-patterns,
-# stimulus-patterns, turbo-patterns) with deliberately opposite advice. Skill
-# discovery reads the frontmatter `name:`, so mirroring both packs at once makes
-# those six ambiguous. One pack at a time, unprefixed, so the directory name equals the
-# frontmatter name exactly as it does in the pack itself.
-#
-# Codex and Claude Code users install the plugin instead — this mirror is for
-# working from a clone of this repo, and for tools that read .agents/skills
-# directly. Antigravity and opencode both do: they discover
-# {workspace}/.agents/skills/<name>/SKILL.md with no install step, so running
-# this script is a complete workspace-scoped install of the selected pack.
-#
-# It only covers a clone of THIS repo — the mirror is written here, and both
-# tools stop walking up at the git worktree root. From another project, point
-# opencode's skills.paths at rails-<pack>/skills instead.
+# This mirror is for using a clone of this repository with Antigravity or
+# opencode. Plugin installation is the normal Claude Code and Codex path. The
+# mirror is intentionally unprefixed: every skill directory matches its
+# frontmatter name, so host discovery remains deterministic.
 set -euo pipefail
 
-PACK="${1:-}"
-case "$PACK" in
-  layered|37signals) ;;
-  *) echo "Usage: $0 <layered|37signals>" >&2; exit 1 ;;
-esac
+if [ "$#" -ne 0 ]; then
+  echo "Usage: $0" >&2
+  exit 1
+fi
 
 cd "$(dirname "$0")/.."
-SRC="rails-$PACK/skills"
+PACK="rails-engineer"
+SRC="$PACK/skills"
 DEST=".agents/skills"
 
-[ -d "$SRC" ] || { echo "No such pack: $SRC" >&2; exit 1; }
+[ -d "$SRC" ] || { echo "No such plugin skill tree: $SRC" >&2; exit 1; }
 
 rm -rf "$DEST"
 mkdir -p "$DEST"
@@ -40,4 +28,4 @@ for dir in "$SRC"/*/; do
   ln -s "../../$SRC/$name" "$DEST/$name"
 done
 
-echo "Mirrored $(find "$DEST" -maxdepth 1 -type l | wc -l) skills from rails-$PACK into $DEST"
+echo "Mirrored $(find "$DEST" -maxdepth 1 -type l | wc -l | tr -d ' ') skills from $PACK into $DEST"
