@@ -1,0 +1,21 @@
+{
+  "name": "rails-engineer",
+  "version": "2.0.0",
+  "description": "Profile-aware Rails guidance: choose and record one coherent stack before applying layered or rich-model conventions.",
+  "author": { "name": "Dhishan", "url": "https://github.com/dkudwalli" },
+  "homepage": "https://github.com/dkudwalli/rails-agents",
+  "repository": "https://github.com/dkudwalli/rails-agents",
+  "license": "MIT",
+  "keywords": ["rails", "profile", "layered", "rich-models", "rspec", "minitest"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Rails Engineer",
+    "shortDescription": "Profile-aware Rails conventions",
+    "longDescription": "Portable Rails skills that first record an application's chosen architecture and stack, then route to layered or rich-model guidance.",
+    "developerName": "Dhishan",
+    "category": "Coding",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://github.com/dkudwalli/rails-agents",
+    "defaultPrompt": ["Use rails-onboard to profile this Rails application", "Apply the Rails Engineer profile to this feature"]
+  }
+}

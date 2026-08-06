@@ -1,0 +1,5 @@
+{
+  "name": "rails-engineer",
+  "description": "Profile-aware Rails guidance that routes to layered or rich-model conventions after onboarding.",
+  "skills": "./skills/"
+}
