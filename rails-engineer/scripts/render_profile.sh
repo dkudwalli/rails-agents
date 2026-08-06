@@ -179,21 +179,28 @@ decision, not migration work.
 <!-- rails-engineer:profile:end -->
 EOF
 
-marker_state=$(awk '
+marker_state=$(LC_ALL=C awk '
+  BEGIN { offset = 0 }
   $0 == "<!-- rails-engineer:profile:start -->" {
     if (inside || starts) invalid = 1
     inside = 1
     starts++
+    start_offset = offset
+    offset += length($0) + 1
     next
   }
   $0 == "<!-- rails-engineer:profile:end -->" {
     if (!inside || ends) invalid = 1
     inside = 0
     ends++
+    end_offset = offset + length($0) + 1
+    offset += length($0) + 1
+    next
   }
+  { offset += length($0) + 1 }
   END {
     if (invalid || inside || starts != ends || starts > 1) print "malformed"
-    else if (starts == 1) print "managed"
+    else if (starts == 1) print "managed", start_offset, end_offset
     else print "none"
   }
 ' "$input_file")
@@ -206,20 +213,11 @@ case "$marker_state" in
     fi
     cat "$profile_file"
     ;;
-  managed)
-    awk -v profile_file="$profile_file" '
-      $0 == "<!-- rails-engineer:profile:start -->" {
-        while ((getline line < profile_file) > 0) print line
-        close(profile_file)
-        inside = 1
-        next
-      }
-      $0 == "<!-- rails-engineer:profile:end -->" {
-        inside = 0
-        next
-      }
-      !inside { print }
-    ' "$input_file"
+  managed\ *)
+    set -- $marker_state
+    dd if="$input_file" bs=1 count="$2" 2>/dev/null
+    cat "$profile_file"
+    dd if="$input_file" bs=1 skip="$3" 2>/dev/null
     ;;
   *) fail 'Malformed managed profile section' ;;
 esac

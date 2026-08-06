@@ -121,6 +121,33 @@ test_replaces_only_the_existing_managed_section() {
   fi
 }
 
+test_preserves_a_nonterminated_suffix() {
+  local input output suffix actual_suffix suffix_bytes
+  input="$TMPDIR/nonterminated-suffix-input.md"
+  output="$TMPDIR/nonterminated-suffix-output.md"
+  suffix="$TMPDIR/nonterminated-suffix.md"
+  actual_suffix="$TMPDIR/actual-nonterminated-suffix.md"
+
+  printf '%s\n' \
+    'Before the managed section.' \
+    '<!-- rails-engineer:profile:start -->' \
+    'Architecture: rich-models' \
+    '<!-- rails-engineer:profile:end -->' > "$input"
+  printf '%s' 'Custom suffix without a final newline.' > "$suffix"
+  cat "$suffix" >> "$input"
+
+  "$RENDERER" \
+    --architecture layered --testing rspec --css tailwind --views viewcomponent \
+    --database postgres --ids uuidv7 --authorization pundit \
+    --authentication secure-password --runtime solid --assets node-bundler \
+    --tenancy multi --deployment kamal --workflow sdd --app-kind existing \
+    --reason 'Keep the current product constraints.' < "$input" > "$output"
+
+  suffix_bytes=$(wc -c < "$suffix" | tr -d ' ')
+  tail -c "$suffix_bytes" "$output" > "$actual_suffix"
+  assert_files_equal "$suffix" "$actual_suffix" 'non-newline-terminated suffix'
+}
+
 test_rejects_invalid_missing_and_malformed_input() {
   local output status
   set +e
@@ -164,6 +191,7 @@ test_rejects_invalid_missing_and_malformed_input() {
 
 test_renders_a_complete_managed_profile
 test_replaces_only_the_existing_managed_section
+test_preserves_a_nonterminated_suffix
 test_rejects_invalid_missing_and_malformed_input
 
 if [[ "$failures" -gt 0 ]]; then
