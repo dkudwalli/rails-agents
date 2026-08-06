@@ -4,9 +4,10 @@ description: >-
   Implements Rails caching patterns for performance optimization. Use when
   adding fragment caching, Russian doll caching, low-level caching, cache
   invalidation, or when user mentions caching, performance, cache keys,
-  or memoization. WHEN NOT: General query optimization (use
-  performance-optimization), background job processing, or problems caused by
-  N+1 queries rather than missing caches.
+  or memoization. WHEN NOT: A rich-models/Fizzy profile app wanting the ETags
+  and Solid Cache warming playbook — use caching-patterns. General query
+  optimization (use performance-optimization), background job processing, or
+  problems caused by N+1 queries rather than missing caches.
 paths: "app/views/**/*.erb, app/controllers/**/*.rb"
 ---
 

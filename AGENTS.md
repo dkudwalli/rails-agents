@@ -110,4 +110,4 @@ bash test/render_profile_test.sh
 bash test/plugin_payload_test.sh
 ```
 
-The verification script resolves every relative Markdown link in the repository, checks the single-pack marketplace contract and uniqueness of skill names, then runs available Claude and Antigravity validators. CI repeats those checks and performs isolated installation/discovery smoke tests against the latest supported host CLIs.
+The verification script resolves every relative Markdown link in the repository, checks the single-pack marketplace contract and uniqueness of skill names, then runs available Claude and Antigravity validators. There is no CI workflow; run the commands above locally before tagging a release.

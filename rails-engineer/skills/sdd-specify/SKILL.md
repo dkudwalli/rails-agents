@@ -1,6 +1,10 @@
 ---
 name: sdd-specify
-description: Create or update the feature specification from a natural language feature description.
+description: >-
+  Create or update the feature specification from a natural language feature
+  description. Use when starting full-ceremony SDD work on a new feature, after
+  sdd-constitution exists. WHEN NOT: A small bug fix or small feature — use
+  sdd-change-specify; refining an existing spec's open questions — use sdd-clarify.
 ---
 
 > **Profile routing:** Read AGENTS.md and its Rails Engineer Profile before continuing. If Workflow: conventional, stop this SDD workflow and use the project's conventional planning and delivery process. If Workflow: sdd, use every selected profile value: layered work uses layered routers and variants; rich-models work uses the stable rails-architecture, rails-models, rails-testing, rails-css, rails-frontend, and rails-access routers, which select rich-models variants. Select the test command from Testing: rspec uses bundle exec rspec; minitest uses bin/rails test. Do not follow a later example that contradicts the profile. This workflow is optional and never installs or changes project files unless it explicitly asks for confirmation.

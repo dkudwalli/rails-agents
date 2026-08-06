@@ -1,6 +1,10 @@
 ---
 name: sdd-tasks
-description: Generate an actionable, dependency-ordered tasks.md for the feature based on available design artifacts.
+description: >-
+  Generate an actionable, dependency-ordered tasks.md for the feature based on
+  available design artifacts. Use after sdd-plan produces plan.md. WHEN NOT: No
+  plan.md exists yet — run sdd-plan first; a small change with no full plan — use
+  sdd-change-tasks.
 ---
 
 > **Profile routing:** Read AGENTS.md and its Rails Engineer Profile before continuing. If Workflow: conventional, stop this SDD workflow and use the project's conventional planning and delivery process. If Workflow: sdd, use every selected profile value: layered work uses layered routers and variants; rich-models work uses the stable rails-architecture, rails-models, rails-testing, rails-css, rails-frontend, and rails-access routers, which select rich-models variants. Select the test command from Testing: rspec uses bundle exec rspec; minitest uses bin/rails test. Do not follow a later example that contradicts the profile. This workflow is optional and never installs or changes project files unless it explicitly asks for confirmation.

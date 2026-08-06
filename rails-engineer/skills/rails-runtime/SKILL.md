@@ -8,7 +8,9 @@ description: >-
 
 # Rails runtime router
 
-Read AGENTS.md and its Rails Engineer Profile first. Runtime: solid selects solid-queue-setup,
-caching-strategies, and layered-job-patterns or rich-models-job-patterns according to architecture.
-Runtime: redis-resque selects the conditional 37signals playbook runtime material and
-rich-models-job-patterns. Keep the selected runtime coherent; no installer or migration is implied.
+Read AGENTS.md and its Rails Engineer Profile first. Runtime: solid selects solid-queue-setup and
+layered-job-patterns or rich-models-job-patterns according to architecture. Runtime: redis-resque
+selects the conditional 37signals playbook runtime material and rich-models-job-patterns. For
+caching, a layered architecture selects caching-strategies and a rich-models architecture selects
+caching-patterns, regardless of runtime. Keep the selected runtime coherent; no installer or
+migration is implied.

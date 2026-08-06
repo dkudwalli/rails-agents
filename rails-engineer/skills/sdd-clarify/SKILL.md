@@ -1,6 +1,12 @@
 ---
 name: sdd-clarify
-description: Identify underspecified areas in the current feature spec by asking up to 5 highly targeted clarification questions and encoding answers back into the spec.
+description: >-
+  Identify underspecified areas in the current feature spec by asking up to 5
+  highly targeted clarification questions and encoding answers back into the spec.
+  Use after sdd-specify, before sdd-plan, when the spec has ambiguous or missing
+  decisions. WHEN NOT: The spec is already clear — go straight to sdd-spec-review
+  or sdd-plan; adversarial gap-hunting rather than author uncertainty — use
+  sdd-spec-review.
 ---
 
 > **Profile routing:** Read AGENTS.md and its Rails Engineer Profile before continuing. If Workflow: conventional, stop this SDD workflow and use the project's conventional planning and delivery process. If Workflow: sdd, use every selected profile value: layered work uses layered routers and variants; rich-models work uses the stable rails-architecture, rails-models, rails-testing, rails-css, rails-frontend, and rails-access routers, which select rich-models variants. Select the test command from Testing: rspec uses bundle exec rspec; minitest uses bin/rails test. Do not follow a later example that contradicts the profile. This workflow is optional and never installs or changes project files unless it explicitly asks for confirmation.
