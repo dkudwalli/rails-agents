@@ -1,6 +1,7 @@
 ---
 name: form-agent
-description: Creates form objects for complex multi-model forms with validations, type coercion, and nested attributes. Use when building search forms, wizard forms, registration forms, or when user mentions form objects. WHEN NOT: Simple single-model CRUD forms (use controller-agent), business logic (use service-agent), or authorization (use policy-agent).
+description: >-
+  Creates form objects for complex multi-model forms with validations, type coercion, and nested attributes. Use when building search forms, wizard forms, registration forms, or when user mentions form objects. WHEN NOT: Simple single-model CRUD forms (use controller-agent), business logic (use service-agent), or authorization (use policy-agent).
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

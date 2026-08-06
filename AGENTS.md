@@ -12,6 +12,7 @@ content is Markdown, JSON, and a little Bash and Python.
 | `.agents/plugins/marketplace.json` | Codex marketplace manifest listing both plugins |
 | `rails-layered/` | Plugin: layered Rails 8 architecture (agents, commands, skills, hooks, Spec-Kit seed) |
 | `rails-37signals/` | Plugin: vanilla Rails per the 37signals playbook (agents, skills, hooks, vendored playbook) |
+| `rails-37signals/PROFILE_TEMPLATE.md` | Copyable application-profile template; users copy it to their own `CLAUDE.md` before applying the pack |
 | `rails-<pack>/.claude-plugin/plugin.json` | Claude Code plugin manifest |
 | `rails-<pack>/.codex-plugin/plugin.json` | Codex plugin manifest |
 | `rails-<pack>/plugin.json` | Antigravity plugin manifest — it only reads a manifest at the plugin root, so this one cannot live in a dotted subdirectory like the other two |
@@ -53,7 +54,7 @@ What each tool can and cannot take:
 
 | Surface | Claude Code | Codex | Antigravity | opencode |
 |---|---|---|---|---|
-| Skills | yes | yes — plugin `skills/`, namespaced in-session as `rails-layered:<skill>` | yes — plugin `skills/`, same `<name>/SKILL.md` layout, no manifest key needed | yes — no install at all. It reads `.agents/skills/<name>/SKILL.md` from the workspace (walking up to the git worktree root), so `scripts/sync_skills_to_agents_dir.sh` output is already a complete install. Elsewhere, point `skills.paths` at `rails-<pack>/skills` |
+| Skills | yes | yes — plugin `skills/`, namespaced in-session as `rails-layered:<skill>` | yes — plugin `skills/`, same `<name>/SKILL.md` layout, no manifest key needed | yes — no install at all. It reads `.agents/skills/<name>/SKILL.md` from the workspace (walking up to the git worktree root), so `scripts/sync_skills_to_agents_dir.sh` output is already a complete install. Elsewhere, add `rails-<pack>/skills` to the `skills` array in `opencode.json` |
 | MCP servers | **none shipped.** Would be `.mcp.json` + a `"type": "http"` + `"url"` pair | **none shipped.** Would be `"mcpServers": "./.mcp.json"` in `.codex-plugin/plugin.json` | **none shipped.** Would be `mcp_config.json` at the plugin root, where a remote server is `serverUrl`, not `"type": "http"` + `"url"` | **not shippable at all.** MCP lives in the user's `opencode.json`, and a remote server is a *third* spelling: `{"type": "remote", "url": …}` with `type` required |
 | Slash commands | yes | **no.** Codex prompts live in `$CODEX_HOME/prompts/` only, are not repo-shareable, and are deprecated in favour of skills | ingested — `agy plugin install` reports `commands: converted to skills`, but it counted 3 for `rails-layered`'s 19 nested files, so assume only top-level ones survive. Every workflow already exists as a skill, so nothing depends on this | supported as `.opencode/command/<name>.md` — flat, filename is the command name — but **not shipped**; `commands/` here is nested, and every workflow already exists as a skill |
 | Agents | yes | **no.** Codex subagents are TOML in `.codex/agents/`; a plugin manifest has no `agents` key | ingested — `agents: 19 processed`. Verified as accepted at install, not as behaving like Claude subagents | supported as `.opencode/agent/<name>.md`, but a different frontmatter vocabulary (`mode`, `permission`, and unknown keys silently absorbed into `options`). **Not shipped** — see below |
@@ -67,8 +68,8 @@ pack root therefore carries three manifests, one per host — none of them is cr
 fourth: it installs nothing and reads the skill directories in place.
 
 opencode ignores unrecognised skill frontmatter, so `user-invocable: true` is dropped — its agents
-load skills through a native `skill` tool rather than as `/<name>`. It also does not hot-reload:
-after editing config, a skill, or re-running the mirror script, opencode must be restarted.
+load skills through a native `skill` tool rather than as `/<name>`. Restart after changing an
+explicit external skill source or upgrading opencode.
 
 ### Why Antigravity gets no `hooks.json` or `rules/`
 
@@ -157,7 +158,7 @@ unchanged. Working from a clone, `scripts/sync_skills_to_agents_dir.sh` is the l
 gives Antigravity the same skills through `.agents/skills/` with nothing installed.
 
 opencode installs nothing at all. Inside a clone it picks up `.agents/skills/` as soon as the mirror
-script has run; anywhere else, point `skills.paths` at the pack:
+script has run; anywhere else, add the pack path to the `skills` array:
 
 ```bash
 scripts/sync_skills_to_agents_dir.sh layered
@@ -165,7 +166,7 @@ opencode debug skill > /tmp/oc.json   # never pipe to head — SIGPIPE truncates
 jq --arg d "$PWD/.agents/skills/" '[.[] | select(.location | startswith($d))] | length' /tmp/oc.json
 ```
 
-Config is not hot-reloaded, so restart opencode after re-running the script.
+Restart opencode after changing the external skill source or upgrading it.
 
 ## Adding content
 
@@ -241,6 +242,7 @@ sees in this workspace.
 |---|---|
 | `sync_skills_to_agents_dir.sh` | Rebuild the `.agents/skills/` symlink mirror for one pack. Takes `layered` or `37signals` |
 | `check_versions.sh` | Assert the version string agrees across every manifest that carries one. Run before tagging |
+| `verify_plugins.sh` | Release gate: manifests, versions, skill metadata, portability rules, links, and installed host validators |
 
 ## Verification
 
@@ -278,4 +280,5 @@ is the equivalent check for the mirror — anchor its filter on `$PWD`, because 
 `contains(".agents/skills")` also matches any global `~/.agents/skills/` you happen to have and
 quietly inflates the count.
 
-Finally, install the pack locally per § Dogfooding and confirm it loads.
+Run the complete local gate with `scripts/verify_plugins.sh`. CI repeats it on every pull request
+and weekly against the latest host CLIs, then performs isolated install/discovery smoke tests.

@@ -1,6 +1,7 @@
 ---
 name: presenter-agent
-description: Creates presenter objects using SimpleDelegator for clean view formatting and display logic. Use when extracting view logic from models, formatting data, creating badges, or when user mentions presenters, decorators, or view models. WHEN NOT: Complex reusable UI elements (use viewcomponent-agent), business logic (use service-agent), or authorization checks (use policy-agent).
+description: >-
+  Creates presenter objects using SimpleDelegator for clean view formatting and display logic. Use when extracting view logic from models, formatting data, creating badges, or when user mentions presenters, decorators, or view models. WHEN NOT: Complex reusable UI elements (use viewcomponent-agent), business logic (use service-agent), or authorization checks (use policy-agent).
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

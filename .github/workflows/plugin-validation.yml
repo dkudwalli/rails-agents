@@ -1,0 +1,99 @@
+name: Plugin validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  portable:
+    name: Portable payload
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify manifests, skills, and links
+        run: scripts/verify_plugins.sh
+
+  host-smoke:
+    name: ${{ matrix.host }} / ${{ matrix.pack }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - host: claude
+            pack: rails-layered
+          - host: claude
+            pack: rails-37signals
+          - host: codex
+            pack: rails-layered
+          - host: codex
+            pack: rails-37signals
+          - host: antigravity
+            pack: rails-layered
+          - host: antigravity
+            pack: rails-37signals
+          - host: opencode
+            pack: rails-layered
+            mirror: layered
+            expected_skills: 54
+          - host: opencode
+            pack: rails-37signals
+            mirror: 37signals
+            expected_skills: 24
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install latest Claude Code
+        if: matrix.host == 'claude'
+        run: npm install --global @anthropic-ai/claude-code
+
+      - name: Install latest Codex
+        if: matrix.host == 'codex'
+        run: npm install --global @openai/codex
+
+      - name: Install latest Antigravity CLI
+        if: matrix.host == 'antigravity'
+        run: |
+          curl -fsSL https://antigravity.google/cli/install.sh | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Install latest OpenCode
+        if: matrix.host == 'opencode'
+        run: npm install --global opencode-ai
+
+      - name: Validate Claude plugin metadata
+        if: matrix.host == 'claude'
+        run: claude plugin validate --strict "./${{ matrix.pack }}"
+
+      - name: Install and list the Codex plugin
+        if: matrix.host == 'codex'
+        run: |
+          codex plugin marketplace add . --json
+          codex plugin add "${{ matrix.pack }}@rails-engineer" --json
+          codex plugin list | rg "${{ matrix.pack }}@rails-engineer"
+
+      - name: Validate and install the Antigravity plugin
+        if: matrix.host == 'antigravity'
+        run: |
+          agy plugin validate "./${{ matrix.pack }}"
+          agy plugin install "./${{ matrix.pack }}"
+          agy plugin list | rg '"name": "${{ matrix.pack }}"|${{ matrix.pack }}'
+
+      - name: Discover the OpenCode skill mirror
+        if: matrix.host == 'opencode'
+        run: |
+          scripts/sync_skills_to_agents_dir.sh "${{ matrix.mirror }}"
+          opencode debug skill > "$RUNNER_TEMP/opencode-skills.json"
+          jq --arg directory "$GITHUB_WORKSPACE/.agents/skills/" --argjson expected "${{ matrix.expected_skills }}" \
+            '[.[] | select(.location | startswith($directory))] | length == $expected' \
+            "$RUNNER_TEMP/opencode-skills.json" | rg '^true$'

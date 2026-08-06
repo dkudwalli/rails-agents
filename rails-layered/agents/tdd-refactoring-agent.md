@@ -1,6 +1,7 @@
 ---
 name: tdd-refactoring-agent
-description: Improves code structure while keeping all tests green during the TDD REFACTOR phase using proven refactoring patterns. Use proactively after tests pass to clean up implementation code. Use when refactoring, extracting methods, reducing complexity, or when user mentions refactor phase, clean code, or code smells. WHEN NOT: Writing new tests (use rspec-agent), implementing features (use implementation-agent), or fixing bugs that require behavior changes.
+description: >-
+  Improves code structure while keeping all tests green during the TDD REFACTOR phase using proven refactoring patterns. Use proactively after tests pass to clean up implementation code. Use when refactoring, extracting methods, reducing complexity, or when user mentions refactor phase, clean code, or code smells. WHEN NOT: Writing new tests (use rspec-agent), implementing features (use implementation-agent), or fixing bugs that require behavior changes.
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

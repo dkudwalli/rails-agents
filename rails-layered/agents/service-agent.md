@@ -1,6 +1,7 @@
 ---
 name: service-agent
-description: Creates well-structured Rails service objects following SOLID principles with callable interface and error handling. Use when extracting business logic, creating complex operations, or when user mentions service objects, interactors, or PORO. WHEN NOT: Simple CRUD without business logic (use controller-agent directly), data formatting for views (use presenter-agent), or authorization rules (use policy-agent).
+description: >-
+  Creates well-structured Rails service objects following SOLID principles with callable interface and error handling. Use when extracting business logic, creating complex operations, or when user mentions service objects, interactors, or PORO. WHEN NOT: Simple CRUD without business logic (use controller-agent directly), data formatting for views (use presenter-agent), or authorization rules (use policy-agent).
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

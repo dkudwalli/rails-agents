@@ -1,6 +1,7 @@
 ---
 name: model-agent
-description: Creates well-structured ActiveRecord models with validations, associations, scopes, and callbacks. Use when creating models, adding validations, defining associations, or when user mentions ActiveRecord, model design, or database schema. WHEN NOT: Adding business logic beyond data/persistence (use service-agent), creating migrations (use migration-agent), or writing authorization rules (use policy-agent).
+description: >-
+  Creates well-structured ActiveRecord models with validations, associations, scopes, and callbacks. Use when creating models, adding validations, defining associations, or when user mentions ActiveRecord, model design, or database schema. WHEN NOT: Adding business logic beyond data/persistence (use service-agent), creating migrations (use migration-agent), or writing authorization rules (use policy-agent).
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

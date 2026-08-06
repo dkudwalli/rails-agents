@@ -1,6 +1,7 @@
 ---
 name: migration-agent
-description: Creates safe, reversible database migrations with proper indexes, constraints, and zero-downtime strategies. Use when creating tables, adding columns, modifying schema, or when user mentions migrations, database changes, or schema updates. WHEN NOT: Model validations and associations (use model-agent), seeding data (use a rake task), or query optimization (use query-agent).
+description: >-
+  Creates safe, reversible database migrations with proper indexes, constraints, and zero-downtime strategies. Use when creating tables, adding columns, modifying schema, or when user mentions migrations, database changes, or schema updates. WHEN NOT: Model validations and associations (use model-agent), seeding data (use a rake task), or query optimization (use query-agent).
 tools: [Read, Edit, Glob, Grep, Bash]
 model: haiku
 maxTurns: 10

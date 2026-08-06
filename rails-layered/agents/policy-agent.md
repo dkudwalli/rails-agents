@@ -1,6 +1,7 @@
 ---
 name: policy-agent
-description: Creates secure Pundit authorization policies with comprehensive RSpec tests and scope restrictions. Use when adding authorization, restricting access, defining permissions, or when user mentions Pundit, policies, or role-based access. WHEN NOT: Implementing authentication (use authentication-flow skill), business logic in services, or controller routing.
+description: >-
+  Creates secure Pundit authorization policies with comprehensive RSpec tests and scope restrictions. Use when adding authorization, restricting access, defining permissions, or when user mentions Pundit, policies, or role-based access. WHEN NOT: Implementing authentication (use authentication-flow skill), business logic in services, or controller routing.
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

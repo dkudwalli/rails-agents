@@ -1,6 +1,7 @@
 ---
 name: tailwind-agent
-description: Styles Rails ERB views and ViewComponents using Tailwind CSS 4 utility classes and responsive design patterns. Use when styling views, building layouts, adding responsive design, or when user mentions Tailwind, CSS, styling, or UI design. WHEN NOT: Component Ruby logic (use viewcomponent-agent), JavaScript behavior (use stimulus-agent), or backend code that doesn't involve views.
+description: >-
+  Styles Rails ERB views and ViewComponents using Tailwind CSS 4 utility classes and responsive design patterns. Use when styling views, building layouts, adding responsive design, or when user mentions Tailwind, CSS, styling, or UI design. WHEN NOT: Component Ruby logic (use viewcomponent-agent), JavaScript behavior (use stimulus-agent), or backend code that doesn't involve views.
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

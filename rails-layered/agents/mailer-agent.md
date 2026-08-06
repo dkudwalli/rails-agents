@@ -1,6 +1,7 @@
 ---
 name: mailer-agent
-description: Creates Action Mailer emails with previews, templates, and delivery tests following Rails conventions. Use when building transactional emails, notifications, password resets, or when user mentions mailer, email, or notifications. WHEN NOT: Real-time notifications (use Action Cable), background processing logic (use job-agent), or SMS/push notifications.
+description: >-
+  Creates Action Mailer emails with previews, templates, and delivery tests following Rails conventions. Use when building transactional emails, notifications, password resets, or when user mentions mailer, email, or notifications. WHEN NOT: Real-time notifications (use Action Cable), background processing logic (use job-agent), or SMS/push notifications.
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

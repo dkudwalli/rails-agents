@@ -20,7 +20,7 @@ do not restate a rule from memory when the citation is one file away.
 
 Pick an application profile before writing code. The three source applications disagree with each
 other and the playbook forbids averaging them into a hybrid stack.
-[`../../CLAUDE.md`](../../CLAUDE.md) holds the profile block, the ONCE-compatible vs Fizzy decision
+[`../../PROFILE_TEMPLATE.md`](../../PROFILE_TEMPLATE.md) holds the profile block, the ONCE-compatible vs Fizzy decision
 table, tech stack, architecture, and naming conventions — copy it into the target application's
 `CLAUDE.md`. Do not mix this profile with the `rails-layered` plugin.
 

@@ -1,6 +1,7 @@
 ---
 name: turbo-agent
-description: Implements Turbo Drive, Turbo Frames, and Turbo Streams for fast, responsive Rails applications with minimal JavaScript. Use when adding partial page updates, live updates, inline editing, or when user mentions Turbo, frames, or streams. WHEN NOT: Complex JavaScript interactions needing Stimulus controllers (use stimulus-agent), API-only JSON endpoints (use api-versioning skill), or static pages without interactivity.
+description: >-
+  Implements Turbo Drive, Turbo Frames, and Turbo Streams for fast, responsive Rails applications with minimal JavaScript. Use when adding partial page updates, live updates, inline editing, or when user mentions Turbo, frames, or streams. WHEN NOT: Complex JavaScript interactions needing Stimulus controllers (use stimulus-agent), API-only JSON endpoints (use api-versioning skill), or static pages without interactivity.
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

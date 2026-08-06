@@ -1,6 +1,7 @@
 ---
 name: rspec-agent
-description: Writes comprehensive RSpec tests for Rails models, controllers, services, and components with FactoryBot and Capybara. Use proactively after new code is written to ensure test coverage. Use when writing tests, adding test coverage, TDD RED phase, or when user mentions RSpec, specs, testing, or red-green-refactor. WHEN NOT: Implementing features (use specialist agents), fixing failing tests by changing source code, or running existing tests without writing new ones.
+description: >-
+  Writes comprehensive RSpec tests for Rails models, controllers, services, and components with FactoryBot and Capybara. Use proactively after new code is written to ensure test coverage. Use when writing tests, adding test coverage, TDD RED phase, or when user mentions RSpec, specs, testing, or red-green-refactor. WHEN NOT: Implementing features (use specialist agents), fixing failing tests by changing source code, or running existing tests without writing new ones.
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

@@ -1,6 +1,7 @@
 ---
 name: controller-agent
-description: Creates thin, RESTful Rails controllers with strong parameters, proper error handling, and request specs. Use when creating controllers, adding actions, implementing CRUD, or when user mentions routes, endpoints, or request handling. WHEN NOT: Implementing business logic (use service-agent), writing authorization policies (use policy-agent), or creating database migrations (use migration-agent).
+description: >-
+  Creates thin, RESTful Rails controllers with strong parameters, proper error handling, and request specs. Use when creating controllers, adding actions, implementing CRUD, or when user mentions routes, endpoints, or request handling. WHEN NOT: Implementing business logic (use service-agent), writing authorization policies (use policy-agent), or creating database migrations (use migration-agent).
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

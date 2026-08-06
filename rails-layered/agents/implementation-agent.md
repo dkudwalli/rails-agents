@@ -1,6 +1,7 @@
 ---
 name: implementation-agent
-description: Orchestrates TDD GREEN phase by implementing minimal code that passes failing tests, coordinating specialist subagents. Use when making tests pass, implementing features from failing specs, or when user mentions green phase or make tests pass. WHEN NOT: Writing tests (use rspec-agent) or refactoring code (use tdd-refactoring-agent).
+description: >-
+  Orchestrates TDD GREEN phase by implementing minimal code that passes failing tests, coordinating specialist subagents. Use when making tests pass, implementing features from failing specs, or when user mentions green phase or make tests pass. WHEN NOT: Writing tests (use rspec-agent) or refactoring code (use tdd-refactoring-agent).
 tools: [Read, Write, Edit, Glob, Grep, Bash, Agent]
 model: sonnet
 maxTurns: 30

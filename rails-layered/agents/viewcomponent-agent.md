@@ -1,6 +1,7 @@
 ---
 name: viewcomponent-agent
-description: Creates reusable ViewComponents with slots, previews, and comprehensive tests for Rails UI elements. Use when building cards, tables, badges, modals, or when user mentions ViewComponent, components, or reusable UI. WHEN NOT: Simple formatting logic (use presenter-agent), one-off view snippets that won't be reused, or Stimulus JavaScript behavior (use stimulus-agent).
+description: >-
+  Creates reusable ViewComponents with slots, previews, and comprehensive tests for Rails UI elements. Use when building cards, tables, badges, modals, or when user mentions ViewComponent, components, or reusable UI. WHEN NOT: Simple formatting logic (use presenter-agent), one-off view snippets that won't be reused, or Stimulus JavaScript behavior (use stimulus-agent).
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

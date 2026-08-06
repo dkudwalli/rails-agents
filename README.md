@@ -28,7 +28,7 @@ Then copy the profile template into your application:
 
 ```bash
 # rails-37signals
-cp ~/.claude/plugins/marketplaces/rails-engineer/rails-37signals/CLAUDE.md ./CLAUDE.md
+cp ~/.claude/plugins/marketplaces/rails-engineer/rails-37signals/PROFILE_TEMPLATE.md ./CLAUDE.md
 
 # rails-layered
 cp ~/.claude/plugins/marketplaces/rails-engineer/rails-layered/AGENTS.md ./AGENTS.md
@@ -140,19 +140,19 @@ upgrading.
 ```jsonc
 {
   "$schema": "https://opencode.ai/config.json",
-  "skills": { "paths": ["~/src/rails-agents/rails-layered/skills"] }
+  "skills": ["~/src/rails-agents/rails-layered/skills"]
 }
 ```
 
 One entry per pack covers every skill; a leading `~` resolves. Never list both packs. opencode drops
-`user-invocable` frontmatter, so ask for workflow skills by name rather than as `/<name>`, and
-restart it after config changes — it does not hot-reload.
+`user-invocable` frontmatter, so ask for workflow skills by name rather than as `/<name>`. Restart
+after changing an external skill source or upgrading opencode.
 
 ### What reaches which tool
 
 | Surface | Claude Code | Codex | Antigravity | opencode |
 |---|---|---|---|---|
-| Skills | yes | yes (plugin `skills/`) | yes (plugin `skills/`) | yes — no install; `skills.paths` |
+| Skills | yes | yes (plugin `skills/`) | yes (plugin `skills/`) | yes — no install; `skills` array or `.agents/skills/` |
 | Conventions rules | yes | yes, inside the conventions skill | yes, inside the conventions skill | yes, inside the conventions skill |
 | SDD / artifact workflows | yes, as `/sdd:*` etc. | yes — they are skills | yes — they are skills | yes — they are skills; ask by name |
 | Slash commands themselves | yes | no — Codex prompts are `$CODEX_HOME/prompts/` only, and deprecated | top-level ones only, converted to skills | no — not shipped; every workflow is already a skill |
@@ -188,6 +188,13 @@ edit tool), and the `TaskCompleted` block never fires because Codex has no such 
 For prompting technique and Model Context Protocol setup, read the official docs rather than a copy
 here — [Claude Code documentation](https://docs.claude.com/en/docs/claude-code) and the
 [MCP specification](https://modelcontextprotocol.io). Guides that restate them drift silently.
+
+## Compatibility
+
+Every pull request and a weekly scheduled run validate the portable payload plus the latest Claude
+Code, Codex, Antigravity, and opencode CLIs. Run `scripts/verify_plugins.sh` before a release; it
+checks manifests, version agreement, skill metadata, portability rules, links, and any installed
+host validators.
 
 ## Credits
 

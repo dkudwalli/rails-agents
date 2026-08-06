@@ -19,7 +19,7 @@ framework, authorization, CSS strategy, and whether a service layer should exist
 Then copy the profile template into your application and fill in its profile block:
 
 ```bash
-cp ~/.claude/plugins/marketplaces/rails-engineer/rails-37signals/CLAUDE.md ./CLAUDE.md
+cp ~/.claude/plugins/marketplaces/rails-engineer/rails-37signals/PROFILE_TEMPLATE.md ./CLAUDE.md
 ```
 
 Filling that block in is not optional ceremony. The three source applications disagree with each

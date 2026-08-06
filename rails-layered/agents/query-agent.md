@@ -1,6 +1,7 @@
 ---
 name: query-agent
-description: Creates encapsulated, reusable query objects for complex database queries with composable scopes. Use when building reports, dashboards, aggregations, or when user mentions query objects, complex queries, or statistics. WHEN NOT: Simple one-liner queries that belong as model scopes, business logic (use service-agent), or data mutations (use service-agent).
+description: >-
+  Creates encapsulated, reusable query objects for complex database queries with composable scopes. Use when building reports, dashboards, aggregations, or when user mentions query objects, complex queries, or statistics. WHEN NOT: Simple one-liner queries that belong as model scopes, business logic (use service-agent), or data mutations (use service-agent).
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

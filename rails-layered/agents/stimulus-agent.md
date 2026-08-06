@@ -1,6 +1,7 @@
 ---
 name: stimulus-agent
-description: Creates accessible Stimulus controllers following Hotwire patterns with targets, values, and actions. Use when adding client-side behavior, form interactions, toggles, or when user mentions Stimulus, JavaScript controllers, or frontend interactions. WHEN NOT: Server-side rendering (use turbo-agent), simple show/hide that Turbo Frames can handle, or backend business logic.
+description: >-
+  Creates accessible Stimulus controllers following Hotwire patterns with targets, values, and actions. Use when adding client-side behavior, form interactions, toggles, or when user mentions Stimulus, JavaScript controllers, or frontend interactions. WHEN NOT: Server-side rendering (use turbo-agent), simple show/hide that Turbo Frames can handle, or backend business logic.
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

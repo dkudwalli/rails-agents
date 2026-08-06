@@ -1,6 +1,7 @@
 ---
 name: job-agent
-description: Creates idempotent, well-tested background jobs using Solid Queue with proper error handling and retry logic. Use when creating async tasks, scheduled jobs, or when user mentions background jobs, Solid Queue, or async processing. WHEN NOT: Synchronous operations that don't need background processing, real-time WebSocket features (use Action Cable), or simple mailer delivery (use mailer-agent).
+description: >-
+  Creates idempotent, well-tested background jobs using Solid Queue with proper error handling and retry logic. Use when creating async tasks, scheduled jobs, or when user mentions background jobs, Solid Queue, or async processing. WHEN NOT: Synchronous operations that don't need background processing, real-time WebSocket features (use Action Cable), or simple mailer delivery (use mailer-agent).
 tools: [Read, Write, Edit, Glob, Grep, Bash]
 model: sonnet
 maxTurns: 30

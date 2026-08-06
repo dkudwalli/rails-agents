@@ -1,6 +1,7 @@
 ---
 name: database-reviewer
-description: PostgreSQL specialist for query optimization, schema design, security, and performance. Use when writing SQL, creating migrations, designing schemas, or troubleshooting database performance. WHEN NOT: ActiveRecord-level N+1 and eager loading (use query-agent), or writing the migration itself (use migration-agent).
+description: >-
+  PostgreSQL specialist for query optimization, schema design, security, and performance. Use when writing SQL, creating migrations, designing schemas, or troubleshooting database performance. WHEN NOT: ActiveRecord-level N+1 and eager loading (use query-agent), or writing the migration itself (use migration-agent).
 tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
 model: sonnet
 memory: project
