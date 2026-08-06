@@ -23,6 +23,7 @@ expect_no_matches() {
 
 expect_no_matches "portable payload tokens" '\$ARGUMENTS|\$\{CLAUDE_PLUGIN_ROOT\}' "$PACK"
 expect_no_matches "retired profile and pack references" 'CLAUDE\.md|## Application profile|rails-layered|rails-37signals' "$PACK"
+expect_no_matches "pack-owned AGENTS profile references" '(?:this|the) pack.s .*AGENTS\.md' "$PACK/skills"
 find_unqualified_collision_calls() {
   rg -n --pcre2 '(?<![a-z-])(job-patterns|legacy-migration|mailer-patterns|migration-patterns|model-patterns|stimulus-patterns|turbo-patterns)(?![a-z-]|\.md)' "$PACK/skills" --glob '*.md' || true
 }

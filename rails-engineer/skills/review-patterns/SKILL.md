@@ -17,4 +17,4 @@ Read the file that covers what you are doing rather than all of them.
 
 These references assume the 37signals profile: rich models, namespaced concerns, state records,
 Minitest with fixtures, plain CSS, no service layer. Record which source application you are
-following before applying them — see the pack's `AGENTS.md` under Rails Engineer Profile.
+following before applying them — see the target application's `AGENTS.md` Rails Engineer Profile.
