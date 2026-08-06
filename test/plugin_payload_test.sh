@@ -23,7 +23,12 @@ expect_no_matches() {
 
 expect_no_matches "portable payload tokens" '\$ARGUMENTS|\$\{CLAUDE_PLUGIN_ROOT\}' "$PACK"
 expect_no_matches "retired profile and pack references" 'CLAUDE\.md|## Application profile|rails-layered|rails-37signals' "$PACK"
-expect_no_matches "bare collision skill references" '`(job-patterns|legacy-migration|mailer-patterns|migration-patterns|model-patterns|stimulus-patterns|turbo-patterns)`|/(job-patterns|legacy-migration|mailer-patterns|migration-patterns|model-patterns|stimulus-patterns|turbo-patterns)/SKILL\.md' "$PACK/skills"
+find_unqualified_collision_calls() {
+  rg -n --pcre2 '(?<![a-z-])(job-patterns|legacy-migration|mailer-patterns|migration-patterns|model-patterns|stimulus-patterns|turbo-patterns)(?![a-z-]|\.md)' "$PACK/skills" --glob '*.md' || true
+}
+
+collision_calls=$(find_unqualified_collision_calls)
+[ -z "$collision_calls" ] || fail "unqualified retired collision skill identifiers: $collision_calls"
 
 for skill_file in "$PACK"/skills/*/SKILL.md; do
   skill_dir=$(basename "$(dirname "$skill_file")")
@@ -41,15 +46,48 @@ for skill_file in "$PACK"/skills/sdd-*/SKILL.md; do
   rg -q 'Workflow: conventional' "$skill_file" || fail "SDD skill does not exit to conventional workflow: $skill_file"
   rg -q 'rich-models' "$skill_file" || fail "SDD skill does not route rich-models work: $skill_file"
   rg -q 'bin/rails test' "$skill_file" || fail "SDD skill does not select Minitest command: $skill_file"
+  profile_line=$(rg -n -m 1 'Profile routing' "$skill_file" | cut -d: -f1)
+  first_instruction_line=$(awk 'NR > 1 && /^---$/ { body = 1; next } body && NF { print NR; exit }' "$skill_file")
+  incompatible_line=$(awk 'NR > 8 && /bundle exec rspec|app\/services|app\/policies|app\/components|ViewComponent|Tailwind/ && $0 !~ /Testing: rspec|Architecture: layered|profile-selected|selected profile|layered profile/ { print NR; exit }' "$skill_file")
+  if [ -z "$profile_line" ] || [ "$profile_line" != "$first_instruction_line" ]; then
+    fail "SDD profile routing is not the first instruction: $skill_file"
+  fi
+  if [ -n "$incompatible_line" ]; then
+    fail "SDD contains unguarded incompatible instruction after profile routing: $skill_file:$incompatible_line"
+  fi
 done
 
-broken=$(find "$PACK" -type f -name '*.md' -print | while IFS= read -r file; do
-  grep -oE '\]\([^)]+\.md[^)]*\)' "$file" | sed 's/^](//;s/)$//' | while IFS= read -r link; do
-    case "$link" in http*|/*|\#*) continue ;; esac
-    [ -e "$(dirname "$file")/${link%%#*}" ] || echo "$file -> $link"
+relative_targets() {
+  find "$PACK" -type f -name '*.md' -print | while IFS= read -r file; do
+    grep -oE '\]\([^)]+\)' "$file" | sed 's/^](//;s/)$//' | while IFS= read -r target; do
+      case "$target" in ../*|./*) printf '%s\t%s\n' "$file" "$target" ;; esac
+    done
+    perl -ne 'while (/`([^`]+)`/g) { $target = $1; print "$ARGV\t$target\n" if $target =~ m{^(?:\.\.?/)+[^[:space:]`]+(?:\.md|AGENTS\.md|CLAUDE\.md)(?:#[^[:space:]`]+)?$}; }' "$file"
   done
+}
+
+broken=$(relative_targets | while IFS=$'\t' read -r file target; do
+  path=${target%%#*}
+  [ -e "$(dirname "$file")/$path" ] || echo "$file -> $target"
 done)
-[ -z "$broken" ] || fail "broken relative Markdown links: $broken"
+[ -z "$broken" ] || fail "broken relative Markdown and inline-code paths: $broken"
+
+profile_path_refs=$(rg -n '`?(\.\./|\./)+AGENTS\.md|`?(\.\./|\./)+CLAUDE\.md' "$PACK" --glob '*.md' || true)
+[ -z "$profile_path_refs" ] || fail "relative references to nonexistent pack profile files: $profile_path_refs"
+
+probe_target="$PACK/skills/rails-models/SKILL.md"
+probe_backup=$(mktemp)
+cp "$probe_target" "$probe_backup"
+trap 'cp "$probe_backup" "$probe_target"; rm -f "$probe_backup"' EXIT HUP INT TERM
+printf '\nRegression probe: route this to model-patterns.\n' >> "$probe_target"
+if [ -z "$(find_unqualified_collision_calls)" ]; then
+  fail "collision detector missed deliberate temporary mutation"
+fi
+printf '\nRegression probe: see `../../../missing-profile/AGENTS.md`.\n' >> "$probe_target"
+if [ -z "$(relative_targets | while IFS=$'\t' read -r file target; do path=${target%%#*}; [ -e "$(dirname "$file")/$path" ] || echo "$file -> $target"; done)" ]; then
+  fail "inline-code path detector missed deliberate temporary mutation"
+fi
+cp "$probe_backup" "$probe_target"
 
 if [ "$failures" -gt 0 ]; then
   exit 1

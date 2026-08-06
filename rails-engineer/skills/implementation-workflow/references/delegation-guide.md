@@ -1,7 +1,7 @@
 # Skill Delegation Guide
 
 > Fizzy profile only: examples here that use UUID ids, `account_id`, `Current.account`, or `params.expect`.
-> Strip them for an ONCE-compatible application — see `../../../AGENTS.md` under Rails Engineer Profile.
+> Strip them for an ONCE-compatible application — see the target application's `AGENTS.md` under Rails Engineer Profile.
 
 ## When to Use Each Skill
 
@@ -17,7 +17,7 @@ Use when creating or modifying controllers.
 - "Extract archive action into Projects::ArchivalsController"
 - "Add nested CommentsController under Cards"
 
-### model-patterns
+### rich-models-model-patterns
 Use when creating or enriching domain models.
 - Creating models with validations, associations, scopes
 - Adding business logic methods to models
@@ -63,7 +63,7 @@ Use when writing or converting tests.
 - "Add system test for project archival workflow"
 - "Write fixtures for projects, cards, and their associations"
 
-### migration-patterns
+### rich-models-migration-patterns
 Use when modifying database schema.
 - Creating tables with UUIDs and account_id
 - Adding columns with proper indexes
@@ -75,7 +75,7 @@ Use when modifying database schema.
 - "Add archivals table for state record pattern"
 - "Backfill account_id on existing cards table"
 
-### job-patterns
+### rich-models-job-patterns
 Use for background processing.
 - Creating Solid Queue jobs (no Redis)
 - Following _later/_now convention on models
@@ -87,7 +87,7 @@ Use for background processing.
 - "Add export_later method to Report model"
 - "Set up recurring cleanup job for expired sessions"
 
-### turbo-patterns
+### rich-models-turbo-patterns
 Use for real-time UI updates.
 - Turbo Stream broadcasts from models
 - Turbo Frames for isolated page sections
@@ -99,7 +99,7 @@ Use for real-time UI updates.
 - "Wrap project list in Turbo Frame for inline editing"
 - "Broadcast card movements to all board viewers"
 
-### stimulus-patterns
+### rich-models-stimulus-patterns
 Use for client-side JavaScript.
 - Focused, single-purpose controllers
 - Form enhancements (autosave, autocomplete)
@@ -132,7 +132,7 @@ Use for performance.
 - Russian doll caching with touch: true
 - Solid Cache configuration (no Redis)
 
-### mailer-patterns
+### rich-models-mailer-patterns
 Use for email.
 - Minimal mailers with deliver_later
 - Bundled/digest notifications
@@ -156,13 +156,13 @@ Use for activity and audit.
 
 | Need | Skill | Notes |
 |------|-------|-------|
-| New table | migration-patterns | Always first in dependency chain |
-| New model | model-patterns | After migration |
+| New table | rich-models-migration-patterns | Always first in dependency chain |
+| New model | rich-models-model-patterns | After migration |
 | Shared behavior | concern-patterns | When 2+ models share code |
 | Boolean to record | state-records | Includes migration + model + controller |
 | New controller | crud-patterns | After model exists |
-| Real-time updates | turbo-patterns | After controller exists |
-| Client interactivity | stimulus-patterns | After views exist |
-| Async operation | job-patterns | For operations >500ms |
-| Email | mailer-patterns | Almost always with job-patterns |
+| Real-time updates | rich-models-turbo-patterns | After controller exists |
+| Client interactivity | rich-models-stimulus-patterns | After views exist |
+| Async operation | rich-models-job-patterns | For operations >500ms |
+| Email | rich-models-mailer-patterns | Almost always with rich-models-job-patterns |
 | Tests | testing-patterns | Throughout, after each layer |

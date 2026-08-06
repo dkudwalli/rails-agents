@@ -6,7 +6,7 @@ description: >-
   building a design system, adding dark mode, defining color or spacing tokens, or
   when user mentions CSS, styling, theming, design tokens, or responsive design.
   WHEN NOT: For ERB structure and partials (use rules/views.md), for JavaScript
-  behavior (use stimulus-patterns), for Turbo updates (use turbo-patterns).
+  behavior (use rails-frontend), for Turbo updates (use rails-frontend).
 license: MIT
 compatibility: Rails 8.0+, Propshaft, modern browsers
 ---

@@ -10,7 +10,7 @@ description: >-
   agents like service-agent, query-agent, or model-agent), writing tests
   (use rspec-agent), architecture-level design (use rails-architecture), or
   planning the order of work across a whole legacy codebase (use
-  legacy-migration).
+  layered-legacy-migration).
 user-invocable: true
 ---
 

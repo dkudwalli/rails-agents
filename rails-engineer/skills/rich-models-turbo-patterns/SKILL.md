@@ -4,7 +4,7 @@ description: >-
   Creates Turbo Streams, Turbo Frames, and morphing patterns for real-time UI
   updates. Use when adding real-time updates, partial page rendering, form
   submissions, or broadcasting.
-  WHEN NOT: For Stimulus JavaScript controllers (see stimulus-patterns skill).
+  WHEN NOT: For Stimulus JavaScript controllers (see rails-frontend).
   For general view conventions (see rules/views.md).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Turbo 8+

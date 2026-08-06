@@ -5,7 +5,7 @@ description: >-
   Use when extracting shared code, organizing models with horizontal concerns,
   DRYing up controllers, or when user mentions concerns, mixins, or modules.
   WHEN NOT: Logic used by only one model (keep in place), service object
-  extraction (use model-patterns), or job organization (use job-patterns).
+  extraction (use rails-models), or job organization (use rails-runtime).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
@@ -16,7 +16,7 @@ Concerns for horizontal behavior, inheritance for vertical specialization.
 
 > Fizzy profile only: the `Current.account` scoping in the controller-concern examples below.
 > An ONCE-compatible application has no account layer — scope through whatever the current actor can
-> reach. See `../../AGENTS.md` under Rails Engineer Profile.
+> reach. See the target application's `AGENTS.md` under Rails Engineer Profile.
 
 ## Project knowledge
 

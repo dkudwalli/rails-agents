@@ -5,8 +5,8 @@ description: >-
   and Solid Cache configuration. Use when optimizing performance, adding caching
   layers, or when user mentions ETags, fresh_when, stale?, cache keys, or
   Russian doll caching.
-  WHEN NOT: For Turbo Stream real-time updates (use turbo-patterns), for
-  background job cache warming logic (use job-patterns).
+  WHEN NOT: For Turbo Stream real-time updates (use rails-frontend), for
+  background job cache warming logic (use rails-runtime).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Solid Cache
 ---

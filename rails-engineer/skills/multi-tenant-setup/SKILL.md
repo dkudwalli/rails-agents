@@ -5,7 +5,7 @@ description: >-
   and data isolation following 37signals patterns. Use when setting up
   multi-tenant architecture, account isolation, membership management, or when
   user mentions multi-tenancy, accounts, or tenant separation.
-  WHEN NOT: For basic model setup without tenancy (use model-patterns), for
+  WHEN NOT: For basic model setup without tenancy (use rails-models), for
   auth/session setup (use auth-setup).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+

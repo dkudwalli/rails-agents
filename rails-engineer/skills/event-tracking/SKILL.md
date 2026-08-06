@@ -6,7 +6,7 @@ description: >-
   audit trails, activity feeds, event recording, webhooks, or when user mentions
   events, tracking, webhooks, or activity logs.
   WHEN NOT: For state changes as records (use state-records), for background
-  job patterns (use job-patterns), for mailer delivery (use mailer-patterns).
+  job patterns (use rails-runtime), for mailer delivery (use rich-models-mailer-patterns).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Solid Queue
 ---

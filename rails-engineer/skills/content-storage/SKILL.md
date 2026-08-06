@@ -7,7 +7,7 @@ description: >-
   data export/import, or when user mentions Active Storage, Action Text, blobs,
   attachments, uploads, or portability.
   WHEN NOT: Static assets and CSS (use css-design), background job structure
-  (use job-patterns), or schema design (use migration-patterns).
+  (use rails-runtime), or schema design (use rails-database).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Action Text, Active Storage
 ---

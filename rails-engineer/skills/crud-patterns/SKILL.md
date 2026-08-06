@@ -5,7 +5,7 @@ description: >-
   resources instead of custom actions. Use when adding features, creating
   controllers, designing routes, or handling state changes via REST.
   WHEN NOT: Non-REST APIs (use api-patterns), view/template work (use
-  turbo-patterns), or model business logic (use model-patterns).
+  rails-frontend), or model business logic (use rails-models).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---

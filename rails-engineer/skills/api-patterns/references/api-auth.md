@@ -1,7 +1,7 @@
 # API Authentication Reference
 
 > Fizzy profile only: examples here that use UUID ids, `account_id`, `Current.account`, or `params.expect`.
-> Strip them for an ONCE-compatible application — see `../../../AGENTS.md` under Rails Engineer Profile.
+> Strip them for an ONCE-compatible application — see the target application's `AGENTS.md` under Rails Engineer Profile.
 
 ## Token Model
 

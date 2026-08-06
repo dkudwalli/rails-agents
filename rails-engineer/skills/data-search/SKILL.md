@@ -8,7 +8,7 @@ description: >-
   WHEN NOT: The app runs PostgreSQL or another adapter — the concern here resolves
   `SQLite`/`Mysql2` by constant lookup and has no branch for it, so port the shape
   rather than the code. Also not for simple `WHERE ... LIKE` filters (use a model
-  scope), schema design (use migration-patterns), or query caching (use
+  scope), schema design (use rails-database), or query caching (use
   caching-patterns).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, SQLite or MySQL

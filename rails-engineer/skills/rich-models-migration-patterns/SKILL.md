@@ -4,7 +4,7 @@ description: >-
   Creates database migrations with UUIDs, account scoping, and no foreign key
   constraints. Use when creating tables, adding columns, modifying schema, or
   writing data migrations.
-  WHEN NOT: For model business logic (see model-patterns skill). For multi-tenant
+  WHEN NOT: For model business logic (see rails-models). For multi-tenant
   scoping logic (see multi-tenant-setup skill).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, PostgreSQL/MySQL/SQLite

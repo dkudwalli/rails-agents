@@ -1,7 +1,7 @@
 ---
 name: postgres-patterns
 description: >-
-  PostgreSQL query optimization, schema design, indexing, Row Level Security, connection management, and the review checklist for database code. Use when writing SQL or migrations, designing a schema, diagnosing a slow query, or reviewing database changes. WHEN NOT: ActiveRecord-level N+1 and eager loading (see performance-optimization), migration mechanics and zero-downtime sequencing (see migration-patterns), or query-object structure (see query-patterns).
+  PostgreSQL query optimization, schema design, indexing, Row Level Security, connection management, and the review checklist for database code. Use when writing SQL or migrations, designing a schema, diagnosing a slow query, or reviewing database changes. WHEN NOT: ActiveRecord-level N+1 and eager loading (see performance-optimization), migration mechanics and zero-downtime sequencing (see layered-migration-patterns), or query-object structure (see query-patterns).
 license: MIT
 compatibility: PostgreSQL 14+
 ---

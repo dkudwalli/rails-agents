@@ -1,7 +1,7 @@
 # Fragment Caching Reference
 
 > Fizzy profile only: examples here that use `Current.account` or `account_id`.
-> Strip them for an ONCE-compatible application — see `../../../AGENTS.md` under Rails Engineer Profile.
+> Strip them for an ONCE-compatible application — see the target application's `AGENTS.md` under Rails Engineer Profile.
 
 ## Russian Doll Caching
 

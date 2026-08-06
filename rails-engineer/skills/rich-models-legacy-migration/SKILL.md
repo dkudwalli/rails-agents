@@ -24,7 +24,8 @@ test suite between each one. An app that cannot be shipped mid-migration has bee
 Nothing else starts until the target application's `AGENTS.md` carries a filled-in
 `## Rails Engineer Profile` block. A two-year-old codebase has none, and half the refactorings below
 change meaning depending on it — an ONCE-compatible app keeps Redis and Resque, so phase 5 is not
-work, it is a mistake. The template is in this pack's `AGENTS.md`.
+work, it is a mistake. Use `rails-onboard` to create the target profile, or start from this pack's
+[`AGENTS_TEMPLATE.md`](../../AGENTS_TEMPLATE.md).
 
 Then get the existing suite green and fast, whatever framework it is written in. Do **not** convert
 it yet. It is the only thing standing between phases 1–5 and a silent regression.

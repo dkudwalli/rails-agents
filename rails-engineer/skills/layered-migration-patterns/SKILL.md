@@ -1,7 +1,7 @@
 ---
 name: layered-migration-patterns
 description: >-
-  Worked ActiveRecord migration implementations: reversible migrations, zero-downtime column and index changes, column types, index recipes, and the pre-flight checklist. Use when creating a table, adding or removing a column, adding an index, or changing a schema on a table with production data. WHEN NOT: Model validations and associations (see model-patterns), PostgreSQL-level tuning and RLS (see postgres-patterns), or seeding data, which belongs in a rake task.
+  Worked ActiveRecord migration implementations: reversible migrations, zero-downtime column and index changes, column types, index recipes, and the pre-flight checklist. Use when creating a table, adding or removing a column, adding an index, or changing a schema on a table with production data. WHEN NOT: Model validations and associations (see rails-models), PostgreSQL-level tuning and RLS (see postgres-patterns), or seeding data, which belongs in a rake task.
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, PostgreSQL 14+
 ---

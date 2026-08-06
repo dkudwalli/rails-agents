@@ -5,7 +5,7 @@ description: >-
   following 37signals conventions. Use when sending emails, creating notification
   systems, digest emails, or when user mentions mailers, emails, notifications,
   or transactional messages.
-  WHEN NOT: For background job scheduling (use job-patterns), for event-driven
+  WHEN NOT: For background job scheduling (use rails-runtime), for event-driven
   triggers (use event-tracking).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Action Mailer, Solid Queue

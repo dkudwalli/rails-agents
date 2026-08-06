@@ -4,8 +4,8 @@ description: >-
   Implements shallow background jobs with _later/_now conventions using Solid
   Queue. Use when adding background processing, async operations, scheduled
   tasks, or when user mentions jobs, queues, workers, or background processing.
-  WHEN NOT: Business logic implementation (use model-patterns), controller
-  work (use crud-patterns), or mailer delivery (use mailer-patterns).
+  WHEN NOT: Business logic implementation (use rails-models), controller
+  work (use crud-patterns), or mailer delivery (use rich-models-mailer-patterns).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Solid Queue
 ---
