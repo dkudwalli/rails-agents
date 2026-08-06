@@ -22,10 +22,10 @@ Rails Engineer Profile selects `Architecture: rich-models`; they do not prescrib
 layered or existing application. The managed profile records the equivalent stack choices and
 deliberate divergences.
 
-**Divergences win.** A stack the application's `CLAUDE.md` records under **Deliberate divergences**
+**Divergences win.** A stack the application's `AGENTS.md` records under **Deliberate divergences**
 — Tailwind, RSpec, Devise, Sidekiq, Elasticsearch, a bundler — overrides every reference below that
 forbids it. The references describe a target, not a verdict on the app you are in: write in the
-idiom the app already runs, and leave the question of removing it to `legacy-migration`. On an
+idiom the app already runs, and leave the question of removing it to `rich-models-legacy-migration`. On an
 existing application, fill that divergence list before asking this pack for code.
 
 The vendored playbook itself lives at

@@ -1,7 +1,7 @@
 ---
 name: review-patterns
 description: >-
-  Reviews Rails code against the 37signals playbook: conceptual compression, everything-is-CRUD naming, state as records, authorization by scoping, expanded conditionals. Use when reviewing a diff, PR, or file for playbook conformance, or when the user mentions a review pass or anti-patterns. WHEN NOT: The rails-layered profile, whose service and policy layers this explicitly rejects.
+  Reviews Rails code against the 37signals playbook: conceptual compression, everything-is-CRUD naming, state as records, authorization by scoping, expanded conditionals. Use when reviewing a diff, PR, or file for playbook conformance, or when the user mentions a review pass or anti-patterns. WHEN NOT: The layered profile, whose service and policy layers this explicitly rejects.
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
@@ -17,4 +17,4 @@ Read the file that covers what you are doing rather than all of them.
 
 These references assume the 37signals profile: rich models, namespaced concerns, state records,
 Minitest with fixtures, plain CSS, no service layer. Record which source application you are
-following before applying them — see the pack's `CLAUDE.md` under Application profile.
+following before applying them — see the pack's `AGENTS.md` under Rails Engineer Profile.

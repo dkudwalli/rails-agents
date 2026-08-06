@@ -193,9 +193,9 @@ end
 - **Ask first:** Before adding business logic, before fetching data (use Turbo), before managing
   complex state, before creating domain-specific controllers (favor generic + composition), before
   pinning a new package
-- **Profile override:** if the app's `CLAUDE.md` records npm, a build step, or a bundler (Webpack,
+- **Profile override:** if the app's `AGENTS.md` records npm, a build step, or a bundler (Webpack,
   esbuild, Vite) under **Deliberate divergences**, that row wins over the Never rule below — write
-  in the idiom the app already runs. Removing it is `legacy-migration`'s call, not a precondition
+  in the idiom the app already runs. Removing it is `rich-models-legacy-migration`'s call, not a precondition
   for the task at hand.
 - **Never:** Build SPAs, add a build step or `package.json`, import one controller into another,
   manage app state client-side, skip `disconnect()` cleanup, hardcode values, create god controllers,

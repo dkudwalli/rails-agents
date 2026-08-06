@@ -16,7 +16,7 @@ Concerns for horizontal behavior, inheritance for vertical specialization.
 
 > Fizzy profile only: the `Current.account` scoping in the controller-concern examples below.
 > An ONCE-compatible application has no account layer — scope through whatever the current actor can
-> reach. See `../../CLAUDE.md` under Application profile.
+> reach. See `../../AGENTS.md` under Rails Engineer Profile.
 
 ## Project knowledge
 

@@ -198,9 +198,9 @@ single file with attribution.
   focus-ring block, `@media (any-hover: hover)` around hover styling
 - **Ask first:** Before adopting `@layer` (check the app's profile), before adding a token tier,
   before a `!important`
-- **Profile override:** if the app's `CLAUDE.md` records Tailwind, Sass, or PostCSS under
+- **Profile override:** if the app's `AGENTS.md` records Tailwind, Sass, or PostCSS under
   **Deliberate divergences**, that row wins over the Never rule below — write in the idiom the app
-  already runs. Removing it is `legacy-migration`'s call, not a precondition for the task at hand.
+  already runs. Removing it is `rich-models-legacy-migration`'s call, not a precondition for the task at hand.
 - **Never:** Add Tailwind, Sass, PostCSS, or a CSS build step; write a dark-mode rule inside a
   component; put an arbitrary value in a utility; use specificity to win an override; rely on file
   order for the cascade

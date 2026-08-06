@@ -3,7 +3,7 @@ name: sdd-validate
 description: Validate that the codebase implements what the feature spec promises using a 4-layer hybrid analysis — no code annotations required.
 ---
 
-> **Profile gate:** This workflow is optional. Read AGENTS.md first and continue only when its Rails Engineer Profile records Workflow: sdd. It never installs or changes project files unless this skill explicitly asks for confirmation.
+> **Profile routing:** Read AGENTS.md and its Rails Engineer Profile before continuing. If Workflow: conventional, stop this SDD workflow and use the project's conventional planning and delivery process. If Workflow: sdd, use every selected profile value: layered work uses layered routers and variants; rich-models work uses the stable rails-architecture, rails-models, rails-testing, rails-css, rails-frontend, and rails-access routers, which select rich-models variants. Select the test command from Testing: rspec uses bundle exec rspec; minitest uses bin/rails test. Do not follow a later example that contradicts the profile. This workflow is optional and never installs or changes project files unless it explicitly asks for confirmation.
 
 ## User Input
 
@@ -17,7 +17,7 @@ Verify that the codebase implements what the feature specification promises. Thi
 
 Uses a **4-layer hybrid approach** :
 1. **Structural scan** — Rails convention-based file existence checks
-2. **Test coverage mapping** — RSpec description and metadata matching
+2. **Test coverage mapping** — framework-aware test paths and descriptions
 3. **AI semantic analysis** — LLM-powered code search for uncovered requirements
 4. **Acceptance test generation** — On-demand, user-approved
 
@@ -60,10 +60,10 @@ For each **Key Entity** in the spec, check file existence using Rails naming con
 
 | Spec mentions entity | Check for |
 |---------------------|-----------|
-| `User` | `app/models/user.rb`, `spec/models/user_spec.rb` |
-| `User` (with CRUD) | `app/controllers/users_controller.rb`, `spec/requests/users_spec.rb` |
-| `User` (with business logic) | `app/services/users/` or `app/services/*user*` |
-| `User` (with authorization) | `app/policies/user_policy.rb`, `spec/policies/user_policy_spec.rb` |
+| `User` | `app/models/user.rb`, plus the profile-selected test location (`spec/` or `test/`) |
+| `User` (with CRUD) | `app/controllers/users_controller.rb`, plus a profile-selected request or integration test |
+| `User` (with business logic) | a service/query for layered, or a rich model/concern for rich-models |
+| `User` (with authorization) | a policy for `Authorization: pundit`, or scoped model/controller code for `scoped-model` |
 | `User` (with background job) | `app/jobs/*user*_job.rb` |
 | `User` (with email) | `app/mailers/*user*_mailer.rb` |
 
@@ -74,22 +74,28 @@ For each **Functional Requirement**, infer expected files from the verb + entity
 
 Record results: **EXISTS** or **MISSING** for each expected file/pattern.
 
-### 4. Layer 2 — Test Coverage Mapping (RSpec)
+### 4. Layer 2 — Test Coverage Mapping
 
 Run `.specify/scripts/bash/collect-test-descriptions.sh` from repo root to collect all test descriptions.
 
-If the script is not available or RSpec is not configured, skip this layer and note it in the report.
+Use the test structure configured by the profile. If the collection script does not understand the
+selected framework, inspect the selected `spec/` or `test/` files directly and note that in the
+report.
 
 For each requirement in the inventory:
 
-1. **Metadata tag match** (exact): Check if any test has `requirement: "FR-001"` metadata. If found, this is a definitive match.
+1. **Requirement marker match** (exact): Check for an explicit `FR-001` marker or matching
+   documented scenario. If found, this is a definitive match.
 
-2. **Description keyword match** (fuzzy): Extract key terms from the requirement text and match against test `full_description` fields. Use these heuristics:
+2. **Description keyword match** (fuzzy): Extract key terms from the requirement text and match
+   against test names, paths, and descriptions. Use these heuristics:
    - Entity name appears in test path or description
    - Action verb appears in test description (validate, create, send, process, etc.)
    - Requirement-specific terms appear (e.g., "email format", "password reset", "session timeout")
 
-3. **For each matched test**: Note whether it exists (coverage) and whether it passes (correctness). If running tests is appropriate, run `bundle exec rspec <matched_file>` to get pass/fail status.
+3. **For each matched test**: Note whether it exists (coverage) and whether it passes (correctness).
+   If running tests is appropriate, use `bundle exec rspec <matched_file>` for `Testing: rspec` or
+   `bin/rails test <matched_file>` for `Testing: minitest`.
 
 Record results per requirement: **Test match (pass)**, **Test match (fail)**, or **No test match**.
 
@@ -123,14 +129,15 @@ Present the user with an offer:
 - SC-001: [requirement text] — Status: NOT COVERED
 
 Would you like me to generate acceptance tests from the spec's acceptance scenarios for these requirements?
-This will create RSpec request/system specs that validate the behavior.
+This will create request, integration, or system tests in the profile-selected framework that
+validate the behavior.
 
 Reply: (1) Generate tests for all, (2) Pick specific ones, (3) Skip
 ```
 
 If the user opts in:
-- Generate RSpec request specs or system specs from the spec's Given/When/Then acceptance scenarios
-- Add `requirement: "FR-003"` metadata tags to the generated `describe` blocks
+- Generate request, integration, or system tests from the spec's Given/When/Then acceptance scenarios
+- Add an explicit `FR-003` marker in the framework's normal test idiom
 - Run the generated tests and report pass/fail
 - **Do NOT modify existing test files** — only create new test files
 
@@ -140,7 +147,8 @@ If the user skips, proceed to report generation.
 
 If `.specify/memory/constitution.md` was loaded:
 
-- Verify that implementation follows constitution principles (thin controllers, normalization-only callbacks, services for side effects, etc.)
+- Verify that implementation follows constitution principles (thin controllers, normalization-only
+  callbacks, and the profile-selected domain boundary for side effects)
 - Check for violations by scanning recently created/modified files
 - Flag any violations as separate findings in the report (not requirement coverage, but compliance)
 

@@ -10,7 +10,7 @@ paths:
 Plain ERB, small partials, and helpers that build tags. No presenters, no view models, no
 ViewComponent, no template language other than ERB.
 
-> If the application's `CLAUDE.md` records ViewComponent, presenters, or another template language
+> If the application's `AGENTS.md` records ViewComponent, presenters, or another template language
 > under **Deliberate divergences**, that row wins over this file — build views the way the app
 > already builds them.
 

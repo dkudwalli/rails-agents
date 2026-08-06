@@ -11,7 +11,7 @@ paths:
 
 > Fizzy profile only: this entire file. Campfire and Writebook are single-account ONCE applications
 > with no account layer at all. Choose multi-tenancy because accounts are first-class in your product,
-> not because Fizzy has it — and record the choice in `CLAUDE.md` under Application profile.
+> not because Fizzy has it — and record the choice in `AGENTS.md` under Rails Engineer Profile.
 >
 > The hardest thing to retrofit is not the column. It is request and job context. Adding `account_id`
 > later, without that context, is named explicitly as a thing not to do.

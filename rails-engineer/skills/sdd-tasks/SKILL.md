@@ -3,7 +3,7 @@ name: sdd-tasks
 description: Generate an actionable, dependency-ordered tasks.md for the feature based on available design artifacts.
 ---
 
-> **Profile gate:** This workflow is optional. Read AGENTS.md first and continue only when its Rails Engineer Profile records Workflow: sdd. It never installs or changes project files unless this skill explicitly asks for confirmation.
+> **Profile routing:** Read AGENTS.md and its Rails Engineer Profile before continuing. If Workflow: conventional, stop this SDD workflow and use the project's conventional planning and delivery process. If Workflow: sdd, use every selected profile value: layered work uses layered routers and variants; rich-models work uses the stable rails-architecture, rails-models, rails-testing, rails-css, rails-frontend, and rails-access routers, which select rich-models variants. Select the test command from Testing: rspec uses bundle exec rspec; minitest uses bin/rails test. Do not follow a later example that contradicts the profile. This workflow is optional and never installs or changes project files unless it explicitly asks for confirmation.
 
 ## User Input
 
@@ -86,7 +86,7 @@ Every task MUST strictly follow this format:
 - ✅ CORRECT: `- [ ] T001 Create project structure per implementation plan`
 - ✅ CORRECT: `- [ ] T005 [P] Implement authentication concern in app/controllers/concerns/authentication.rb`
 - ✅ CORRECT: `- [ ] T012 [P] [US1] Create User model in app/models/user.rb`
-- ✅ CORRECT: `- [ ] T014 [US1] Implement UserService in app/services/user_service.rb`
+- ✅ CORRECT: `- [ ] T014 [US1] Implement the profile-selected domain behavior in its approved location`
 - ❌ WRONG: `- [ ] Create User model` (missing ID and Story label)
 - ❌ WRONG: `T001 [US1] Create model` (missing checkbox)
 - ❌ WRONG: `- [ ] [US1] Create User model` (missing Task ID)
@@ -98,7 +98,7 @@ Every task MUST strictly follow this format:
    - Each user story (P1, P2, P3...) gets its own phase
    - Map all related components to their story:
      - Models needed for that story
-     - Services needed for that story
+     - Profile-selected domain behavior needed for that story
      - Interfaces/UI needed for that story
      - If tests requested: Tests specific to that story
    - Mark story dependencies (most stories should be independent)
@@ -110,7 +110,7 @@ Every task MUST strictly follow this format:
 3. **From Data Model**:
    - Map each entity to the user story(ies) that need it
    - If entity serves multiple stories: Put in earliest story or Setup phase
-   - Relationships → service layer tasks in appropriate story phase
+   - Relationships → tasks in the profile-selected domain boundary in the appropriate story phase
 
 4. **From Setup/Infrastructure**:
    - Shared infrastructure → Setup phase (Phase 1)
@@ -122,8 +122,10 @@ Every task MUST strictly follow this format:
 - **Phase 1**: Setup — config initializers, routes, Gemfile additions
 - **Phase 2**: Foundational — migrations + `db:migrate` + fixtures, then (TDD) model spec → model (MUST complete before user stories)
 - **Phase 3+**: User Stories in priority order (P1, P2, P3...)
-  - Within each story (TDD order): service spec → service → request/controller spec → controller → views → system test
+  - Within each story (TDD order): test → profile-selected domain behavior → request/controller test
+    → controller → views → system test
   - When tests are NOT requested: omit the spec tasks but keep the same implementation order
-  - If story adds schema: migration → model before service
+  - If story adds schema: migration → model before its profile-selected domain behavior
   - Each phase should be a complete, independently testable increment
-- **Final Phase**: Polish — `bundle exec rubocop -a`, `bin/brakeman --no-pager`, `bundle exec rspec` validation
+- **Final Phase**: Polish — the application's configured linter, `bin/brakeman --no-pager` when
+  available, and the profile-selected test command (`bundle exec rspec` or `bin/rails test`)

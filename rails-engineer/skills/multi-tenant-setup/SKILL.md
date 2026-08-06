@@ -19,7 +19,7 @@ compatibility: Ruby 3.3+, Rails 8.0+
 >
 > The decision is not the column. It is request and job context. **Adding `account_id` later, without
 > that context, is explicitly named as a thing not to do** — so decide now, and record the choice in
-> `CLAUDE.md` under `## Application profile`.
+> `AGENTS.md` under `## Rails Engineer Profile`.
 >
 > Tenancy, UUID ids, deterministic fixture ordering, and job context serialization are one coherent
 > package. Adopt them together or not at all.
@@ -35,7 +35,7 @@ compatibility: Ruby 3.3+, Rails 8.0+
 - `Current` derives dependent attributes in its writers, and offers `with_*` block wrappers rather
   than having callers assign attributes ad hoc
 - **Jobs serialize account context explicitly.** Ambient `Current` does not cross the queue boundary
-  — see `job-patterns`
+  — see `rich-models-job-patterns`
 - Cable connections authenticate, and every stream is scoped through the resolved actor
 - UUIDs keep account identifiers non-enumerable — adopt them with their fixture and ordering
   implications, not on their own

@@ -8,7 +8,7 @@ paths:
 Plain CSS served by Propshaft. No Sass, no PostCSS, no Tailwind, no CSS-in-JS — at nearly 9,000 lines
 of CSS in the largest source application, so "we're too small for tooling" is not the reason.
 
-> If the application's `CLAUDE.md` records Tailwind, Sass, or PostCSS under **Deliberate
+> If the application's `AGENTS.md` records Tailwind, Sass, or PostCSS under **Deliberate
 > divergences**, that row wins over this file — style with the system the app already has.
 
 - **One file per component**, alphabetical, no manifest, linked as a single `stylesheet_link_tag :app`

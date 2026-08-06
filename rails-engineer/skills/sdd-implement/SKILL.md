@@ -1,9 +1,9 @@
 ---
 name: sdd-implement
-description: Execute the implementation plan by delegating each task in tasks.md to the matching specialist agent (model-agent, service-agent, rspec-agent, ...) in a fresh context, orchestrated phase-by-phase.
+description: Execute the implementation plan phase-by-phase using the architecture, tests, views, CSS, and access mechanisms recorded in AGENTS.md.
 ---
 
-> **Profile gate:** This workflow is optional. Read AGENTS.md first and continue only when its Rails Engineer Profile records Workflow: sdd. It never installs or changes project files unless this skill explicitly asks for confirmation.
+> **Profile routing:** Read AGENTS.md and its Rails Engineer Profile before continuing. If Workflow: conventional, stop this SDD workflow and use the project's conventional planning and delivery process. If Workflow: sdd, use every selected profile value: layered work uses layered routers and variants; rich-models work uses the stable rails-architecture, rails-models, rails-testing, rails-css, rails-frontend, and rails-access routers, which select rich-models variants. Select the test command from Testing: rspec uses bundle exec rspec; minitest uses bin/rails test. Do not follow a later example that contradicts the profile. This workflow is optional and never installs or changes project files unless it explicitly asks for confirmation.
 
 ## User Input
 
@@ -85,37 +85,23 @@ You **MUST** consider it before proceeding. If they gave none, continue without 
 
    The parent agent (you) acts as an **orchestrator**. Instead of executing all tasks inline (which causes context rot on long sessions), delegate each implementation task to a fresh subagent via the **Agent tool**, routed to the **specialist agent** that matches the task (see Specialist agent routing below). Each subagent gets a clean context window with only the information it needs.
 
-   **Specialist agent routing** — set the Agent tool's `subagent_type` from the task's primary output file or intent, instead of a generic agent:
+   **Profile routing** — use the router before selecting a task implementation boundary:
 
-   | Task target | `subagent_type` |
-   |-------------|-----------------|
-   | `spec/**` test tasks (TDD RED) | `rspec-agent` |
-   | `db/migrate/*` migrations | `migration-agent` |
-   | `app/models/*` | `model-agent` |
-   | `app/services/*` | `service-agent` |
-   | `app/queries/*` | `query-agent` |
-   | `app/controllers/*` | `controller-agent` |
-   | `app/policies/*` | `policy-agent` |
-   | `app/forms/*` | `form-agent` |
-   | `app/presenters/*` | `presenter-agent` |
-   | `app/components/*` | `viewcomponent-agent` |
-   | `app/jobs/*` | `job-agent` |
-   | `app/mailers/*` | `mailer-agent` |
-   | `app/javascript/controllers/*` (Stimulus) | `stimulus-agent` |
-   | Turbo Frames/Streams tasks | `turbo-agent` |
-   | View styling / Tailwind tasks | `tailwind-agent` |
-   | Anything without a clear match | `general-purpose` |
+   | Profile decision | Task guidance |
+   |---|---|
+   | `Architecture: layered` | Use `rails-architecture` and the selected layered specialist for services, queries, policies, forms, or components. |
+   | `Architecture: rich-models` | Use `rails-architecture`, `rails-models`, and the matching `rich-models-*` variant; keep domain behavior in models or concerns. |
+   | `Testing: rspec` | Write and run specs under `spec/` with `bundle exec rspec`. |
+   | `Testing: minitest` | Write and run tests under `test/` with `bin/rails test`. |
+   | `Views`, `CSS`, `Authorization` | Use `rails-frontend`, `rails-css`, and `rails-access`; do not create an unselected component, CSS, or policy layer. |
 
-   - Choose the specialist by the task's primary output file. If a task spans layers, pick the layer it mostly creates (or split it).
-   - **TDD pairing**: route the test task to `rspec-agent` (writes the failing spec), then route the matching implementation task to its layer specialist (makes it pass). The parent runs the spec between the two to confirm RED → GREEN.
-   - Fall back to `general-purpose` only when nothing matches.
+   - Choose work by the task's primary output and profile route. If a task spans boundaries, split it.
+   - **TDD pairing**: write the selected-framework failing test, then implement the matching
+     profile-selected behavior, and run that same framework to confirm RED → GREEN.
 
-   **Hosts without these specialist agents.** The routing table names agents that ship with the
-   prior layered pack on Claude Code. This portable plugin ships skills, not host-specific agents.
-   If your host has no subagent mechanism, or cannot resolve these names, do not stop and do not
-   substitute an unrelated agent: execute each task inline in the same phase order, and apply the
-   conventions selected by the current Rails Engineer Profile. The routing table still identifies the
-   task's layer — that is the part that matters.
+   This portable plugin ships skills, not host-specific agents. If the host supports subagents, give
+   each one the selected profile and router guidance; otherwise execute inline in the same phase
+   order. Never substitute a layered specialist for rich-models work.
 
    **Execution rules:**
    - **Phase-by-phase execution**: Complete each phase before moving to the next
@@ -163,19 +149,22 @@ You **MUST** consider it before proceeding. If they gave none, continue without 
 
    ## Instructions
    - Implement ONLY this task — do not modify files outside its scope
-   - Follow Rails conventions and the project's architecture (skinny controllers, services for business logic, normalization-only callbacks)
+   - Follow the selected Rails Engineer Profile and router; use services only for a layered profile
+     and rich models or concerns for a rich-models profile
    - Write minimal, correct code that satisfies the task description
    - If the task includes writing tests, ensure they pass
    - Report what files you created or modified when done
    ```
 
    **Per-task verification** (parent runs after each subagent completes):
-   - Run `bundle exec rubocop -a` on files the subagent created or modified
-   - If the task involved tests, run `bundle exec rspec {test_file}` to verify they pass
+   - Run the application's configured linter on files the subagent created or modified
+   - If the task involved tests, run `bundle exec rspec {test_file}` for `Testing: rspec` or
+     `bin/rails test {test_file}` for `Testing: minitest`
 
    **Per-phase verification** (parent runs after all tasks in a phase complete):
-   - Run `bundle exec rspec` to catch regressions across the full suite
-   - If system tests exist for the phase, also run `bundle exec rspec spec/system/`
+   - Run `bundle exec rspec` for `Testing: rspec` or `bin/rails test` for `Testing: minitest` to
+     catch regressions across the full suite
+   - If system tests exist, use the selected framework's system-test command
 
    **Error handling for subagents**:
    - If a subagent fails or produces code that doesn't pass verification: retry **once** with the error output included in the subagent prompt as additional context
@@ -184,9 +173,12 @@ You **MUST** consider it before proceeding. If they gave none, continue without 
 
 7. Implementation phase guide (what each phase typically involves):
    - **Setup (Phase 1, parent-executed)**: Initialize config initializers, routes, dependencies — execute these directly without subagents
-   - **Foundational (Phase 2, subagent-executed)**: Run migrations, create models, write model specs — each task gets a fresh subagent routed to its specialist (`migration-agent`, `model-agent`, `rspec-agent`)
-   - **User Stories (Phase 3+, subagent-executed)**: Implement services, controllers, views per user story — each task gets a fresh subagent (routed to its specialist) with only that story's spec section
-   - **Polish (Final phase, parent-executed)**: `bundle exec rubocop -a`, `bin/brakeman --no-pager`, `bundle exec rspec` — execute directly, no subagents needed
+   - **Foundational (Phase 2, subagent-executed)**: Run migrations, create models, and write tests
+     in the selected framework; give each task the matching router guidance
+   - **User Stories (Phase 3+, subagent-executed)**: Implement the profile-selected domain boundary,
+     controllers, and views per user story with only that story's spec section
+   - **Polish (Final phase, parent-executed)**: run the configured linter, `bin/brakeman --no-pager`
+     when available, and the profile-selected full test command
 
 8. Progress tracking and error handling (parent orchestrator responsibilities):
    - Report progress after each completed task (whether parent-executed or subagent-executed)

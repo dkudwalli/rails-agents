@@ -35,7 +35,7 @@ provenance, not links — nothing in this repository resolves them, so do not tr
 and conventions references cite *these documents* instead (`13-absences.md`), so every citation a
 skill makes has a resolvable target.
 
-These 24 documents are vendored inside the `rails-37signals` plugin, and the plugin cites them by
+These 24 documents are vendored inside the `rich-models` plugin, and the plugin cites them by
 relative path from the same plugin root, so installing the plugin brings the playbook with it. There
 is nothing separate to copy.
 
@@ -55,7 +55,7 @@ records both and names the direction of travel. Don't average them.
 
 | | | |
 |---|---|---|
-| [`PLAYBOOK.md`](PLAYBOOK.md) | **Condensed ruleset** | The whole playbook as rules, no prose — copy into your repo's `AGENTS.md` / `CLAUDE.md` |
+| [`PLAYBOOK.md`](PLAYBOOK.md) | **Condensed ruleset** | The whole playbook as rules, no prose — copy into your repo's `AGENTS.md` / `AGENTS.md` |
 | [`01-philosophy.md`](01-philosophy.md) | Philosophy | Vanilla Rails, conceptual compression, why there is no service layer |
 | [`02-ruby-style.md`](02-ruby-style.md) | Ruby style | `STYLE.md`'s rules verified against all three, plus the conventions it doesn't mention |
 | [`03-models.md`](03-models.md) | Models | The namespaced-concern idiom, `delegated_type`, `Current`, scopes, callbacks |

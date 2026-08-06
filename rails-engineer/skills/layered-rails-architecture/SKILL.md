@@ -180,7 +180,7 @@ implementations live in that layer's own skill, and this file must never grow a 
 | [error-handling.md](references/error-handling.md) | Result objects, typed error codes, controller and API error branching |
 | [testing-strategy.md](references/testing-strategy.md) | Test pyramid, coverage targets, and which skill holds each layer's specs |
 
-Worked implementations by layer: `service-patterns`, `query-patterns`, `model-patterns`,
+Worked implementations by layer: `service-patterns`, `query-patterns`, `layered-model-patterns`,
 `controller-patterns`, `policy-patterns`, `form-patterns`, `presenter-patterns`,
-`viewcomponent-patterns`, `job-patterns`, `mailer-patterns`. The house rules those implementations
+`viewcomponent-patterns`, `layered-job-patterns`, `layered-mailer-patterns`. The house rules those implementations
 obey are in `layered-conventions`.

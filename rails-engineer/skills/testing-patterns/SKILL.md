@@ -5,7 +5,7 @@ description: >-
   Minitest (not RSpec) and fixtures (not factories). Use when writing tests,
   adding test coverage, or creating fixtures in an app whose suite is Minitest.
   WHEN NOT: The app's suite is RSpec — write the new test in the framework already
-  there; converting a green suite is `legacy-migration` phase 6, "last, or never".
+  there; converting a green suite is `rich-models-legacy-migration` phase 6, "last, or never".
   Also not for test configuration or CI setup (see `tooling-ci-deploy`).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Minitest
@@ -27,7 +27,7 @@ examples.
 
 **On an app whose suite is already RSpec, write the new test in RSpec.** That is the target state
 above, not a precondition for using this skill. A half-converted suite is worth less than a green one
-in either framework, so converting is `legacy-migration` phase 6 — "last, or never", file by file as
+in either framework, so converting is `rich-models-legacy-migration` phase 6 — "last, or never", file by file as
 tests are touched for other reasons. The fixture-first and integration-over-unit habits below port to
 RSpec unchanged; only the DSL differs.
 
@@ -291,9 +291,9 @@ assert_select ".card__title", text: "Logo"
   assert the negative as well as the positive, exercise every declared format, parallelize
 - **Ask first:** Before adding a fixture (can you mutate an existing one?), before testing private
   methods, before testing Rails' own functionality, before using a mock (prefer real objects)
-- **Profile override:** if the app's `CLAUDE.md` records RSpec or FactoryBot under **Deliberate
+- **Profile override:** if the app's `AGENTS.md` records RSpec or FactoryBot under **Deliberate
   divergences**, that row wins over the Never rule below — write in the idiom the app already
-  runs. Removing it is `legacy-migration`'s call, not a precondition for the task at hand.
+  runs. Removing it is `rich-models-legacy-migration`'s call, not a precondition for the task at hand.
 - **Never:** Use RSpec or FactoryBot, use `assigns`, build test data in global setup, stub
   `Current.user` in place of a real sign-in, scaffold a test framework around one piece of logic
 

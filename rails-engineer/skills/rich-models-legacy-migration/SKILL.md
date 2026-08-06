@@ -21,10 +21,10 @@ test suite between each one. An app that cannot be shipped mid-migration has bee
 
 ## Phase 0 — Decide what you are migrating toward
 
-Nothing else starts until the target application's `CLAUDE.md` carries a filled-in
-`## Application profile` block. A two-year-old codebase has none, and half the refactorings below
+Nothing else starts until the target application's `AGENTS.md` carries a filled-in
+`## Rails Engineer Profile` block. A two-year-old codebase has none, and half the refactorings below
 change meaning depending on it — an ONCE-compatible app keeps Redis and Resque, so phase 5 is not
-work, it is a mistake. The template is in this pack's `CLAUDE.md`.
+work, it is a mistake. The template is in this pack's `AGENTS.md`.
 
 Then get the existing suite green and fast, whatever framework it is written in. Do **not** convert
 it yet. It is the only thing standing between phases 1–5 and a silent regression.
@@ -100,10 +100,10 @@ thing being migrated away from.
 
 ## Phase 6 — The test suite
 
-RSpec + FactoryBot → Minitest + fixtures.
+the existing alternate test stack → Minitest + fixtures.
 
 Last, or never. Highest churn and lowest user-visible value of anything here, and doing it early
-destroys the safety net that phases 1–5 depend on. A green RSpec suite is worth more than a
+destroys the safety net that phases 1–5 depend on. A green existing alternate test suite is worth more than a
 half-converted Minitest one. Convert file by file as tests are touched for other reasons, rather than
 as a project.
 
@@ -119,7 +119,7 @@ as a project.
 ## What has no worked example yet
 
 `refactoring-patterns.md` covers service objects, state records, god controllers, callback chains,
-and pulling a shared concern out of a fat model. `migration-strategies.md` covers RSpec, Sidekiq,
+and pulling a shared concern out of a fat model. `migration-strategies.md` covers alternate-test, Sidekiq,
 React, and Redis. The rest — Devise → custom auth, Pundit → scoped lookups, flat → *namespaced*
 concerns, build step → importmap, ViewComponent → partials, serializers → jbuilder — have no
 before/after in this pack. Their target state is documented in the `auth-setup`, `concern-patterns`,

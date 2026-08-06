@@ -1,6 +1,6 @@
 # 37signals Rails playbook
 
-Copy this into a Rails application's `AGENTS.md` or `CLAUDE.md`. These are defaults; retain an
+Copy this into a Rails application's `AGENTS.md` or `AGENTS.md`. These are defaults; retain an
 explicit product constraint when it requires a documented divergence.
 
 ## Build shape

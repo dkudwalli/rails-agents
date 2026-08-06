@@ -3,7 +3,7 @@ name: sdd-change-tasks
 description: Generate a flat task list (3-8 tasks) for a small change based on the change spec.
 ---
 
-> **Profile gate:** This workflow is optional. Read AGENTS.md first and continue only when its Rails Engineer Profile records Workflow: sdd. It never installs or changes project files unless this skill explicitly asks for confirmation.
+> **Profile routing:** Read AGENTS.md and its Rails Engineer Profile before continuing. If Workflow: conventional, stop this SDD workflow and use the project's conventional planning and delivery process. If Workflow: sdd, use every selected profile value: layered work uses layered routers and variants; rich-models work uses the stable rails-architecture, rails-models, rails-testing, rails-css, rails-frontend, and rails-access routers, which select rich-models variants. Select the test command from Testing: rspec uses bundle exec rspec; minitest uses bin/rails test. Do not follow a later example that contradicts the profile. This workflow is optional and never installs or changes project files unless it explicitly asks for confirmation.
 
 ## User Input
 
@@ -35,7 +35,9 @@ You **MUST** consider it before proceeding. If they gave none, continue without 
    1. **Migration/schema tasks** (if database changes needed)
    2. **Implementation tasks** (one per file or logical unit of change)
    3. **Test tasks** (write or update specs for changed behavior)
-   4. **Validation task** (always last): `Run bundle exec rspec && bundle exec rubocop -a`
+   4. **Validation task** (always last): use the profile-selected test command — `bundle exec rspec`
+      for `Testing: rspec`, `bin/rails test` for `Testing: minitest` — then run the app's selected
+      lint command. Never add a framework migration task merely to satisfy this workflow.
 
    Task format rules:
    - Format: `- [ ] T001 Description with exact file path`

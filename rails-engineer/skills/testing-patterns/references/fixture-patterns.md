@@ -116,7 +116,7 @@ card_two:
 
 > Fizzy profile only: this section. UUIDv7 primary keys come as a package with **deterministic
 > fixture ids** and `id` tie-breakers on every ordering scope — see
-> `../../migration-patterns/references/uuid-setup.md`. An ONCE-compatible application uses integer
+> `../../rich-models-migration-patterns/references/uuid-setup.md`. An ONCE-compatible application uses integer
 > ids and none of this applies.
 
 Fixtures auto-generate UUIDs based on fixture name. Use explicit UUIDs only when cross-referencing:

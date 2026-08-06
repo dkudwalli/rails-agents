@@ -153,7 +153,7 @@ permission to extract, not an obligation.
 - **the `specification-test` skill** -- decides layer placement from the shape of the test a
   piece of code needs. Reach for it when a threshold here fires but the destination layer is unclear.
 - **`references/god-objects.md`** -- churn x complexity analysis for models past 300 lines.
-- **the `legacy-migration` skill** -- the order to take these extractions in across a whole existing
+- **the `layered-legacy-migration` skill** -- the order to take these extractions in across a whole existing
   application, and which ones to skip. Reach for it when the question is "where do I start" rather
   than "is this one ready."
 - **the `behavioral-guidelines` skill** § Simplicity First -- the prior question: does this code need to

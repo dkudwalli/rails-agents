@@ -22,7 +22,7 @@ parsers, query objects, and generators live in `app/models/` next to the records
 directory to hold a *category* of object, you have built a layer.
 
 > Fizzy profile only: UUID primary keys and `account_id`/`Current.account` in the examples below.
-> Check the `## Application profile` block in `CLAUDE.md` first.
+> Check the `## Rails Engineer Profile` block in `AGENTS.md` first.
 
 ## Project knowledge
 
@@ -205,7 +205,7 @@ validates :body, presence: true, if: :published?           # Conditional
 
 **A validation is not an invariant.** When a rule is absolute, put a unique index or a database
 constraint behind it — a validation only checks the rows Rails happens to look at. See
-`migration-patterns`.
+`rich-models-migration-patterns`.
 
 ## Callbacks and enums
 
@@ -335,9 +335,9 @@ See `references/model-examples.md` for complete model examples (join tables, for
 - **Ask first:** Before adding a plain object — it is allowed, but it belongs in `app/models/` with a
   domain name, never in a category directory. Before adding a callback with a side effect. Before
   using inheritance (prefer composition via concerns)
-- **Profile override:** if the app's `CLAUDE.md` records `app/services` or another category
+- **Profile override:** if the app's `AGENTS.md` records `app/services` or another category
   directory under **Deliberate divergences**, that row wins over the Never rule below — write in
-  the idiom the app already runs. Removing it is `legacy-migration`'s call, not a precondition for
+  the idiom the app already runs. Removing it is `rich-models-legacy-migration`'s call, not a precondition for
   the task at hand.
 - **Never:** Create anemic models (data without behavior), create an `app/services/` directory, put
   business logic in controllers, rely on ambient `Current` inside a job, create models without tests

@@ -19,7 +19,7 @@ yourself wanting a verb endpoint, name the noun the verb creates or destroys.
 
 > Fizzy profile only: the `Current.account` scoping in the examples below, and `params.expect`.
 > An ONCE-compatible application has no account layer and uses `params.require(...).permit(...)`.
-> Check the `## Application profile` block in `CLAUDE.md` before copying either.
+> Check the `## Rails Engineer Profile` block in `AGENTS.md` before copying either.
 
 ## Project knowledge
 
@@ -306,9 +306,9 @@ Authorization gets tested by asserting the negative in integration tests
 - **Always:** Map actions to CRUD, create new resources for state changes, use `<Parent>Scoped`
   concerns for lookup, enforce authorization by scoping the lookup, use strong parameters
 - **Ask first:** Before adding a custom action or a non-REST route — and name the exception when you do
-- **Profile override:** if the app's `CLAUDE.md` records Pundit, CanCan, or another policy layer
+- **Profile override:** if the app's `AGENTS.md` records Pundit, CanCan, or another policy layer
   under **Deliberate divergences**, that row wins over the Never rule below — write in the idiom
-  the app already runs. Removing it is `legacy-migration`'s call, not a precondition for the task
+  the app already runs. Removing it is `rich-models-legacy-migration`'s call, not a precondition for the task
   at hand.
 - **Never:** Add member/collection routes for ordinary domain behaviour, add a policy object, create
   controllers without tests, put business logic in controllers

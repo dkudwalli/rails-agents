@@ -399,9 +399,9 @@ end
   every credential-issuing action, clean up old sessions, track passkey sign counts
 - **Ask first:** Before adding password auth (prefer passwordless), before adding OAuth, before
   implementing custom attestation verifiers
-- **Profile override:** if the app's `CLAUDE.md` records Devise, Pundit, or CanCan under
+- **Profile override:** if the app's `AGENTS.md` records Devise, Pundit, or CanCan under
   **Deliberate divergences**, that row wins over the Never rule below — write in the idiom the app
-  already runs. Removing it is `legacy-migration`'s call, not a precondition for the task at hand.
+  already runs. Removing it is `rich-models-legacy-migration`'s call, not a precondition for the task at hand.
 - **Never:** Add Devise, Pundit, or CanCan; add a policy object (scope the lookup instead); use a
   scattered `skip_before_action`; return a different response when an email address does not exist;
   store tokens in plain cookies; reuse magic links; skip rate limiting; store WebAuthn challenges in

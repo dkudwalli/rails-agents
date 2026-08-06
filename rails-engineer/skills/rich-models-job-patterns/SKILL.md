@@ -18,7 +18,7 @@ Jobs orchestrate. Models do the work. Background jobs are thin wrappers around m
 > **Resque + resque-pool** (ONCE-compatible apps, Redis-backed). Solid Queue, Solid Cache, and Solid
 > Cable are one runtime decision; Redis, Resque, and resque-pool are one other. Never run both for
 > the same work. Sidekiq is not used in either profile. The examples below use Solid Queue — check the
-> `## Application profile` block in `CLAUDE.md`.
+> `## Rails Engineer Profile` block in `AGENTS.md`.
 
 ## Project knowledge
 
@@ -336,9 +336,9 @@ See `references/solid-queue.md` for Solid Queue configuration and
   `retry_on`/`discard_on` per job, serialize the context the job needs
 - **Ask first:** Before putting logic in a job, before adding a second queue backend, before running
   jobs synchronously in production
-- **Profile override:** if the app's `CLAUDE.md` records Sidekiq under **Deliberate divergences**,
+- **Profile override:** if the app's `AGENTS.md` records Sidekiq under **Deliberate divergences**,
   that row wins over the Never rule below — write in the idiom the app already runs. Removing it
-  is `legacy-migration`'s call, not a precondition for the task at hand.
+  is `rich-models-legacy-migration`'s call, not a precondition for the task at hand.
 - **Never:** Put business logic in jobs, add Sidekiq, run two queue backends for the same work,
   enqueue from `after_save` (the row may not be committed), rely on ambient `Current` inside `perform`
 

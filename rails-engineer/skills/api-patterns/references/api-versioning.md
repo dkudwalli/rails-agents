@@ -1,7 +1,7 @@
 # API Versioning Reference
 
 > Fizzy profile only: examples here that use UUID ids, `account_id`, `Current.account`, or `params.expect`.
-> Strip them for an ONCE-compatible application — see `../../../CLAUDE.md` under Application profile.
+> Strip them for an ONCE-compatible application — see `../../../AGENTS.md` under Rails Engineer Profile.
 
 ## When to Version
 

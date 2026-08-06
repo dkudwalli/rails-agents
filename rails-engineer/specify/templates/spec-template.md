@@ -3,7 +3,7 @@
 **Feature Branch**: `[###-feature-name]`
 **Created**: [DATE]
 **Status**: Draft
-**Input**: User description: "$ARGUMENTS"
+**Input**: User description: "the user-provided feature description"
 
 ## User Scenarios & Testing *(mandatory)*
 

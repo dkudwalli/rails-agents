@@ -61,11 +61,12 @@ Use the absolute directory from which this `SKILL.md` was loaded. The trailing s
 ```bash
 SKILL_DIR="<absolute path to the loaded rails-onboard skill directory>"; \
 PROFILE_RENDERER="$SKILL_DIR/../../scripts/render_profile.sh"; \
-INPUT="AGENTS.md"; OUTPUT="$(mktemp)"; \
+INPUT="AGENTS.md"; TARGET_DIR="$(dirname "$INPUT")"; OUTPUT="$(mktemp "$TARGET_DIR/.rails-engineer-profile.XXXXXX")"; \
 if [ -f "$INPUT" ]; then "$PROFILE_RENDERER" < "$INPUT" > "$OUTPUT" --architecture <value> --testing <value> --css <value> --views <value> --database <value> --ids <value> --authorization <value> --authentication <value> --runtime <value> --assets <value> --tenancy <value> --deployment <value> --workflow <value> --app-kind <new|existing> --reason "<rationale>"; else "$PROFILE_RENDERER" < /dev/null > "$OUTPUT" --architecture <value> --testing <value> --css <value> --views <value> --database <value> --ids <value> --authorization <value> --authentication <value> --runtime <value> --assets <value> --tenancy <value> --deployment <value> --workflow <value> --app-kind <new|existing> --reason "<rationale>"; fi
 ```
 
-Add one `--divergence "<reason>"` for each recorded mixed choice. After confirmation, atomically
-replace `AGENTS.md` with `mv "$OUTPUT" "$INPUT"`. If the renderer rejects malformed markers, stop
-and ask the user to resolve them; never overwrite user content. Do not run dependency installers,
-generators, migrations, or configuration changes.
+Add one `--divergence "<reason>"` for each recorded mixed choice. The preview file is created in the
+target project's directory, so after confirmation `mv "$OUTPUT" "$INPUT"` is an atomic replacement
+on that filesystem. If the renderer rejects malformed markers, stop and ask the user to resolve
+them; never overwrite user content. Do not run dependency installers, generators, migrations, or
+configuration changes.

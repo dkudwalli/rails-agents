@@ -3,7 +3,7 @@ name: sdd-analyze
 description: Perform a non-destructive cross-artifact consistency and quality analysis across spec.md, plan.md, and tasks.md after task generation.
 ---
 
-> **Profile gate:** This workflow is optional. Read AGENTS.md first and continue only when its Rails Engineer Profile records Workflow: sdd. It never installs or changes project files unless this skill explicitly asks for confirmation.
+> **Profile routing:** Read AGENTS.md and its Rails Engineer Profile before continuing. If Workflow: conventional, stop this SDD workflow and use the project's conventional planning and delivery process. If Workflow: sdd, use every selected profile value: layered work uses layered routers and variants; rich-models work uses the stable rails-architecture, rails-models, rails-testing, rails-css, rails-frontend, and rails-access routers, which select rich-models variants. Select the test command from Testing: rspec uses bundle exec rspec; minitest uses bin/rails test. Do not follow a later example that contradicts the profile. This workflow is optional and never installs or changes project files unless it explicitly asks for confirmation.
 
 ## User Input
 
@@ -103,9 +103,12 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Any requirement or plan element conflicting with a MUST principle
 - Missing mandated sections or quality gates from constitution
 - **Rails-specific alignment checks**:
-  - Controllers must only orchestrate (delegate to services, render responses) — no business logic in actions [Constitution §II]
+  - Controllers must only orchestrate and render responses; route domain behavior according to the
+    selected architecture rather than requiring a service layer [Constitution §II]
   - Model callbacks restricted to data normalization only (no side effects like emails, API calls, job enqueuing) [Constitution §III]. To grade a borderline callback, use the 1-5 rubric in the `extraction-timing` skill: score >= 4 satisfies §III, 3 is flagged for review, <= 2 violates it
-  - Side effects (emails, API calls, job enqueuing, creating related records) must use service objects [Constitution §III]
+  - Side effects (emails, API calls, job enqueuing, creating related records) must use the
+    profile-selected domain boundary: services for layered, rich models or concerns for rich-models
+    [Constitution §III]
   - Routes must follow RESTful conventions (`resources`/`namespace`) — non-RESTful routes require documented justification
   - No premature abstractions — base classes/helpers only when 5+ implementations share identical structure [Constitution §I]
 

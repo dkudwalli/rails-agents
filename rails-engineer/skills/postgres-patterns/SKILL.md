@@ -189,6 +189,6 @@ with `ON DELETE`, `NOT NULL`, `CHECK`. `lowercase_snake_case` identifiers, never
 
 ## Related
 
-- `migration-patterns` — writing the migration that adds these indexes and constraints safely
+- `layered-migration-patterns` — writing the migration that adds these indexes and constraints safely
 - `performance-optimization` — the ActiveRecord side: eager loading and N+1 detection
 - `query-patterns` — structuring the Ruby that issues these queries

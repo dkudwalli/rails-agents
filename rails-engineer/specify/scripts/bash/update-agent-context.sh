@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Update CLAUDE.md at the repo root from the current feature's plan.md.
+# Update AGENTS.md at the repo root from the current feature's plan.md.
 #
 # Reads Language/Version, Primary Dependencies, Storage and Project Type out of plan.md, then
-# either creates CLAUDE.md from .specify/templates/agent-file-template.md or splices the new
+# either creates AGENTS.md from .specify/templates/agent-file-template.md or splices the new
 # values into the existing file's "Active Technologies" and "Recent Changes" sections, preserving
 # everything the developer wrote by hand.
 #
@@ -30,7 +30,7 @@ unset _paths_output
 
 NEW_PLAN="$IMPL_PLAN"  # Alias for compatibility with existing code
 
-CLAUDE_FILE="$REPO_ROOT/CLAUDE.md"
+AGENTS_FILE="$REPO_ROOT/AGENTS.md"
 
 # Template file
 TEMPLATE_FILE="$REPO_ROOT/.specify/templates/agent-file-template.md"
@@ -256,7 +256,7 @@ create_new_agent_file() {
 
 
 # ponytail: hand-rolled line-by-line Markdown section splicer, ~150 lines where awk would do it in
-# ~30. Left alone deliberately — it edits the developer's own CLAUDE.md in place and preserves their
+# ~30. Left alone deliberately — it edits the developer's own AGENTS.md in place and preserves their
 # manual additions, so a rewrite risks silent content loss for a cosmetic win. Rewrite only with a
 # fixture-based test around it first.
 update_existing_agent_file() {
@@ -480,7 +480,7 @@ update_agent_file() {
 main() {
     validate_environment
 
-    log_info "=== Updating CLAUDE.md for feature $CURRENT_BRANCH ==="
+    log_info "=== Updating AGENTS.md for feature $CURRENT_BRANCH ==="
 
     # Parse the plan file to extract project information
     if ! parse_plan_data "$NEW_PLAN"; then
@@ -488,7 +488,7 @@ main() {
         exit 1
     fi
 
-    if update_agent_file "$CLAUDE_FILE" "Claude Code"; then
+    if update_agent_file "$AGENTS_FILE" "Claude Code"; then
         log_success "Agent context update completed successfully"
     else
         log_error "Agent context update completed with errors"

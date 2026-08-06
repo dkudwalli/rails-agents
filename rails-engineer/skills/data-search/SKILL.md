@@ -105,9 +105,9 @@ any other domain object. There is no `app/queries/` directory.
   query syntax, bind every value, order deterministically, reindex from `after_save_commit`
 - **Ask first:** Before sharding an index, before adding a stemmer or synonym layer, before
   introducing a search service — name the requirement the database cannot meet
-- **Profile override:** if the app's `CLAUDE.md` records Elasticsearch, OpenSearch, or a search
+- **Profile override:** if the app's `AGENTS.md` records Elasticsearch, OpenSearch, or a search
   gem under **Deliberate divergences**, that row wins over the Never rule below — write in the
-  idiom the app already runs. Removing it is `legacy-migration`'s call, not a precondition for the
+  idiom the app already runs. Removing it is `rich-models-legacy-migration`'s call, not a precondition for the
   task at hand.
 - **Never:** Add Elasticsearch, OpenSearch, or a search gem by default; interpolate params into SQL;
   wrap user input in `Arel.sql`; create an `app/queries/` directory for search objects

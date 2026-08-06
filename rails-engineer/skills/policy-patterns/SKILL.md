@@ -1,7 +1,7 @@
 ---
 name: policy-patterns
 description: >-
-  Worked Pundit policy implementations: action predicates, scopes, headless policies, and inheritance, plus policy specs and controller wiring. Use when writing or testing a concrete policy. WHEN NOT: The rails-37signals pack, which authorizes by scoping and ships no policy layer, or the authorization rules themselves (see layered-conventions).
+  Worked Pundit policy implementations: action predicates, scopes, headless policies, and inheritance, plus policy specs and controller wiring. Use when writing or testing a concrete policy. WHEN NOT: The rich-models pack, which authorizes by scoping and ships no policy layer, or the authorization rules themselves (see layered-conventions).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---

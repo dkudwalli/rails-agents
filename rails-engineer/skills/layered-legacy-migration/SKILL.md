@@ -36,14 +36,14 @@ test suite between each one. An app that cannot be shipped mid-migration has bee
 
 Nothing else starts until three things are true.
 
-**One: the target application carries a filled-in profile block.** Copy the `## Application profile`
-block from this pack's `AGENTS.md` into the target app's `AGENTS.md` or `CLAUDE.md`, and fill in the
+**One: the target application carries a filled-in profile block.** Copy the `## Rails Engineer Profile`
+block from this pack's `AGENTS.md` into the target app's `AGENTS.md` or `AGENTS.md`, and fill in the
 literal `Reason: <one product constraint that justifies the extra layers>` placeholder. The layered
 profile is a deliberate divergence from vanilla Rails — five extra directories that a plain Rails app
 does not have. That cost needs a reason written down before anyone starts paying it.
 
 **Stop here if** the reason cannot be named. An app with no constraint driving the extra layers
-belongs on the `rails-37signals` profile, and every phase below is cost with no return.
+belongs on the `rich-models` profile, and every phase below is cost with no return.
 
 **Two: the existing suite is green and fast, in whatever framework it is already written in. Do not
 convert it.** The profile names RSpec + FactoryBot, and `layered-conventions` gates its rules on that

@@ -1,7 +1,7 @@
 # Mailer Templates Reference
 
 > Fizzy profile only: examples here that use `Current.account` or `account_id`.
-> Strip them for an ONCE-compatible application — see `../../../CLAUDE.md` under Application profile.
+> Strip them for an ONCE-compatible application — see `../../../AGENTS.md` under Rails Engineer Profile.
 
 ## Template Conventions
 

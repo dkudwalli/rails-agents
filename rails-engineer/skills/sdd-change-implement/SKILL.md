@@ -3,7 +3,7 @@ name: sdd-change-implement
 description: Execute a small change by processing all tasks sequentially from tasks.md — no subagents, no hooks, no checklists.
 ---
 
-> **Profile gate:** This workflow is optional. Read AGENTS.md first and continue only when its Rails Engineer Profile records Workflow: sdd. It never installs or changes project files unless this skill explicitly asks for confirmation.
+> **Profile routing:** Read AGENTS.md and its Rails Engineer Profile before continuing. If Workflow: conventional, stop this SDD workflow and use the project's conventional planning and delivery process. If Workflow: sdd, use every selected profile value: layered work uses layered routers and variants; rich-models work uses the stable rails-architecture, rails-models, rails-testing, rails-css, rails-frontend, and rails-access routers, which select rich-models variants. Select the test command from Testing: rspec uses bundle exec rspec; minitest uses bin/rails test. Do not follow a later example that contradicts the profile. This workflow is optional and never installs or changes project files unless it explicitly asks for confirmation.
 
 ## User Input
 
@@ -29,7 +29,9 @@ You **MUST** consider it before proceeding. If they gave none, continue without 
    - Parse all uncompleted tasks (`- [ ]` items) from tasks.md
    - For each task:
      - Execute the task as described (create, modify, or update files)
-     - Follow Rails conventions and the project's architecture (skinny controllers, services for business logic, normalization-only callbacks)
+     - Follow the Rails Engineer Profile and the router for the task's layer. A layered profile may
+       use services and policies; a rich-models profile keeps behavior in rich models, concerns, and
+       scoped lookups. Do not create a layer the profile has not selected.
      - Mark the task as `[X]` in tasks.md immediately after completion
      - Report brief progress: task ID and what was done
    - If a task fails:
@@ -38,8 +40,9 @@ You **MUST** consider it before proceeding. If they gave none, continue without 
      - Halt execution and suggest next steps for manual resolution
 
 5. **Final validation**:
-   - Run `bundle exec rspec` and report results
-   - Run `bundle exec rubocop -a` and report results
+   - Run `bundle exec rspec` when `Testing: rspec`, or `bin/rails test` when `Testing: minitest`,
+     and report results
+   - Run the application's configured lint command and report results
    - If either fails: attempt to fix the issues and re-run (max 2 attempts)
    - If still failing after retries: report the remaining issues for manual resolution
 

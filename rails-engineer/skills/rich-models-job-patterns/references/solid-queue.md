@@ -2,7 +2,7 @@
 
 > Profile decision: the Solid trifecta (Queue, Cache, Cable) is **one** runtime choice; Redis
 > with Resque and resque-pool is **one other**. Never run both for the same work. This reference
-> documents the Solid side — see `../../../CLAUDE.md` under Application profile.
+> documents the Solid side — see `../../../AGENTS.md` under Rails Engineer Profile.
 
 Database-backed job queue for Rails. No Redis required.
 

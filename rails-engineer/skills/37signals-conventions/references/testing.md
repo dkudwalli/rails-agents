@@ -6,7 +6,7 @@ paths:
 
 # Testing Conventions (37signals)
 
-> If the application's `CLAUDE.md` records RSpec or FactoryBot under **Deliberate divergences**,
+> If the application's `AGENTS.md` records RSpec or FactoryBot under **Deliberate divergences**,
 > that row wins over this file — write tests in the framework the suite already uses.
 
 - Minitest and fixtures. No RSpec, no FactoryBot, no shoulda, no `let`, no `describe`, no shared examples

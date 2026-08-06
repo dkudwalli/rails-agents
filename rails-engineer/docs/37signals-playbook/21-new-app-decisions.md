@@ -77,7 +77,7 @@ and [`18-content-storage-portability.md`](18-content-storage-portability.md).
 At the top of a target repository's `AGENTS.md`, record:
 
 ```markdown
-## Application profile
+## Rails Engineer Profile
 
 Profile: Fizzy / ONCE-compatible
 Reason: <one product constraint>

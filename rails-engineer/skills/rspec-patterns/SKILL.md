@@ -1,7 +1,7 @@
 ---
 name: rspec-patterns
 description: >-
-  Writes RSpec specs across every layer — models, requests, services, policies, jobs, mailers, components, and system specs — with FactoryBot. Use when adding or fixing tests, or when the user mentions RSpec, FactoryBot, or spec structure. WHEN NOT: The rails-37signals pack, which uses Minitest and fixtures, or mutation coverage (see mutation-testing).
+  Writes RSpec specs across every layer — models, requests, services, policies, jobs, mailers, components, and system specs — with FactoryBot. Use when adding or fixing tests, or when the user mentions RSpec, FactoryBot, or spec structure. WHEN NOT: The rich-models pack, which uses Minitest and fixtures, or mutation coverage (see mutation-testing).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
