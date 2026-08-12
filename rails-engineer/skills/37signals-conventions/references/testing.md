@@ -35,6 +35,6 @@ paths:
 - Add one focused test for new non-trivial logic; do not scaffold a framework around it
 
 > Fizzy profile only: deterministic fixture UUIDs and cross-account isolation tests. These belong
-> with UUID primary keys and the account layer as one package — see `rules/migrations.md`.
+> with UUID primary keys and the account layer as one package — see [migrations.md](migrations.md).
 
 See [`11-testing.md`](../../../docs/37signals-playbook/11-testing.md).

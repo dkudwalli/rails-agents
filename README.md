@@ -85,7 +85,7 @@ For prompting technique and Model Context Protocol setup, use the official [Clau
 
 ## Compatibility
 
-Every pull request and a weekly scheduled run validate the portable payload plus the latest Claude Code, Codex, Antigravity, and opencode CLIs. Run `scripts/verify_plugins.sh` before a release; it checks manifests, version agreement, skill metadata, portability rules, links, and installed host validators.
+Validate releases locally before tagging: run `scripts/verify_plugins.sh`, `bash test/render_profile_test.sh`, and `bash test/plugin_payload_test.sh`. The verification script checks manifests, version agreement, skill metadata, portability rules, links, and the Claude Code and Antigravity validators when installed. Manually smoke-test supported hosts from the installation commands above; this repository does not run CI automation.
 
 ## Credits
 

@@ -24,8 +24,17 @@ expect_no_matches() {
 expect_no_matches "portable payload tokens" '\$ARGUMENTS|\$\{CLAUDE_PLUGIN_ROOT\}' "$PACK"
 expect_no_matches "retired profile and pack references" 'CLAUDE\.md|## Application profile|rails-layered|rails-37signals' "$PACK"
 expect_no_matches "pack-owned AGENTS profile references" '(?:this|the) pack.s .*AGENTS\.md' "$PACK/skills"
+find_stale_internal_pointers() {
+  local pack="${1:-$PACK}"
+  rg -n --pcre2 '(?<!\.claude/)rules/[a-z0-9_-]+\.md|(?<!plugin>/)skills/[a-z0-9_-]+' "$pack/skills" --glob '*.md' || true
+}
+
+stale_internal_pointers=$(find_stale_internal_pointers)
+[ -z "$stale_internal_pointers" ] || fail "stale internal payload pointers: $stale_internal_pointers"
+
 find_unqualified_collision_calls() {
-  rg -n --pcre2 '(?<![a-z-])(job-patterns|legacy-migration|mailer-patterns|migration-patterns|model-patterns|stimulus-patterns|turbo-patterns)(?![a-z-]|\.md)' "$PACK/skills" --glob '*.md' || true
+  local pack="${1:-$PACK}"
+  rg -n --pcre2 '(?<![a-z-])(job-patterns|legacy-migration|mailer-patterns|migration-patterns|model-patterns|stimulus-patterns|turbo-patterns)(?![a-z-]|\.md)' "$pack/skills" --glob '*.md' || true
 }
 
 collision_calls=$(find_unqualified_collision_calls)
@@ -59,7 +68,8 @@ for skill_file in "$PACK"/skills/sdd-*/SKILL.md; do
 done
 
 relative_targets() {
-  find "$PACK" -type f -name '*.md' -print | while IFS= read -r file; do
+  local pack="${1:-$PACK}"
+  find "$pack" -type f -name '*.md' -print | while IFS= read -r file; do
     grep -oE '\]\([^)]+\)' "$file" | sed 's/^](//;s/)$//' | while IFS= read -r target; do
       case "$target" in ../*|./*) printf '%s\t%s\n' "$file" "$target" ;; esac
     done
@@ -76,19 +86,23 @@ done)
 profile_path_refs=$(rg -n '`?(\.\./|\./)+AGENTS\.md|`?(\.\./|\./)+CLAUDE\.md' "$PACK" --glob '*.md' || true)
 [ -z "$profile_path_refs" ] || fail "relative references to nonexistent pack profile files: $profile_path_refs"
 
-probe_target="$PACK/skills/rails-models/SKILL.md"
-probe_backup=$(mktemp)
-cp "$probe_target" "$probe_backup"
-trap 'cp "$probe_backup" "$probe_target"; rm -f "$probe_backup"' EXIT HUP INT TERM
+probe_root=$(mktemp -d)
+trap 'rm -rf "$probe_root"' EXIT HUP INT TERM
+mkdir -p "$probe_root/skills/rails-models"
+probe_target="$probe_root/skills/rails-models/SKILL.md"
+cp "$PACK/skills/rails-models/SKILL.md" "$probe_target"
 printf '\nRegression probe: route this to model-patterns.\n' >> "$probe_target"
-if [ -z "$(find_unqualified_collision_calls)" ]; then
+if [ -z "$(find_unqualified_collision_calls "$probe_root")" ]; then
   fail "collision detector missed deliberate temporary mutation"
 fi
+printf '\nRegression probe: see rules/views.md.\n' >> "$probe_target"
+if [ -z "$(find_stale_internal_pointers "$probe_root")" ]; then
+  fail "stale-pointer detector missed deliberate temporary mutation"
+fi
 printf '\nRegression probe: see `../../../missing-profile/AGENTS.md`.\n' >> "$probe_target"
-if [ -z "$(relative_targets | while IFS=$'\t' read -r file target; do path=${target%%#*}; [ -e "$(dirname "$file")/$path" ] || echo "$file -> $target"; done)" ]; then
+if [ -z "$(relative_targets "$probe_root" | while IFS=$'\t' read -r file target; do path=${target%%#*}; [ -e "$(dirname "$file")/$path" ] || echo "$file -> $target"; done)" ]; then
   fail "inline-code path detector missed deliberate temporary mutation"
 fi
-cp "$probe_backup" "$probe_target"
 
 if [ "$failures" -gt 0 ]; then
   exit 1

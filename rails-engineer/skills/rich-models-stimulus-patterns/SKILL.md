@@ -5,7 +5,7 @@ description: >-
   Use when adding JavaScript behavior, UI interactions, form enhancements, or
   building reusable client-side components.
   WHEN NOT: For Turbo Stream/Frame patterns (see rails-frontend). For
-  server-side view logic (see rules/views.md).
+  server-side view logic (see [views reference](../37signals-conventions/references/views.md)).
 license: MIT
 compatibility: Stimulus 3.2+, Turbo 8.0+, Importmap
 ---

@@ -13,7 +13,7 @@ paths:
 - Bundle notifications — one digest instead of N individual emails
 - Transactional email only
 - A domain operation selects recipients and enqueues delivery; the mailer does not decide who gets mail
-- Always `deliver_later`, never `deliver_now` in production code. See `rules/jobs.md` for the
+- Always `deliver_later`, never `deliver_now` in production code. See [jobs.md](jobs.md) for the
   `_later`/`_now` chain
 - Shared setup lives in `ApplicationMailer`
 - Build absolute URLs from configured `default_url_options` — never interpolate a host

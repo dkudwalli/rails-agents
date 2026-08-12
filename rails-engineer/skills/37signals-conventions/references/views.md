@@ -44,7 +44,7 @@ ViewComponent, no template language other than ERB.
   instead of importing other controllers
 - Prefer CSS and platform events (`<dialog>`, `animationend`, `getComputedStyle`) over JS timing
 - Helpers are pure named-export functions, hand-written rather than pulled from a utility library
-- Action Text for rich text; Active Storage for uploads — see `skills/content-storage`
+- Action Text for rich text; Active Storage for uploads — see [content-storage](../../content-storage/SKILL.md)
 
 See [`05-views-helpers.md`](../../../docs/37signals-playbook/05-views-helpers.md) and
 [`06-hotwire-javascript.md`](../../../docs/37signals-playbook/06-hotwire-javascript.md).

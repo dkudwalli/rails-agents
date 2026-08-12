@@ -5,7 +5,7 @@ description: >-
   updates. Use when adding real-time updates, partial page rendering, form
   submissions, or broadcasting.
   WHEN NOT: For Stimulus JavaScript controllers (see rails-frontend).
-  For general view conventions (see rules/views.md).
+  For general view conventions (see [views reference](../37signals-conventions/references/views.md)).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Turbo 8+
 ---
