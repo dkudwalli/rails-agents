@@ -13,20 +13,24 @@ The profile is an explicit application decision, not a migration command. Existi
 
 ## Quick start
 
-```text
-/plugin marketplace add dkudwalli/rails-agents
-/plugin install rails-engineer@rails-engineer
-```
+Install Rails Engineer, then work from the target Rails application:
 
-Then run `/rails-onboard` from the Rails application. It inspects the existing project, asks one profile choice at a time, previews the exact managed section, and changes nothing until you confirm. The resulting section is written to `AGENTS.md` between `rails-engineer:profile` markers.
+| Host | Install | First prompt |
+|---|---|---|
+| Claude Code | `/plugin marketplace add dkudwalli/rails-agents` then `/plugin install rails-engineer@rails-engineer` | Run `/rails-onboard`, then `/rails-guide` for your first task. |
+| OpenAI Codex | `codex plugin marketplace add dkudwalli/rails-agents` then `codex plugin add rails-engineer@rails-engineer` | “Use `rails-engineer:rails-onboard` for this application,” then “Use `rails-engineer:rails-guide` for this task.” |
+| Google Antigravity | `git clone https://github.com/dkudwalli/rails-agents` then `agy plugin install ./rails-agents/rails-engineer` | Ask the assistant to use `rails-onboard`, then `rails-guide`. |
+| opencode | Add `rails-engineer/skills` to the `skills` array shown below. | Ask the assistant to use `rails-onboard`, then `rails-guide`. |
 
-To reconfigure later, run onboarding again. It replaces only that marked section and preserves all other `AGENTS.md` content. See the pack's [onboarding guide](rails-engineer/README.md#after-installation) and [profile template](rails-engineer/AGENTS_TEMPLATE.md).
+Onboarding proposes an editable complete profile from repository evidence for existing apps, or from one of three new-app starting stacks: Layered, Rich Models — Fizzy-style, or Rich Models — ONCE-compatible. It writes the resulting section to `AGENTS.md` only after preview and explicit confirmation.
+
+To reconfigure later, run onboarding again. It replaces only that marked section and preserves all other `AGENTS.md` content. See the pack's [first-10-minutes guide](rails-engineer/README.md#first-10-minutes) and [profile template](rails-engineer/AGENTS_TEMPLATE.md).
 
 ## What you get
 
-Rails Engineer ships 90 portable skills, static references, and an optional Spec-Kit seed. It does not ship agents, slash-command shims, hooks, or MCP servers: skills are the portable payload on every supported host.
+Rails Engineer ships 91 portable skills, static references, and an optional Spec-Kit seed. It does not ship agents, slash-command shims, hooks, or MCP servers: skills are the portable payload on every supported host.
 
-Start work through the stable profile-aware routers: `rails-architecture`, `rails-models`, `rails-testing`, `rails-css`, `rails-database`, `rails-access`, `rails-runtime`, `rails-frontend`, `rails-tenancy`, `rails-deployment`, and `rails-workflow`. Each reads the application profile first, then selects the matching detailed skill or convention reference.
+Start work through `rails-guide` when the entrypoint is unclear. It checks that onboarding is complete and selects the right stable profile-aware router: `rails-architecture`, `rails-models`, `rails-testing`, `rails-css`, `rails-database`, `rails-access`, `rails-runtime`, `rails-frontend`, `rails-tenancy`, `rails-deployment`, or `rails-workflow`. Each then selects the matching detailed skill or convention reference.
 
 The Spec Driven Development skills are available only when onboarding selects `Workflow: sdd`. They remain opt-in and never install project files automatically. Run `sdd-init` once before the first `sdd-specify`; [Your First SDD Feature](docs/your-first-sdd-feature.md) walks through the workflow.
 

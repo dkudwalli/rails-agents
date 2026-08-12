@@ -5,20 +5,20 @@
     "url": "https://github.com/dkudwalli"
   },
   "metadata": {
-    "description": "One profile-aware Rails guidance pack for Claude Code: record an application's stack, then route to the matching layered or rich-model conventions.",
-    "version": "2.0.0"
+    "description": "One profile-aware Rails guidance pack for Claude Code: onboard an application's stack, then use rails-guide to find the matching layered or rich-model conventions.",
+    "version": "2.0.1"
   },
   "plugins": [
     {
       "name": "rails-engineer",
-      "description": "Profile-aware Rails guidance with portable skills for layered and rich-model applications. Start with rails-onboard to record the application's deliberate architecture, testing, CSS, database, authorization, runtime, and workflow choices.",
-      "version": "2.0.0",
+      "description": "Profile-aware Rails guidance with portable skills for layered and rich-model applications. Start with rails-onboard, then use rails-guide to find the right router for each task.",
+      "version": "2.0.1",
       "author": {
         "name": "Dhishan",
         "url": "https://github.com/dkudwalli"
       },
       "homepage": "https://github.com/dkudwalli/rails-agents",
-      "tags": ["rails", "ruby", "profile", "layered", "rich-models", "rspec", "minitest", "sdd"],
+      "tags": ["rails", "ruby", "profile", "onboarding", "workflow", "layered", "rich-models", "rspec", "minitest", "sdd"],
       "source": "./rails-engineer"
     }
   ]

@@ -1,21 +1,21 @@
 {
   "name": "rails-engineer",
-  "version": "2.0.0",
-  "description": "Profile-aware Rails guidance: choose and record one coherent stack before applying layered or rich-model conventions.",
+  "version": "2.0.1",
+  "description": "Profile-aware Rails guidance: onboard one coherent stack, then use rails-guide to reach the right layered or rich-model conventions.",
   "author": { "name": "Dhishan", "url": "https://github.com/dkudwalli" },
   "homepage": "https://github.com/dkudwalli/rails-agents",
   "repository": "https://github.com/dkudwalli/rails-agents",
   "license": "MIT",
-  "keywords": ["rails", "profile", "layered", "rich-models", "rspec", "minitest"],
+  "keywords": ["rails", "profile", "onboarding", "workflow", "layered", "rich-models", "rspec", "minitest"],
   "skills": "./skills/",
   "interface": {
     "displayName": "Rails Engineer",
-    "shortDescription": "Profile-aware Rails conventions",
-    "longDescription": "Portable Rails skills that first record an application's chosen architecture and stack, then route to layered or rich-model guidance.",
+    "shortDescription": "Profile-aware Rails guidance",
+    "longDescription": "Portable Rails skills that onboard an application's chosen stack, then use rails-guide to route work to layered or rich-model guidance.",
     "developerName": "Dhishan",
     "category": "Coding",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://github.com/dkudwalli/rails-agents",
-    "defaultPrompt": ["Use rails-onboard to profile this Rails application", "Apply the Rails Engineer profile to this feature"]
+    "defaultPrompt": ["Use rails-engineer:rails-onboard to profile this Rails application", "Use rails-engineer:rails-guide to find the right guidance for this feature"]
   }
 }

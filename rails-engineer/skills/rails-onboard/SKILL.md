@@ -13,11 +13,11 @@ user-invocable: true
 Create or update the profile before applying any convention. This is a guided, non-destructive
 decision capture, not a dependency installer or migration tool.
 
-## 1. Find evidence, then ask one question at a time
+## 1. Find evidence, propose a complete draft, then resolve only uncertainty
 
 If `AGENTS.md` already has a complete managed Rails Engineer profile, read it first. Compare it to
-the repository and ask for confirmation or a changed value one choice at a time. Never silently
-replace a recorded choice.
+the repository, present a concise field-by-field comparison, and ask only about changed, ambiguous,
+or conflicting values. Never silently replace a recorded choice.
 
 For an existing app, inspect these project signals before asking. They are evidence, not authority:
 
@@ -35,10 +35,24 @@ For an existing app, inspect these project signals before asking. They are evide
 | deployment | `config/deploy.yml`; `Dockerfile` and `Procfile` |
 | workflow | `.specify/`, existing specs/plans, or the team's conventional issue/PR process |
 
-Ask exactly one question, wait for its answer, record it, then ask the next. For a new app, explain
-the two or three allowed values and ask in this order: architecture, testing, CSS, views, database,
-IDs, authorization, authentication, runtime, assets, tenancy, deployment, workflow. Ask whether
-the app is `new` or `existing`, then ask for one concise rationale.
+First determine whether the app is `new` or `existing`. For an existing app, build the complete
+candidate from repository evidence. Mark every undetected field as unresolved and every conflicting
+signal as a conflict; ask one concise question at a time only for those fields or an override the
+user requests.
+
+For a new app, offer one of these complete, editable starting stacks. State that `Workflow:
+conventional` keeps SDD opt-in; the user may select `sdd` during review.
+
+| Starting stack | Architecture | Testing | CSS | Views | Database | IDs | Authorization | Authentication | Runtime | Assets | Tenancy | Deployment | Workflow |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Layered | layered | rspec | tailwind | viewcomponent | postgres | uuidv7 | pundit | secure-password | solid | node-bundler | multi | kamal | conventional |
+| Rich Models — Fizzy-style | rich-models | minitest | plain | erb-partials | sqlite | uuidv7 | scoped-model | session-record | solid | importmap | multi | kamal | conventional |
+| Rich Models — ONCE-compatible | rich-models | minitest | plain | erb-partials | sqlite | integer | scoped-model | session-record | redis-resque | importmap | single | docker-procfile | conventional |
+
+After selecting a starting stack or inspecting an existing app, show the entire candidate profile in
+a compact table. Ask the user to approve it or name every field to change. Apply those overrides,
+then ask one concise question at a time only for unresolved or conflicting fields. Ask for one
+concise rationale after all values are resolved.
 
 ## 2. Handle mixed choices explicitly
 

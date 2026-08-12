@@ -49,6 +49,23 @@ done
 duplicate_names=$(for skill_file in "$PACK"/skills/*/SKILL.md; do sed -n '2s/^name: //p' "$skill_file"; done | sort | uniq -d)
 [ -z "$duplicate_names" ] || fail "duplicate skill names: $duplicate_names"
 
+guide="$PACK/skills/rails-guide/SKILL.md"
+[ -f "$guide" ] || fail "rails-guide skill is missing"
+rg -q '^name: rails-guide$' "$guide" || fail "rails-guide frontmatter name is invalid"
+rg -q '^user-invocable: true$' "$guide" || fail "rails-guide must be user-invocable"
+rg -q 'Read the target application.s `AGENTS\.md`' "$guide" || fail "rails-guide is not profile-first"
+rg -q '`rails-onboard` and stop' "$guide" || fail "rails-guide does not route missing profiles to onboarding"
+for router in rails-workflow rails-architecture rails-models rails-testing rails-css rails-database rails-access rails-runtime rails-frontend rails-tenancy rails-deployment; do
+  rg -q "\`$router\`" "$guide" || fail "rails-guide does not expose $router"
+done
+
+onboard="$PACK/skills/rails-onboard/SKILL.md"
+for starting_stack in 'Layered' 'Rich Models — Fizzy-style' 'Rich Models — ONCE-compatible'; do
+  rg -Fq "$starting_stack" "$onboard" || fail "rails-onboard does not expose the $starting_stack starting stack"
+done
+rg -q 'candidate profile' "$onboard" || fail "rails-onboard does not present an editable candidate"
+rg -q 'Ask for explicit confirmation' "$onboard" || fail "rails-onboard lost its write confirmation"
+
 expect_no_matches "rich-model variants contain layered test guidance" 'RSpec|rspec|FactoryBot|factory_bot|layered-' "$PACK"/skills/rich-models-*
 
 for skill_file in "$PACK"/skills/sdd-*/SKILL.md; do

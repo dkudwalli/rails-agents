@@ -4,13 +4,20 @@ Rails Engineer is one portable, profile-aware plugin. It carries both the layere
 set and the 37signals-inspired rich-models knowledge set without asking an application to install
 two incompatible packs.
 
-## After installation
+## First 10 minutes
 
-Run the user-invocable `rails-onboard` skill from the Rails application. In Claude Code that is
-`/rails-onboard`; in Codex, Antigravity, and opencode, ask the assistant to use `rails-onboard` for
-the current application. The skill inspects existing project files, asks one choice at a time,
-previews the exact managed section it will add to `AGENTS.md`, and changes nothing until you
-confirm. For a new application it still asks each profile choice.
+Start in the Rails application, not in this plugin checkout.
+
+1. Set up the application profile. In Claude Code run `/rails-onboard`. In Codex ask to use
+   `rails-engineer:rails-onboard`; in Antigravity or opencode ask to use `rails-onboard`.
+2. For an existing app, onboarding inspects the repository and presents an editable detected
+   profile. For a new app, select the Layered, Rich Models — Fizzy-style, or Rich Models —
+   ONCE-compatible starting stack; all fields remain editable.
+3. Review the complete profile, resolve only missing or conflicting choices, then approve the exact
+   `AGENTS.md` section. Nothing changes before that explicit confirmation.
+4. Begin a task with `rails-guide`: `/rails-guide` in Claude Code, `rails-engineer:rails-guide` in
+   Codex, or ask the assistant to use `rails-guide` in Antigravity or opencode. It picks the stable
+   profile-aware router for the request.
 
 The managed profile is bracketed by `rails-engineer:profile` markers. Re-running onboarding compares
 the current choices and replaces only that marked section, preserving the rest of `AGENTS.md`.
@@ -18,14 +25,29 @@ the current choices and replaces only that marked section, preserving the rest o
 
 ## Using the guidance
 
-Start with the stable router that matches the work: `rails-architecture`, `rails-models`,
-`rails-testing`, `rails-css`, `rails-database`, `rails-access`, `rails-runtime`,
-`rails-frontend`, `rails-tenancy`, `rails-deployment`, or `rails-workflow`. Each reads the profile
-first and then directs the assistant to the matching variant or reference.
+Use `rails-guide` whenever the right entrypoint is not obvious. It selects from the stable routers
+below; each reads the profile first and then directs the assistant to the matching variant or
+reference.
+
+| Work | Router |
+|---|---|
+| Planning or implementation sequence | `rails-workflow` |
+| Code placement or new layers | `rails-architecture` |
+| Models and domain behavior | `rails-models` |
+| Tests | `rails-testing` |
+| CSS | `rails-css` |
+| Database and migrations | `rails-database` |
+| Authentication and authorization | `rails-access` |
+| Jobs, cache, and realtime | `rails-runtime` |
+| Views, Turbo, Stimulus, and assets | `rails-frontend` |
+| Multi-tenancy | `rails-tenancy` |
+| Deployment and operations | `rails-deployment` |
 
 `layered-*` and `rich-models-*` skills are intentionally distinct where the old packs used the
 same name. The vendored [37signals playbook](docs/37signals-playbook/PLAYBOOK.md) is conditional
 reference material for a `rich-models` profile, not an instruction to migrate a layered app.
 
 The `sdd-*` workflows and `specify/` seed are available only when the profile selects `Workflow:
-sdd`; they are optional and never installed into an application automatically.
+sdd`; starter stacks use `Workflow: conventional`, so SDD is optional and never installed into an
+application automatically. Use `sdd-init` and then `sdd-specify` only after selecting the opt-in
+workflow.
