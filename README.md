@@ -89,7 +89,7 @@ For prompting technique and Model Context Protocol setup, use the official [Clau
 
 ## Compatibility
 
-Validate releases locally before tagging: run `scripts/verify_plugins.sh`, `bash test/render_profile_test.sh`, and `bash test/plugin_payload_test.sh`. The verification script checks manifests, version agreement, skill metadata, portability rules, links, and the Claude Code and Antigravity validators when installed. Manually smoke-test supported hosts from the installation commands above; this repository does not run CI automation.
+Validate releases locally from a clean worktree with `scripts/release_check.sh`. It runs version agreement, plugin verification, profile-renderer tests, and payload-integrity tests, then prints the exact `v<version>` tag to create. Claude Code and Antigravity validators run when their CLIs are installed; otherwise they are reported as skipped. Manually smoke-test supported hosts from the installation commands above; this repository does not run CI automation.
 
 ## Credits
 

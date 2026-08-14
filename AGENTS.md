@@ -90,7 +90,10 @@ The version must agree in four places:
 3. `rails-engineer/.claude-plugin/plugin.json` → `version`
 4. `rails-engineer/.codex-plugin/plugin.json` → `version`
 
-Run `scripts/check_versions.sh` before tagging `v<version>`. The Codex manifest version is load-bearing because its cache key includes it. The Antigravity manifest has no version field, and opencode has no manifest.
+Run `scripts/release_check.sh` from a clean worktree before tagging `v<version>`. It runs every
+local release check and prints the exact tag to create. The Codex manifest version is load-bearing
+because its cache key includes it. The Antigravity manifest has no version field, and opencode has
+no manifest.
 
 ## Scripts
 
@@ -99,15 +102,18 @@ Run `scripts/check_versions.sh` before tagging `v<version>`. The Codex manifest 
 | `sync_skills_to_agents_dir.sh` | Rebuild the workspace `.agents/skills/` symlink mirror from the single pack |
 | `check_versions.sh` | Assert the version string agrees across every versioned manifest |
 | `verify_plugins.sh` | Release gate: marketplace wiring, manifests, versions, skill metadata, portability, links, and installed host validators |
+| `release_check.sh` | Strict pre-tag gate: requires a clean worktree, runs every local release check, and prints the version-derived tag |
 
 ## Verification
 
-Run the full local release gate:
+Run the strict pre-tag gate from a clean worktree:
 
 ```bash
-scripts/verify_plugins.sh
-bash test/render_profile_test.sh
-bash test/plugin_payload_test.sh
+scripts/release_check.sh
 ```
 
-The verification script resolves every relative Markdown link in the repository, checks the single-pack marketplace contract and uniqueness of skill names, then runs available Claude and Antigravity validators. There is no CI workflow; run the commands above locally before tagging a release.
+The release check runs version agreement, payload verification, renderer tests, and payload-integrity
+tests. The verification step resolves every relative Markdown link in the repository, checks the
+single-pack marketplace contract and uniqueness of skill names, then runs available Claude and
+Antigravity validators. Missing host CLIs are reported as skipped; the release check does not install
+them. There is no CI workflow.
