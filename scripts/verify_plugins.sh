@@ -8,6 +8,51 @@ cd "$(dirname "$0")/.."
 PACK="rails-engineer"
 failures=0
 
+# Skills bound to one value of the profile's *Architecture* field. Their descriptions must say so,
+# and must name the sibling skill the other architecture uses instead, so an agent cannot load
+# contradictory advice by matching trigger words alone. Add a skill here when it becomes
+# architecture-bound; the gate below then fails until its description is written.
+#
+# Membership is the Architecture axis only. Deliberately absent:
+#   - Skills selected by a different profile field, which is a separate choice with its own
+#     router: CSS (tailwind-patterns, css-design), Authorization (policy-patterns, crud-patterns),
+#     Runtime, Database, Tenancy, Deployment.
+#   - testing-patterns and rspec-patterns, gated on the suite already in the repo. That is an
+#     observable signal and a better one than the profile file; leave their phrasing alone.
+#   - caching-patterns, caching-strategies, and 37signals-conventions, which carry an equivalent
+#     gate in their own wording and predate this check. Listing them would fail on phrasing, not
+#     on a missing boundary.
+LAYERED_ONLY_SKILLS="
+layered-conventions
+layered-job-patterns
+layered-legacy-migration
+layered-mailer-patterns
+layered-migration-patterns
+layered-model-patterns
+layered-rails-architecture
+layered-stimulus-patterns
+layered-turbo-patterns
+form-patterns
+presenter-patterns
+query-patterns
+rails-concern
+service-patterns
+"
+
+RICH_MODELS_ONLY_SKILLS="
+rich-models-job-patterns
+rich-models-legacy-migration
+rich-models-mailer-patterns
+rich-models-migration-patterns
+rich-models-model-patterns
+rich-models-rails-architecture
+rich-models-stimulus-patterns
+rich-models-turbo-patterns
+concern-patterns
+implementation-workflow
+state-records
+"
+
 fail() {
   echo "FAIL: $*" >&2
   failures=$((failures + 1))
@@ -38,13 +83,54 @@ check_marketplaces() {
   ' .agents/plugins/marketplace.json >/dev/null || fail "Codex marketplace must expose only ./rails-engineer"
 }
 
+contains() {
+  case "$2" in *"$1"*) return 0 ;; esac
+  return 1
+}
+
+# A profile-bound skill must scope itself to its own profile and hand the other profile off to its
+# sibling by name. Routers enforce this in prose, but nothing stops an agent from matching a leaf
+# description directly, and the two profiles give contradictory advice under the same keywords.
+check_profile_gate() {
+  local skill="$1" name="$2" description="$3" own opposite
+
+  if contains " $name " " $(echo "$LAYERED_ONLY_SKILLS" | tr '\n' ' ') "; then
+    own="layered"
+    opposite="rich-models"
+  elif contains " $name " " $(echo "$RICH_MODELS_ONLY_SKILLS" | tr '\n' ' ') "; then
+    own="rich-models"
+    opposite="layered"
+  else
+    return 0
+  fi
+
+  if ! contains "$own profile" "$description"; then
+    fail "$skill is profile-bound but its description never says it applies only in a $own profile app"
+  fi
+
+  if ! contains "WHEN NOT: A $opposite profile app — use " "$description"; then
+    fail "$skill is missing its 'WHEN NOT: A $opposite profile app — use <sibling>.' gate"
+  fi
+}
+
+# Descriptions are folded YAML, so the clause the profile gate looks for is usually on a
+# continuation line. Read from `description:` up to the next top-level key, not just the first line.
+skill_description() {
+  sed -n '2,/^---$/p' "$1" |
+    awk '/^description:/ { found = 1 }
+         found && !/^description:/ && /^[A-Za-z][A-Za-z0-9_-]*:/ { exit }
+         found' |
+    tr '\n' ' ' |
+    sed -e 's/^description: *[>|]\{0,1\}-\{0,1\} *//' -e 's/  */ /g' -e 's/ *$//'
+}
+
 check_skills() {
   local skill name description names actual duplicates
 
   names=""
   while IFS= read -r skill; do
     name=$(sed -n '2,/^---$/p' "$skill" | sed -n 's/^name: *//p' | head -1)
-    description=$(sed -n '2,/^---$/p' "$skill" | rg -m 1 '^description:' || true)
+    description=$(skill_description "$skill")
 
     if [ -z "$name" ]; then
       fail "$skill is missing frontmatter name"
@@ -54,6 +140,8 @@ check_skills() {
 
     if [ -z "$description" ]; then
       fail "$skill is missing frontmatter description"
+    else
+      check_profile_gate "$skill" "$name" "$description"
     fi
 
     names="${names}${name}"$'\n'

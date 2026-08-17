@@ -70,7 +70,7 @@ Read the reference that covers what you are doing, not all of them.
 |---|---|
 | [`controller-structure.md`](references/controller-structure.md) | Targets, values, classes, lifecycle, and the naming conventions |
 | [`composition.md`](references/composition.md) | Multiple and nested controllers, events, outlets |
-| [`controller-catalog.md`](references/controller-catalog.md) | UI, form, and utility controllers — toggle, dropdown, modal, tabs, tooltip, auto-submit, character-counter, clipboard, confirm |
+| [`controller-catalog.md`](references/controller-catalog.md) | UI, form, and utility controllers — toggle, dropdown, modal, tabs, tooltip, auto-submit, character-counter, form validation, clipboard, auto-dismiss, confirm, disable |
 | [`stimulus-examples.md`](references/stimulus-examples.md) | Full implementations with HTML — integration (sortable, trix, flatpickr), tracking, animation, domain-specific |
 | [`performance-and-testing.md`](references/performance-and-testing.md) | Event delegation, cleanup, listener identity, system tests |
 

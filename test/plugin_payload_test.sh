@@ -80,7 +80,25 @@ done
 rg -q 'candidate profile' "$onboard" || fail "rails-onboard does not present an editable candidate"
 rg -q 'Ask for explicit confirmation' "$onboard" || fail "rails-onboard lost its write confirmation"
 
-expect_no_matches "rich-model variants contain layered test guidance" 'RSpec|rspec|FactoryBot|factory_bot|layered-' "$PACK"/skills/rich-models-*
+# Bodies and references only. Each description now names its layered sibling in a WHEN NOT handoff,
+# which is a profile boundary rather than layered guidance leaking into the rich-models payload.
+LAYERED_LEAK='RSpec|rspec|FactoryBot|factory_bot|layered-'
+
+for rich_skill in "$PACK"/skills/rich-models-*/SKILL.md; do
+  body_matches=$(awk '/^---$/ { seen++; next } seen >= 2' "$rich_skill" |
+    rg -n "$LAYERED_LEAK" || true)
+  if [ -n "$body_matches" ]; then
+    fail "rich-model variant body contains layered test guidance: $rich_skill"
+    printf '%s\n' "$body_matches" >&2
+  fi
+done
+
+reference_matches=$(find "$PACK/skills" -path '*/rich-models-*/references/*' -type f \
+  -exec rg -n "$LAYERED_LEAK" {} + || true)
+if [ -n "$reference_matches" ]; then
+  fail "rich-model reference files contain layered test guidance"
+  printf '%s\n' "$reference_matches" >&2
+fi
 
 for skill_file in "$PACK"/skills/sdd-*/SKILL.md; do
   rg -q 'Read AGENTS\.md' "$skill_file" || fail "SDD skill does not read AGENTS profile: $skill_file"
