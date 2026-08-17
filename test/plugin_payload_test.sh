@@ -59,6 +59,20 @@ for router in rails-workflow rails-architecture rails-models rails-testing rails
   rg -q "\`$router\`" "$guide" || fail "rails-guide does not expose $router"
 done
 
+architecture="$PACK/skills/rails-architecture/SKILL.md"
+rg -q 'layered-rails-architecture' "$architecture" || fail "rails-architecture does not route layered work to its architecture skill"
+rg -q 'rich-models-rails-architecture' "$architecture" || fail "rails-architecture does not route rich-models work to its architecture skill"
+
+rich_architecture="$PACK/skills/rich-models-rails-architecture/SKILL.md"
+[ -f "$rich_architecture" ] || fail "rich-models architecture skill is missing"
+rg -q '^name: rich-models-rails-architecture$' "$rich_architecture" || fail "rich-models architecture skill frontmatter name is invalid"
+rg -q 'Read the target application.s `AGENTS\.md`' "$rich_architecture" || fail "rich-models architecture skill is not profile-first"
+rg -q 'recorded deliberate divergence' "$rich_architecture" || fail "rich-models architecture skill does not preserve recorded divergences"
+for specialist in 37signals-conventions rich-models-model-patterns concern-patterns state-records crud-patterns; do
+  rg -q "\`$specialist\`" "$rich_architecture" || fail "rich-models architecture skill does not route to $specialist"
+done
+rg -q 'app/services' "$rich_architecture" || fail "rich-models architecture skill does not reject category layers by default"
+
 onboard="$PACK/skills/rails-onboard/SKILL.md"
 for starting_stack in 'Layered' 'Rich Models — Fizzy-style' 'Rich Models — ONCE-compatible'; do
   rg -Fq "$starting_stack" "$onboard" || fail "rails-onboard does not expose the $starting_stack starting stack"

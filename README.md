@@ -28,9 +28,9 @@ To reconfigure later, run onboarding again. It replaces only that marked section
 
 ## What you get
 
-Rails Engineer ships 91 portable skills, static references, and an optional Spec-Kit seed. It does not ship agents, slash-command shims, hooks, or MCP servers: skills are the portable payload on every supported host.
+Rails Engineer ships 92 portable skills, static references, and an optional Spec-Kit seed. It does not ship agents, slash-command shims, hooks, or MCP servers: skills are the portable payload on every supported host.
 
-Start work through `rails-guide` when the entrypoint is unclear. It checks that onboarding is complete and selects the right stable profile-aware router: `rails-architecture`, `rails-models`, `rails-testing`, `rails-css`, `rails-database`, `rails-access`, `rails-runtime`, `rails-frontend`, `rails-tenancy`, `rails-deployment`, or `rails-workflow`. Each then selects the matching detailed skill or convention reference.
+Start work through `rails-guide` when the entrypoint is unclear. It checks that onboarding is complete and selects the right stable profile-aware router: `rails-architecture`, `rails-models`, `rails-testing`, `rails-css`, `rails-database`, `rails-access`, `rails-runtime`, `rails-frontend`, `rails-tenancy`, `rails-deployment`, or `rails-workflow`. `rails-architecture` now selects an explicit architecture guide for either layered or rich-models applications; every router then selects the matching detailed skill or convention reference.
 
 The Spec Driven Development skills are available only when onboarding selects `Workflow: sdd`. They remain opt-in and never install project files automatically. Run `sdd-init` once before the first `sdd-specify`; [Your First SDD Feature](docs/your-first-sdd-feature.md) walks through the workflow.
 

@@ -11,6 +11,5 @@ description: >-
 Read AGENTS.md and its Rails Engineer Profile first. For Architecture: layered, read
 layered-rails-architecture, then the named layered specialist such as service-patterns,
 query-patterns, form-patterns, presenter-patterns, or layered-conventions. For Architecture:
-rich-models, read 37signals-conventions, its conditional playbook reference, and
-rich-models-model-patterns or concern-patterns. Do not mix the two architectures unless the profile
-records an explicit divergence.
+rich-models, read rich-models-rails-architecture, then its named specialist or convention reference.
+Do not mix the two architectures unless the profile records an explicit divergence.
