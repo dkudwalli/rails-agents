@@ -171,3 +171,10 @@ class ComplexJob < ApplicationJob
   end
 end
 ```
+
+## One pool, plus the catch-all queue
+
+Run one pool listening to the named queues **plus `"*"`**, so a new queue name never silently goes
+unprocessed. Take the process count from `Concurrent.physical_processor_count`. Keep the same
+configuration shape in every environment — a worker layout that only exists in production is a
+layout nobody has tested.

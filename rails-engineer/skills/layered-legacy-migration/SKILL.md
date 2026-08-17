@@ -1,7 +1,7 @@
 ---
 name: layered-legacy-migration
 description: >-
-  Orders the work of bringing an existing Rails codebase onto the layered profile — which extraction to do first, what unblocks what, and what to leave alone. Use when the user wants to modernize, migrate, or adopt layered architecture across a whole existing application, has inherited a Rails codebase, or asks where to start. WHEN NOT: Executing a single known extraction (use `extraction-timing`, then the matching `<layer>-patterns` skill), deciding which layer one file belongs to (use `specification-test`), or finding the problems in the first place (use `code-review`).
+  Orders the work of bringing an existing Rails codebase onto the layered profile — which extraction to do first, what unblocks what, and what to leave alone. Use when the user wants to modernize, migrate, or adopt layered architecture across a whole existing application, has inherited a Rails codebase, or asks where to start. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-legacy-migration. Executing a single known extraction (use `extraction-timing`, then the matching `<layer>-patterns` skill), deciding which layer one file belongs to (use `specification-test`), or finding the problems in the first place (use `code-review`).
 user-invocable: true
 compatibility: Ruby 3.1+, Rails 7.0+
 ---

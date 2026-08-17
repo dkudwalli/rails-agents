@@ -4,7 +4,7 @@ description: >-
   The layered Rails 8 conventions this plugin enforces — controllers, models, services, queries,
   policies, forms, presenters, jobs, mailers, migrations, views, and testing. Use when writing or
   reviewing Rails code in a project that follows the layered profile, when you need the house rule
-  for a specific layer, or when the user asks what the conventions are. WHEN NOT: deciding which
+  for a specific layer, or when the user asks what the conventions are. WHEN NOT: A rich-models profile app — use 37signals-conventions. Deciding which
   layer a responsibility belongs to (use rails-architecture), deciding whether code is big enough to
   extract (use extraction-timing), or deciding placement from the shape of a test (use
   specification-test).

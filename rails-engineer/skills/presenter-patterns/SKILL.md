@@ -1,7 +1,7 @@
 ---
 name: presenter-patterns
 description: >-
-  Builds presenter objects with SimpleDelegator to move display logic out of models and views. Use when a view needs formatting, derived labels, or conditional display logic, or when the user mentions presenters, decorators, or view models. WHEN NOT: Reusable markup with its own template, which is a ViewComponent (see viewcomponent-patterns), or domain logic, which belongs in the model.
+  Builds presenter objects with SimpleDelegator to move display logic out of models and views. Use when a view needs formatting, derived labels, or conditional display logic, or when the user mentions presenters, decorators, or view models. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-rails-architecture. Reusable markup with its own template, which is a ViewComponent (see viewcomponent-patterns), or domain logic, which belongs in the model.
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---

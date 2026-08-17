@@ -1,7 +1,7 @@
 ---
 name: form-patterns
 description: >-
-  Builds form objects for multi-model, wizard, and non-ActiveRecord forms using ActiveModel. Use when one form writes to several models, a form needs validation unrelated to persistence, or the user mentions form objects or wizard forms. WHEN NOT: A plain single-model form, which needs no form object, or business rules that belong in a service.
+  Builds form objects for multi-model, wizard, and non-ActiveRecord forms using ActiveModel. Use when one form writes to several models, a form needs validation unrelated to persistence, or the user mentions form objects or wizard forms. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-rails-architecture. A plain single-model form, which needs no form object, or business rules that belong in a service.
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---

@@ -1,7 +1,7 @@
 ---
 name: query-patterns
 description: >-
-  Worked query-object implementations: filtering, composition, scopes, N+1 avoidance, and pagination, plus their RSpec specs. Use when writing or testing a concrete query class. WHEN NOT: Choosing between a scope and a query object (see rails-architecture), the query-layer rules (see layered-conventions), or database-level tuning (see performance-optimization).
+  Worked query-object implementations: filtering, composition, scopes, N+1 avoidance, and pagination, plus their RSpec specs. Use when writing or testing a concrete query class. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-rails-architecture. Choosing between a scope and a query object (see rails-architecture), the query-layer rules (see layered-conventions), or database-level tuning (see performance-optimization).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---

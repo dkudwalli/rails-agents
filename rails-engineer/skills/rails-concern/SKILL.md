@@ -4,7 +4,7 @@ description: >-
   Creates Rails concerns for shared behavior across models or controllers
   with TDD. Use when extracting shared code, creating reusable modules,
   DRYing up models/controllers, or when user mentions concerns, modules,
-  mixins, or shared behavior. WHEN NOT: Logic used by only one model or
+  mixins, or shared behavior. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use concern-patterns. Logic used by only one model or
   controller (keep it in place), complex business logic (use service objects),
   or query encapsulation (use query objects).
 paths: "app/models/concerns/**/*.rb, app/controllers/concerns/**/*.rb"
@@ -13,6 +13,10 @@ paths: "app/models/concerns/**/*.rb, app/controllers/concerns/**/*.rb"
 # Rails Concern Generator (TDD)
 
 Creates concerns (ActiveSupport::Concern modules) for shared behavior with specs first.
+
+> Layered profile only. Read the target application's `AGENTS.md` under Rails Engineer Profile
+> first. A rich-models profile uses `concern-patterns` instead, which namespaces concerns under the
+> model that owns them rather than collecting them in `app/models/concerns/`.
 
 ## Quick Start
 

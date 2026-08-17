@@ -5,7 +5,7 @@ description: >-
   deciding where to put code, choosing between patterns (service objects vs
   concerns vs query objects), designing feature architecture, refactoring
   for better organization, or when user mentions architecture, code
-  organization, design patterns, or layered design. WHEN NOT: Implementing
+  organization, design patterns, or layered design. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-rails-architecture. Implementing
   specific patterns (use specialist agents like service-agent or query-agent),
   writing tests, or debugging runtime errors.
 model: sonnet

@@ -1,7 +1,7 @@
 ---
 name: layered-job-patterns
 description: >-
-  Writes Active Job classes with retry, discard, and idempotency handling, plus their specs. Use when moving work off the request cycle, scheduling recurring work, or when the user mentions background jobs, Solid Queue, retries, or deliver_later. WHEN NOT: Queue adapter setup and operations (see solid-queue-setup), or business logic that belongs in a service the job calls.
+  Writes Active Job classes with retry, discard, and idempotency handling, plus their specs. Use when moving work off the request cycle, scheduling recurring work, or when the user mentions background jobs, Solid Queue, retries, or deliver_later. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-job-patterns. Queue adapter setup and operations (see solid-queue-setup), or business logic that belongs in a service the job calls.
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---

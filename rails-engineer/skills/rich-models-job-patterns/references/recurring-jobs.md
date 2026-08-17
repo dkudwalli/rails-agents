@@ -172,3 +172,21 @@ schedule: every monday at 9am
 schedule: every sunday at 9am
 schedule: every 1st of month at midnight
 ```
+
+## Authoring rules for recurring.yml
+
+- Prefer `command:` over `class:` — a class method reads as domain vocabulary, a job class does not
+- Stagger the minutes so daily tasks do not all fire on the hour
+- Group entries by purpose, not alphabetically
+- Give every model that accumulates rows a `cleanup` class method and drive it from here
+
+```yaml
+# config/recurring.yml
+production:
+  cleanup_sessions:
+    command: "Session.cleanup"
+    schedule: "at 3:07am every day"
+  cleanup_magic_links:
+    command: "MagicLink.cleanup"
+    schedule: "at 3:22am every day"
+```

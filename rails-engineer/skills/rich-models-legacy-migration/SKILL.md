@@ -1,7 +1,7 @@
 ---
 name: rich-models-legacy-migration
 description: >-
-  Orders the work of bringing an existing, inherited, or legacy Rails codebase toward 37signals conventions — which refactoring to do first, what unblocks what, and what to leave alone. Use when the user wants to modernize, migrate, or clean up a whole existing application, has inherited a messy codebase, mentions a legacy Rails app, or asks where to start. WHEN NOT: Executing a single known refactoring (use `refactoring-patterns`), or finding the problems in the first place (use `review-patterns`).
+  Orders the work of bringing an existing, inherited, or legacy Rails codebase toward 37signals conventions — which refactoring to do first, what unblocks what, and what to leave alone. Use when the user wants to modernize, migrate, or clean up a whole existing application, has inherited a messy codebase, mentions a legacy Rails app, or asks where to start. Applies only in a rich-models profile app. WHEN NOT: A layered profile app — use layered-legacy-migration. Executing a single known refactoring (use `refactoring-patterns`), or finding the problems in the first place (use `review-patterns`).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---

@@ -4,7 +4,8 @@ description: >-
   Creates and refactors model and controller concerns for shared behavior.
   Use when extracting shared code, organizing models with horizontal concerns,
   DRYing up controllers, or when user mentions concerns, mixins, or modules.
-  WHEN NOT: Logic used by only one model (keep in place), service object
+  Applies only in a rich-models profile app.
+  WHEN NOT: A layered profile app — use rails-concern. Logic used by only one model (keep in place), service object
   extraction (use rails-models), or job organization (use rails-runtime).
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
@@ -13,6 +14,10 @@ compatibility: Ruby 3.3+, Rails 8.0+
 # Concern Patterns (37signals)
 
 Concerns for horizontal behavior, inheritance for vertical specialization.
+
+> Rich-models profile only. Read the target application's `AGENTS.md` under Rails Engineer Profile
+> first. A layered profile uses `rails-concern` instead, which is spec-first and keeps concerns in
+> `app/models/concerns/`.
 
 > Fizzy profile only: the `Current.account` scoping in the controller-concern examples below.
 > An ONCE-compatible application has no account layer — scope through whatever the current actor can

@@ -1,7 +1,7 @@
 ---
 name: implementation-workflow
 description: >-
-  Routes an implementation task to the right 37signals skill and sequences the work: which pattern skill owns controllers, models, concerns, state records, jobs, or views, and in what order to build. Use when starting a feature and unsure which conventions apply, or when a task spans several areas. WHEN NOT: A single well-scoped change where the governing skill is already obvious.
+  Routes an implementation task to the right 37signals skill and sequences the work: which pattern skill owns controllers, models, concerns, state records, jobs, or views, and in what order to build. Use when starting a feature and unsure which conventions apply, or when a task spans several areas. Applies only in a rich-models profile app. WHEN NOT: A layered profile app — use rails-workflow. A single well-scoped change where the governing skill is already obvious.
 license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---

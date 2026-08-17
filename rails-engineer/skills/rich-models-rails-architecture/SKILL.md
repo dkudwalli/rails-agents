@@ -1,9 +1,9 @@
 ---
 name: rich-models-rails-architecture
 description: >-
-  Decides where Rails code belongs in an application whose Rails Engineer Profile selects rich-models.
+  Decides where Rails code belongs in a rich-models profile app, per its marked Rails Engineer Profile.
   Use before adding a controller action, model behavior, concern, state record, or domain object, or
-  when a request suggests a service, query, form, or another application layer. WHEN NOT: a focused
+  when a request suggests a service, query, form, or another application layer. WHEN NOT: A layered profile app — use layered-rails-architecture. A focused
   implementation already has a selected specialist skill.
 ---
 

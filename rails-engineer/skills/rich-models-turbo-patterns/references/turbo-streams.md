@@ -183,3 +183,34 @@ module TurboHelper
   end
 end
 ```
+
+## Controller pattern with implicit templates
+
+When each action has its own `.turbo_stream.erb` view, `respond_to` needs no block — Rails finds the
+template by action name. Reach for the array form above only when the response is assembled in Ruby.
+
+```ruby
+class Cards::CommentsController < ApplicationController
+  def create
+    @comment = @card.comments.create!(comment_params)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to @card }
+    end
+  end
+
+  def destroy
+    @comment = @card.comments.find(params[:id])
+    @comment.destroy!
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to @card }
+    end
+  end
+end
+```
+
+## Custom stream actions
+
+A custom Turbo Stream action is two small files — a client-side action registration and a helper that
+emits it. Extend Turbo rather than reaching for bespoke JavaScript that manipulates the DOM directly.
