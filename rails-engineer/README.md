@@ -51,3 +51,27 @@ The `sdd-*` workflows and `specify/` seed are available only when the profile se
 sdd`; starter stacks use `Workflow: conventional`, so SDD is optional and never installed into an
 application automatically. Use `sdd-init` and then `sdd-specify` only after selecting the opt-in
 workflow.
+
+## Host compatibility
+
+opencode needs no plugin installation. For stable 1.x, configure the canonical tree with
+`skills.paths`:
+
+```jsonc
+{
+  "skills": {
+    "paths": ["~/src/rails-agents/rails-engineer/skills"]
+  }
+}
+```
+
+The v2 `skills` array is preview-only. Inside a clone, `scripts/sync_skills_to_agents_dir.sh`
+provides the version-neutral workspace `.agents/skills/` alternative.
+
+## Release compatibility
+
+Marketplace releases are checked from a clean worktree with `scripts/release_check.sh`. The gate
+runs version, payload, renderer, profile, and release-contract checks; installed Claude Code and
+Antigravity validators run as available, while missing host CLIs are reported as skipped. The same
+single deterministic gate runs on GitHub Actions for pushes and pull requests without installing
+host CLIs.

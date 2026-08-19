@@ -20,7 +20,7 @@ Install Rails Engineer, then work from the target Rails application:
 | Claude Code | `/plugin marketplace add dkudwalli/rails-agents` then `/plugin install rails-engineer@rails-engineer` | Run `/rails-onboard`, then `/rails-guide` for your first task. |
 | OpenAI Codex | `codex plugin marketplace add dkudwalli/rails-agents` then `codex plugin add rails-engineer@rails-engineer` | “Use `rails-engineer:rails-onboard` for this application,” then “Use `rails-engineer:rails-guide` for this task.” |
 | Google Antigravity | `git clone https://github.com/dkudwalli/rails-agents` then `agy plugin install ./rails-agents/rails-engineer` | Ask the assistant to use `rails-onboard`, then `rails-guide`. |
-| opencode | Add `rails-engineer/skills` to the `skills` array shown below. | Ask the assistant to use `rails-onboard`, then `rails-guide`. |
+| opencode | Add `rails-engineer/skills` with the stable 1.x `skills.paths` configuration shown below. | Ask the assistant to use `rails-onboard`, then `rails-guide`. |
 
 Onboarding proposes an editable complete profile from repository evidence for existing apps, or from one of three new-app starting stacks: Layered, Rich Models — Fizzy-style, or Rich Models — ONCE-compatible. It writes the resulting section to `AGENTS.md` only after preview and explicit confirmation.
 
@@ -65,16 +65,26 @@ agy plugin install ./rails-agents/rails-engineer
 
 It copies the pack into `~/.gemini/config/plugins/`, so rerun the install after upgrading.
 
-**opencode** needs no plugin install. Point its `skills` array to the canonical tree:
+**opencode** needs no plugin install. In stable 1.x, point `skills.paths` at the canonical tree:
 
 ```jsonc
 {
   "$schema": "https://opencode.ai/config.json",
+  "skills": {
+    "paths": ["~/src/rails-agents/rails-engineer/skills"]
+  }
+}
+```
+
+The v2 `skills` array syntax is preview-only:
+
+```jsonc
+{
   "skills": ["~/src/rails-agents/rails-engineer/skills"]
 }
 ```
 
-Alternatively, inside a clone run `scripts/sync_skills_to_agents_dir.sh`; Antigravity and opencode both discover the resulting workspace `.agents/skills/` mirror. Restart opencode after changing an external skill source or upgrading it.
+Alternatively, inside a clone run `scripts/sync_skills_to_agents_dir.sh`. The workspace `.agents/skills/` mirror is version-neutral, so it avoids choosing either configuration shape. Restart opencode after changing an external skill source or upgrading it.
 
 ## Documentation
 
@@ -89,7 +99,7 @@ For prompting technique and Model Context Protocol setup, use the official [Clau
 
 ## Compatibility
 
-Validate releases locally from a clean worktree with `scripts/release_check.sh`. It runs version agreement, plugin verification, profile-renderer tests, and payload-integrity tests, then prints the exact `v<version>` tag to create. Claude Code and Antigravity validators run when their CLIs are installed; otherwise they are reported as skipped. Manually smoke-test supported hosts from the installation commands above; this repository does not run CI automation.
+Validate releases locally from a clean worktree with `scripts/release_check.sh`. It runs version agreement, plugin verification, renderer and profile contracts, payload-integrity, and release-check contracts, then prints the exact `v<version>` tag to create. Claude Code and Antigravity validators run when their CLIs are installed; otherwise they are reported as skipped. GitHub Actions runs this same deterministic gate on every push and pull request, without installing host CLIs; manually smoke-test supported hosts from the installation commands above.
 
 ## Credits
 

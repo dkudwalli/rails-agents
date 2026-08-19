@@ -1,0 +1,12 @@
+name: Release check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  release-check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: scripts/release_check.sh

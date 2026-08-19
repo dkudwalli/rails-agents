@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "One profile-aware Rails guidance pack for Claude Code: onboard an application's stack, then use rails-guide to find the matching layered or rich-model conventions.",
-    "version": "2.1.0"
+    "version": "2.1.1"
   },
   "plugins": [
     {
       "name": "rails-engineer",
       "description": "Profile-aware Rails guidance with portable skills for layered and rich-model applications. Start with rails-onboard, then use rails-guide to find the right router for each task.",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "author": {
         "name": "Dhishan",
         "url": "https://github.com/dkudwalli"

@@ -32,7 +32,7 @@ Three rules apply to every skill body:
 | Commands, agents, hooks | not shipped | not shipped | not shipped | not shipped |
 | MCP servers | none shipped | none shipped | none shipped | none shipped; configuration is user-owned |
 
-Codex and Antigravity snapshot the whole pack on installation, so relative references inside it are available. opencode installs nothing: it can read `rails-engineer/skills` from its `skills` array or the workspace `.agents/skills/<name>/SKILL.md` mirror. Restart opencode after changing an external source or upgrading it.
+Codex and Antigravity snapshot the whole pack on installation, so relative references inside it are available. opencode installs nothing: stable 1.x reads `rails-engineer/skills` from `skills.paths`; the v2 `skills` array is preview-only. The workspace `.agents/skills/<name>/SKILL.md` mirror is version-neutral. Restart opencode after changing an external source or upgrading it.
 
 ## Dogfooding
 
@@ -113,8 +113,9 @@ Run the strict pre-tag gate from a clean worktree:
 scripts/release_check.sh
 ```
 
-The release check runs version agreement, payload verification, renderer tests, and payload-integrity
-tests. The verification step resolves every relative Markdown link in the repository, checks the
+The release check runs version agreement, payload verification, renderer tests, profile contracts,
+payload-integrity tests, and its own contract test. The verification step resolves every relative Markdown link in the repository, checks the
 single-pack marketplace contract and uniqueness of skill names, then runs available Claude and
 Antigravity validators. Missing host CLIs are reported as skipped; the release check does not install
-them. There is no CI workflow.
+them. One deterministic GitHub Actions job runs this same gate on pushes and pull requests without
+installing host CLIs.

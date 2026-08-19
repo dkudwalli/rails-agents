@@ -20,7 +20,12 @@ assert_contains() {
 fixture() {
   local path="$TMPDIR/$1"
   mkdir "$path"
-  cp -a "$ROOT"/. "$path"
+
+  # Exercise the exact release payload without copying the source repository's
+  # Git metadata into the fixture. A copied .git directory points at the
+  # source worktree and makes a clean fixture look dirty or outside Git.
+  git -C "$ROOT" archive --format=tar HEAD | tar -x -C "$path"
+  git -C "$path" init -q
   git -C "$path" add -A
   git -C "$path" -c user.name='Release Check Test' -c user.email='release-check@example.test' commit -qm fixture
   printf '%s' "$path"
@@ -30,10 +35,23 @@ test_clean_fixture_passes() {
   local path output version
   path=$(fixture clean)
   version=$(jq -r '.metadata.version' "$path/.claude-plugin/marketplace.json")
-  output=$("$path/scripts/release_check.sh")
+  output=$(env _RAILS_ENGINEER_RELEASE_CHECK_UNDER_TEST=1 "$path/scripts/release_check.sh")
 
+  assert_contains "$output" '==> bash test/profile_contract_test.sh'
   assert_contains "$output" "Release candidate v$version passed."
   assert_contains "$output" "Create the tag with: git tag v$version"
+}
+
+test_release_check_runs_its_contract_test() {
+  local path output
+  path=$(fixture runs-contract-test)
+  # This is the outer release invocation. Nested invocations receive the
+  # internal guard from release_check.sh, so this remains finite when the
+  # contract test runs as part of a release check.
+  output=$(env -u _RAILS_ENGINEER_RELEASE_CHECK_UNDER_TEST "$path/scripts/release_check.sh")
+
+  assert_contains "$output" 'bash test/release_check_test.sh'
+  assert_contains "$output" 'PASS: release check contract'
 }
 
 test_dirty_fixture_fails_before_checks() {
@@ -42,7 +60,7 @@ test_dirty_fixture_fails_before_checks() {
   touch "$path/UNCOMMITTED_RELEASE_CHANGE"
 
   set +e
-  output=$("$path/scripts/release_check.sh" 2>&1)
+  output=$(env _RAILS_ENGINEER_RELEASE_CHECK_UNDER_TEST=1 "$path/scripts/release_check.sh" 2>&1)
   status=$?
   set -e
 
@@ -61,7 +79,7 @@ test_version_mismatch_fails() {
   git -C "$path" -c user.name='Release Check Test' -c user.email='release-check@example.test' commit -qm mismatch
 
   set +e
-  output=$("$path/scripts/release_check.sh" 2>&1)
+  output=$(env _RAILS_ENGINEER_RELEASE_CHECK_UNDER_TEST=1 "$path/scripts/release_check.sh" 2>&1)
   status=$?
   set -e
 
@@ -70,6 +88,9 @@ test_version_mismatch_fails() {
 }
 
 test_clean_fixture_passes
+if [ "${_RAILS_ENGINEER_RELEASE_CHECK_UNDER_TEST:-}" != "1" ]; then
+  test_release_check_runs_its_contract_test
+fi
 test_dirty_fixture_fails_before_checks
 test_version_mismatch_fails
 
