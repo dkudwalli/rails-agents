@@ -117,10 +117,10 @@ See [references/memory-and-profiling.md](references/memory-and-profiling.md) for
 
 ## Workflow
 
-1. **Detect** -- Enable Bullet, run specs, check Rack Mini Profiler
+1. **Detect** -- Enable Bullet, run the tests selected by `rails-testing`, check Rack Mini Profiler
 2. **Analyze** -- Use `explain(:analyze)`, check slow query logs, profile memory
 3. **Fix** -- Apply the appropriate pattern from the reference files
-4. **Verify** -- Re-run specs, confirm query counts, check profiler
+4. **Verify** -- Re-run the profile-selected tests, confirm query counts, check profiler
 
 ## Reference Files
 

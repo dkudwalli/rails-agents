@@ -16,7 +16,7 @@ end
 ### Finding Memory Issues
 
 ```ruby
-# In console or specs
+# In console or profile-selected tests
 require 'memory_profiler'
 
 report = MemoryProfiler.report do

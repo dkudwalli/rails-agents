@@ -1,5 +1,10 @@
 # N+1 Query Detection and Prevention Patterns
 
+> **Test framework routing:** Read the target application's Rails Engineer Profile before using the
+> examples. Testing: rspec may use the RSpec examples below. Testing: minitest uses `rails-testing`
+> to select the equivalent Minitest request or integration test and fixture style;
+> do not copy RSpec configuration, factories, or matchers into a Minitest application.
+
 ## The N+1 Problem
 
 ```ruby
@@ -104,7 +109,9 @@ config.after_initialize do
 end
 ```
 
-## N+1 Detection in Specs
+## N+1 Detection in Tests
+
+### Testing: rspec
 
 ```ruby
 # spec/rails_helper.rb
@@ -131,7 +138,28 @@ RSpec.describe "Events", type: :request do
 end
 ```
 
+### Testing: minitest
+
+With `Bullet.raise = true` in the test environment, exercise the same request through the
+integration-test style selected by `rails-testing`. Use the application's fixtures or setup rather
+than introducing factories solely for this check:
+
+```ruby
+# test/integration/events_test.rb
+class EventsTest < ActionDispatch::IntegrationTest
+  test "loads index without N+1" do
+    assert_nothing_raised { get events_path }
+    assert_response :success
+  end
+end
+```
+
 ## Query Count Assertions
+
+The notification counter is framework-neutral. Include it through the selected suite rather than
+copying the other framework's setup.
+
+### Testing: rspec
 
 ```ruby
 # spec/support/query_counter.rb
@@ -157,6 +185,23 @@ it "makes minimal queries" do
   end
 
   expect(query_count).to eq(2)  # events + venues
+end
+```
+
+### Testing: minitest
+
+Include the same module in the narrow test class (or the application's test
+support base) and use a literal assertion:
+
+```ruby
+include QueryCounter
+
+test "makes minimal queries" do
+  query_count = count_queries do
+    Event.with_details.map { |event| event.venue.name }
+  end
+
+  assert_equal 2, query_count
 end
 ```
 

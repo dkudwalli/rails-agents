@@ -177,6 +177,10 @@ fi
 fixture=$(verification_fixture)
 guide="$fixture/rails-engineer/skills/rails-guide/SKILL.md"
 workflow="$fixture/rails-engineer/skills/rails-workflow/SKILL.md"
+performance="$fixture/rails-engineer/skills/performance-optimization/SKILL.md"
+performance_n_plus_one="$fixture/rails-engineer/skills/performance-optimization/references/n-plus-one.md"
+accessibility="$fixture/rails-engineer/skills/accessibility-review/SKILL.md"
+accessibility_failures="$fixture/rails-engineer/skills/accessibility-review/references/common-failures.md"
 
 printf '\nRegression probe: use imaginary-agent and @ghost-agent.\n' >> "$guide"
 printf '\nRegression probe: use reference-only-agent.\n' >> \
@@ -188,6 +192,10 @@ sed -i 's/ WHEN NOT:.*//' "$workflow"
 long_description=$(printf 'x%.0s' {1..1100})
 sed -i "s|^description:.*|description: $long_description|" "$fixture/rails-engineer/skills/pr-artifact/SKILL.md"
 sed -i 's/ships 92 portable skills/ships 91 portable skills/' "$fixture/README.md"
+printf '\nRegression probe: run specs, then re-run specs.\n' >> "$performance"
+sed -i '/Testing: minitest.*rails-testing/d' "$performance_n_plus_one"
+printf '\nRegression probe: axe-core specs run in CI.\n' >> "$accessibility"
+sed -i '/Profile adaptation:.*rails-testing.*rails-css.*rails-frontend/d' "$accessibility_failures"
 
 set +e
 verifier_output=$(cd "$fixture" && scripts/verify_plugins.sh 2>&1)
@@ -204,6 +212,10 @@ assert_contains "$verifier_output" "skill name 'Invalid_Skill_Name' is invalid"
 assert_contains "$verifier_output" "rails-workflow/SKILL.md description is missing a meaningful WHEN NOT boundary"
 assert_contains "$verifier_output" "pr-artifact/SKILL.md description exceeds 1024 characters"
 assert_contains "$verifier_output" "README.md documents 91 skills but the payload contains 92"
+assert_contains "$verifier_output" "performance-optimization/SKILL.md contains unguarded RSpec-specific workflow wording"
+assert_contains "$verifier_output" "performance-optimization/references/n-plus-one.md does not route Testing: minitest through rails-testing"
+assert_contains "$verifier_output" "accessibility-review/SKILL.md contains unguarded axe-core specs wording"
+assert_contains "$verifier_output" "accessibility-review/references/common-failures.md lacks profile adaptation through rails-testing, rails-css, and rails-frontend"
 
 if [ "$failures" -gt 0 ]; then
   exit 1

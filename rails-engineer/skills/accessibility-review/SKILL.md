@@ -264,7 +264,7 @@ Use `role="alert"` / `aria-live="assertive"` only for errors.
 - [ ] Works with latest screen readers (NVDA, VoiceOver, JAWS)
 
 ### Automation & Process
-- [ ] axe-core specs run in CI for critical pages and components
+- [ ] axe-core checks run in the test suite selected by `rails-testing` for critical pages and UI
 - [ ] Lighthouse or Pa11y run against key URLs pre-merge
 - [ ] Manual keyboard-only pass performed on changed flows
 - [ ] Screen-reader smoke test documented for major releases

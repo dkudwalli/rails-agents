@@ -3,6 +3,8 @@
 Beyond the "top offenders" in `SKILL.md`. Each entry: symptom → WCAG SC →
 why it fails → Rails/Hotwire remediation.
 
+> **Profile adaptation:** Before applying a remedy, use `rails-testing` for RSpec or Minitest syntax, `rails-css` for Tailwind or plain CSS, and `rails-frontend` for ViewComponent or ERB-partial structure. Do not introduce an unselected stack.
+
 ## Images and media
 
 ### Decorative icon announced as "image"
@@ -23,7 +25,7 @@ why it fails → Rails/Hotwire remediation.
 
 ### Styled `<div>` used as heading
 - **SC**: 1.3.1
-- **Fix**: Use `<h1>`–`<h6>`. Style with Tailwind utilities, not tag choice.
+- **Fix**: Use `<h1>`–`<h6>`. Style through the approach selected by `rails-css`, not tag choice.
 
 ### Skipped heading levels
 - **SC**: 1.3.1, 2.4.6
@@ -97,8 +99,10 @@ why it fails → Rails/Hotwire remediation.
 
 ### Focus indicator removed
 - **SC**: 2.4.7, 1.4.11
-- **Symptom**: `outline: none` or Tailwind `focus:outline-none` without a replacement.
-- **Fix**: Add `focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2` (contrast ≥ 3:1).
+- **Symptom**: `outline: none`, or `focus:outline-none` when CSS: tailwind, without a replacement.
+- **Fix**: Add a visible focus style with contrast ≥ 3:1. When CSS: tailwind, an example is
+  `focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2`; with plain CSS,
+  define the equivalent `:focus-visible` rule in the application's stylesheet.
 
 ### Tab order broken by positive `tabindex`
 - **SC**: 2.4.3
@@ -153,11 +157,16 @@ why it fails → Rails/Hotwire remediation.
 - **SC**: 4.1.2
 - **Fix**: Update `aria-expanded` alongside the visual state in the controller action.
 
-## ViewComponent-specific
+## Component-specific (when Views: viewcomponent)
+
+Use `rails-frontend` to adapt these remedies. When Views: erb-partials, apply the same semantic and
+accessibility requirements to the rendered partial or page rather than introducing ViewComponent.
 
 ### Icon-only button lacks label
 - **SC**: 4.1.2, 2.5.3
-- **Fix**: `<button aria-label="Close"><%= icon "x" %></button>` or a visually-hidden `<span class="sr-only">Close</span>`.
+- **Fix**: `<button aria-label="Close"><%= icon "x" %></button>` or visually hidden text using
+  the utility selected by `rails-css` (`sr-only` when CSS: tailwind, or the app's plain-CSS
+  equivalent).
 
 ### Component hides content with `display: none` but AT still sees it
 - **SC**: 4.1.2
@@ -165,7 +174,9 @@ why it fails → Rails/Hotwire remediation.
 
 ### Preview lacks an accessibility assertion
 - **SC**: process gap
-- **Fix**: Every component preview ships an RSpec system spec with `be_axe_clean`.
+- **Fix**: Every component preview has an accessibility assertion in the suite selected by
+  `rails-testing`. Testing: rspec may use a system spec with `be_axe_clean`; Testing: minitest uses
+  the application's equivalent accessibility assertion in its system test.
 
 ## Motion and preferences
 

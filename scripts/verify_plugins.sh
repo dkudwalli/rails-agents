@@ -209,6 +209,33 @@ check_portability() {
   done < <(rg -n -o --glob '*.md' '@references/[a-zA-Z0-9_./-]+' "$PACK/skills" || true)
 }
 
+check_profiled_review_guidance() {
+  local performance performance_n_plus_one accessibility accessibility_failures
+
+  performance="$PACK/skills/performance-optimization/SKILL.md"
+  performance_n_plus_one="$PACK/skills/performance-optimization/references/n-plus-one.md"
+  accessibility="$PACK/skills/accessibility-review/SKILL.md"
+  accessibility_failures="$PACK/skills/accessibility-review/references/common-failures.md"
+
+  if rg -qi '\b(?:run|re-run) specs\b' "$performance"; then
+    fail "performance-optimization/SKILL.md contains unguarded RSpec-specific workflow wording"
+  fi
+
+  if rg -q 'RSpec' "$performance_n_plus_one" &&
+    { ! rg -q 'Testing: rspec' "$performance_n_plus_one" ||
+      ! rg -q 'Testing: minitest.*rails-testing' "$performance_n_plus_one"; }; then
+    fail "performance-optimization/references/n-plus-one.md does not route Testing: minitest through rails-testing"
+  fi
+
+  if rg -qi 'axe-core specs' "$accessibility"; then
+    fail "accessibility-review/SKILL.md contains unguarded axe-core specs wording"
+  fi
+
+  if ! rg -q 'Profile adaptation:.*rails-testing.*rails-css.*rails-frontend' "$accessibility_failures"; then
+    fail "accessibility-review/references/common-failures.md lacks profile adaptation through rails-testing, rails-css, and rails-frontend"
+  fi
+}
+
 check_links() {
   local file link target
 
@@ -248,6 +275,7 @@ check_marketplaces
 scripts/check_versions.sh
 check_skills
 check_portability
+check_profiled_review_guidance
 check_links
 check_host_validators
 
