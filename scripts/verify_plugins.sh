@@ -118,6 +118,7 @@ check_profile_gate() {
 skill_description() {
   sed -n '2,/^---$/p' "$1" |
     awk '/^description:/ { found = 1 }
+         found && /^---$/ { exit }
          found && !/^description:/ && /^[A-Za-z][A-Za-z0-9_-]*:/ { exit }
          found' |
     tr '\n' ' ' |

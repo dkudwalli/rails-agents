@@ -23,7 +23,9 @@ verification_fixture() {
   cp -a "$ROOT/.agents/plugins" "$path/.agents/plugins"
   cp -a "$ROOT/rails-engineer" "$path/rails-engineer"
   cp -a "$ROOT/scripts" "$path/scripts"
+  cp "$ROOT/AGENTS.md" "$path/AGENTS.md"
   cp "$ROOT/README.md" "$path/README.md"
+  cp -a "$ROOT/docs" "$path/docs"
 
   printf '%s' "$path"
 }
@@ -174,6 +176,23 @@ fi
 # Exercise the release verifier against a temporary payload carrying one mutation for every
 # portable-skill contract. Each assertion names the diagnostic the corresponding production check
 # must emit; a generic non-zero exit is not enough because another mutation could cause it.
+limit_fixture=$(verification_fixture)
+limit_skill="$limit_fixture/rails-engineer/skills/pr-artifact/SKILL.md"
+limit_boundary="WHEN NOT: skip this workflow"
+limit_padding=$((1024 - ${#limit_boundary} - 1))
+limit_description="$(printf 'x%.0s' $(seq 1 "$limit_padding")) $limit_boundary"
+sed -i '/^user-invocable: true$/d' "$limit_skill"
+sed -i "s|^description:.*|description: $limit_description|" "$limit_skill"
+
+set +e
+limit_output=$(cd "$limit_fixture" && scripts/verify_plugins.sh 2>&1)
+limit_status=$?
+set -e
+
+assert_contains "$limit_description" "WHEN NOT:"
+[ "${#limit_description}" -eq 1024 ] || fail "last-key description fixture is not at the 1024-character limit"
+[ "$limit_status" -eq 0 ] || fail "a 1024-character last-key description was rejected: $limit_output"
+
 fixture=$(verification_fixture)
 guide="$fixture/rails-engineer/skills/rails-guide/SKILL.md"
 workflow="$fixture/rails-engineer/skills/rails-workflow/SKILL.md"
@@ -187,7 +206,9 @@ printf '\nRegression probe: use imaginary-agent and @ghost-agent.\n' >> "$guide"
 printf '\nRegression probe: use reference-only-agent.\n' >> \
   "$fixture/rails-engineer/skills/caching-patterns/references/http-caching.md"
 printf '\nRegression probe: see @references/missing.md.\n' >> "$guide"
-sed -i '/^description:/i model: opus' "$guide"
+for key in agent model context allowed-tools effort; do
+  sed -i "/^description:/i $key: unsupported" "$guide"
+done
 sed -i 's/rails-guide/Invalid_Skill_Name/' "$guide"
 sed -i 's/ WHEN NOT:.*//' "$workflow"
 long_description=$(printf 'x%.0s' {1..1100})
@@ -209,7 +230,9 @@ assert_contains "$verifier_output" "legacy agent reference in rails-guide/SKILL.
 assert_contains "$verifier_output" "legacy agent reference in rails-guide/SKILL.md: @ghost-agent"
 assert_contains "$verifier_output" "legacy agent reference in caching-patterns/references/http-caching.md: reference-only-agent"
 assert_contains "$verifier_output" "legacy reference pointer in rails-guide/SKILL.md: @references/missing.md"
-assert_contains "$verifier_output" "rails-guide/SKILL.md has non-portable frontmatter key: model"
+for key in agent model context allowed-tools effort; do
+  assert_contains "$verifier_output" "rails-guide/SKILL.md has non-portable frontmatter key: $key"
+done
 assert_contains "$verifier_output" "skill name 'Invalid_Skill_Name' is invalid"
 assert_contains "$verifier_output" "rails-workflow/SKILL.md description is missing a meaningful WHEN NOT boundary"
 assert_contains "$verifier_output" "pr-artifact/SKILL.md description exceeds 1024 characters"
