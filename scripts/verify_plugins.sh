@@ -210,12 +210,13 @@ check_portability() {
 }
 
 check_profiled_review_guidance() {
-  local performance performance_n_plus_one accessibility accessibility_failures
+  local performance performance_n_plus_one accessibility accessibility_failures accessibility_snippets
 
   performance="$PACK/skills/performance-optimization/SKILL.md"
   performance_n_plus_one="$PACK/skills/performance-optimization/references/n-plus-one.md"
   accessibility="$PACK/skills/accessibility-review/SKILL.md"
   accessibility_failures="$PACK/skills/accessibility-review/references/common-failures.md"
+  accessibility_snippets="$PACK/skills/accessibility-review/references/rails-snippets.md"
 
   if rg -qi '\b(?:run|re-run) specs\b' "$performance"; then
     fail "performance-optimization/SKILL.md contains unguarded RSpec-specific workflow wording"
@@ -233,6 +234,10 @@ check_profiled_review_guidance() {
 
   if ! rg -q 'Profile adaptation:.*rails-testing.*rails-css.*rails-frontend' "$accessibility_failures"; then
     fail "accessibility-review/references/common-failures.md lacks profile adaptation through rails-testing, rails-css, and rails-frontend"
+  fi
+
+  if ! rg -q 'Profile routing:.*rails-testing.*rails-css.*rails-frontend' "$accessibility_snippets"; then
+    fail "accessibility-review/references/rails-snippets.md lacks profile routing through rails-testing, rails-css, and rails-frontend"
   fi
 }
 

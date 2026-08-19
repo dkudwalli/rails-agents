@@ -1,16 +1,25 @@
 # Rails Accessibility Snippets
 
-Drop-in remediations for this stack (Rails 8.1 + Hotwire + Tailwind 4 +
-ViewComponent). Adapt namespaces to the project.
+> **Profile routing:** Before copying a snippet, use `rails-testing` for RSpec or Minitest syntax, `rails-css` for Tailwind or plain CSS, and `rails-frontend` for ViewComponent or ERB-partial structure. Do not introduce an unselected stack.
 
-## 1. Layout skeleton
+These are Rails 8.1 + Hotwire remediations. Each stack-specific section names the profile value it
+requires. Adapt namespaces and reuse the target application's existing test helpers, CSS tokens,
+and view structure.
+
+- Utility-class examples apply only when `CSS: tailwind`. With `CSS: plain`, keep the semantic
+  markup and use the plain-CSS classes in section 6.
+- The component class in section 5 applies only when `Views: viewcomponent`; an ERB-partial
+  alternative follows it.
+- The RSpec examples in section 7 apply only when `Testing: rspec`; Minitest routing follows them.
+
+## 1. Layout skeleton (CSS: tailwind variant)
 
 ```erb
 <%# app/views/layouts/application.html.erb %>
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
   <head>
-    <title><%= content_for?(:title) ? yield(:title) : "Rails AI Agents" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "Application" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -49,6 +58,9 @@ Key points:
 - `<main>` has `tabindex="-1"` so the focus-on-navigate controller below can
   move focus to it.
 
+When `CSS: plain`, retain the same landmarks and ARIA attributes, replace the utility lists with
+semantic classes such as `skip-link` and `flash-region`, and use section 6's plain-CSS definitions.
+
 ## 2. Focus-on-navigate Stimulus controller
 
 Move focus to `<main>` after Turbo navigations so screen-reader users hear
@@ -78,7 +90,7 @@ export default class extends Controller {
 
 Attach on `<body data-controller="focus-main">` in the layout.
 
-## 3. Accessible flash partial
+## 3. Accessible flash partial (CSS: tailwind variant)
 
 ```erb
 <%# app/views/shared/_flash.html.erb %>
@@ -92,7 +104,7 @@ Attach on `<body data-controller="focus-main">` in the layout.
 
 Polite for notices, assertive for alerts.
 
-## 4. Form with accessible errors
+## 4. Form with accessible errors (CSS: tailwind variant)
 
 ```erb
 <%= form_with model: @user, class: "space-y-4" do |f| %>
@@ -142,7 +154,15 @@ export default class extends Controller {
 }
 ```
 
-## 5. Icon button ViewComponent
+For `CSS: plain`, keep the labels, error IDs, `aria-invalid`, `aria-describedby`, and focus behavior;
+replace only the utility strings with the application's form and error-summary classes.
+
+## 5. Icon button (profile-selected view structure)
+
+### Views: viewcomponent
+
+The utility list in this variant additionally requires `CSS: tailwind`. With `CSS: plain`, use the
+`icon-button` class from section 6.
 
 ```ruby
 # app/components/icon_button_component.rb
@@ -171,12 +191,37 @@ end
 Minimum touch target ≥ 44×44 (beats 2.5.8's 24×24 floor), explicit
 `aria-label`, focus ring preserved.
 
-## 6. Tailwind utilities worth adding
+### Views: erb-partials
+
+Keep the same accessible name and touch target without introducing ViewComponent:
+
+```erb
+<%# app/views/shared/_icon_button.html.erb %>
+<button type="button"
+        aria-label="<%= label %>"
+        class="icon-button <%= local_assigns[:class_name] %>">
+  <%= inline_svg_tag "#{icon}.svg", aria: { hidden: true } %>
+</button>
+```
+
+Use `rails-frontend` to place the partial according to the application's existing conventions.
+The partial shows the `CSS: plain` class; a Tailwind application may substitute its existing
+profile-approved utility list.
+
+## 6. Profile-selected CSS helpers
+
+### CSS: tailwind
+
+Tailwind already provides `sr-only` and focus variants. Add only missing project-level behavior,
+such as reduced-motion defaults; do not redefine framework utilities unless the application has a
+recorded reason.
+
+### CSS: plain
 
 ```css
 /* app/assets/stylesheets/accessibility.css */
 
-.sr-only {
+.visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -185,10 +230,10 @@ Minimum touch target ≥ 44×44 (beats 2.5.8's 24×24 floor), explicit
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
-  border-width: 0;
+  border: 0;
 }
 
-.focus\:not-sr-only:focus {
+.skip-link:focus {
   position: static;
   width: auto;
   height: auto;
@@ -196,6 +241,20 @@ Minimum touch target ≥ 44×44 (beats 2.5.8's 24×24 floor), explicit
   overflow: visible;
   clip: auto;
   white-space: normal;
+}
+
+.icon-button {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  min-block-size: 44px;
+  min-inline-size: 44px;
+}
+
+.icon-button:focus-visible,
+.skip-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -208,7 +267,11 @@ Minimum touch target ≥ 44×44 (beats 2.5.8's 24×24 floor), explicit
 }
 ```
 
-## 7. RSpec a11y system spec
+## 7. Accessibility checks in the profile-selected suite
+
+### Testing: rspec
+
+Use this only when the application already selects RSpec and has `axe-rspec` configured:
 
 ```ruby
 # spec/system/accessibility/home_spec.rb
@@ -237,6 +300,25 @@ RSpec.shared_examples "an accessible page" do |path|
 end
 ```
 
+### Testing: minitest
+
+Use `rails-testing` to place the equivalent check in the application's
+`ApplicationSystemTestCase`. Reuse its installed axe/Capybara assertion helper; do not add
+`axe-rspec`, RSpec matchers, or RSpec support directories. If the application has no Minitest axe
+adapter, keep the system smoke test in Minitest and run the already-configured Pa11y or Lighthouse
+check alongside it rather than changing test frameworks:
+
+```ruby
+# test/system/accessibility/home_test.rb
+class HomeAccessibilityTest < ApplicationSystemTestCase
+  test "exposes the home page to the configured accessibility checker" do
+    visit root_path
+    assert_selector "main"
+    # Invoke the application's configured accessibility assertion here.
+  end
+end
+```
+
 ## 8. `rails generate` helper for accessible CRUD views
 
 Override the scaffold templates at `lib/templates/erb/scaffold/` so new
@@ -245,16 +327,16 @@ default. This removes a whole class of regressions at the generator level.
 
 ## 9. Brakeman-style a11y pre-commit check
 
-Add a Lefthook or Husky hook that runs `bundle exec herb lint app/views
-app/components` and `npx pa11y-ci` against a local server before commits
-touching view files. Keep the CI job non-blocking initially; flip to
-blocking once the baseline is green.
+If the application already uses a pre-commit runner, configure it to run Herb and the existing
+Pa11y check against a local server before commits touching view files. For `Views: viewcomponent`,
+lint `app/views app/components`; for `Views: erb-partials`, lint `app/views`. Keep a new CI check
+non-blocking until its baseline is green.
 
 ## 10. Language switcher
 
 ```erb
 <nav aria-label="Language">
-  <ul class="flex gap-2">
+  <ul class="language-switcher">
     <% I18n.available_locales.each do |locale| %>
       <li>
         <%= link_to t("languages.#{locale}"),

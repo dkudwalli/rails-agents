@@ -181,6 +181,7 @@ performance="$fixture/rails-engineer/skills/performance-optimization/SKILL.md"
 performance_n_plus_one="$fixture/rails-engineer/skills/performance-optimization/references/n-plus-one.md"
 accessibility="$fixture/rails-engineer/skills/accessibility-review/SKILL.md"
 accessibility_failures="$fixture/rails-engineer/skills/accessibility-review/references/common-failures.md"
+accessibility_snippets="$fixture/rails-engineer/skills/accessibility-review/references/rails-snippets.md"
 
 printf '\nRegression probe: use imaginary-agent and @ghost-agent.\n' >> "$guide"
 printf '\nRegression probe: use reference-only-agent.\n' >> \
@@ -196,6 +197,7 @@ printf '\nRegression probe: run specs, then re-run specs.\n' >> "$performance"
 sed -i '/Testing: minitest.*rails-testing/d' "$performance_n_plus_one"
 printf '\nRegression probe: axe-core specs run in CI.\n' >> "$accessibility"
 sed -i '/Profile adaptation:.*rails-testing.*rails-css.*rails-frontend/d' "$accessibility_failures"
+sed -i '/Profile routing:.*rails-testing.*rails-css.*rails-frontend/d' "$accessibility_snippets"
 
 set +e
 verifier_output=$(cd "$fixture" && scripts/verify_plugins.sh 2>&1)
@@ -216,6 +218,7 @@ assert_contains "$verifier_output" "performance-optimization/SKILL.md contains u
 assert_contains "$verifier_output" "performance-optimization/references/n-plus-one.md does not route Testing: minitest through rails-testing"
 assert_contains "$verifier_output" "accessibility-review/SKILL.md contains unguarded axe-core specs wording"
 assert_contains "$verifier_output" "accessibility-review/references/common-failures.md lacks profile adaptation through rails-testing, rails-css, and rails-frontend"
+assert_contains "$verifier_output" "accessibility-review/references/rails-snippets.md lacks profile routing through rails-testing, rails-css, and rails-frontend"
 
 if [ "$failures" -gt 0 ]; then
   exit 1
