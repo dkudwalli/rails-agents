@@ -10,6 +10,24 @@ fail() {
   failures=$((failures + 1))
 }
 
+assert_contains() {
+  local haystack="$1" needle="$2"
+  [[ "$haystack" == *"$needle"* ]] || fail "expected verifier output to contain: $needle"
+}
+
+verification_fixture() {
+  local path="$probe_root/verifier-fixture"
+
+  mkdir -p "$path/.agents"
+  cp -a "$ROOT/.claude-plugin" "$path/.claude-plugin"
+  cp -a "$ROOT/.agents/plugins" "$path/.agents/plugins"
+  cp -a "$ROOT/rails-engineer" "$path/rails-engineer"
+  cp -a "$ROOT/scripts" "$path/scripts"
+  cp "$ROOT/README.md" "$path/README.md"
+
+  printf '%s' "$path"
+}
+
 expect_no_matches() {
   local label="$1" pattern="$2"
   shift 2
@@ -152,6 +170,40 @@ printf '\nRegression probe: see `../../../missing-profile/AGENTS.md`.\n' >> "$pr
 if [ -z "$(relative_targets "$probe_root" | while IFS=$'\t' read -r file target; do path=${target%%#*}; [ -e "$(dirname "$file")/$path" ] || echo "$file -> $target"; done)" ]; then
   fail "inline-code path detector missed deliberate temporary mutation"
 fi
+
+# Exercise the release verifier against a temporary payload carrying one mutation for every
+# portable-skill contract. Each assertion names the diagnostic the corresponding production check
+# must emit; a generic non-zero exit is not enough because another mutation could cause it.
+fixture=$(verification_fixture)
+guide="$fixture/rails-engineer/skills/rails-guide/SKILL.md"
+workflow="$fixture/rails-engineer/skills/rails-workflow/SKILL.md"
+
+printf '\nRegression probe: use imaginary-agent and @ghost-agent.\n' >> "$guide"
+printf '\nRegression probe: use reference-only-agent.\n' >> \
+  "$fixture/rails-engineer/skills/caching-patterns/references/http-caching.md"
+printf '\nRegression probe: see @references/missing.md.\n' >> "$guide"
+sed -i '/^description:/i model: opus' "$guide"
+sed -i 's/rails-guide/Invalid_Skill_Name/' "$guide"
+sed -i 's/ WHEN NOT:.*//' "$workflow"
+long_description=$(printf 'x%.0s' {1..1100})
+sed -i "s|^description:.*|description: $long_description|" "$fixture/rails-engineer/skills/pr-artifact/SKILL.md"
+sed -i 's/ships 92 portable skills/ships 91 portable skills/' "$fixture/README.md"
+
+set +e
+verifier_output=$(cd "$fixture" && scripts/verify_plugins.sh 2>&1)
+verifier_status=$?
+set -e
+
+[ "$verifier_status" -ne 0 ] || fail "portable payload mutations unexpectedly passed verification"
+assert_contains "$verifier_output" "legacy agent reference in rails-guide/SKILL.md: imaginary-agent"
+assert_contains "$verifier_output" "legacy agent reference in rails-guide/SKILL.md: @ghost-agent"
+assert_contains "$verifier_output" "legacy agent reference in caching-patterns/references/http-caching.md: reference-only-agent"
+assert_contains "$verifier_output" "legacy reference pointer in rails-guide/SKILL.md: @references/missing.md"
+assert_contains "$verifier_output" "rails-guide/SKILL.md has non-portable frontmatter key: model"
+assert_contains "$verifier_output" "skill name 'Invalid_Skill_Name' is invalid"
+assert_contains "$verifier_output" "rails-workflow/SKILL.md description is missing a meaningful WHEN NOT boundary"
+assert_contains "$verifier_output" "pr-artifact/SKILL.md description exceeds 1024 characters"
+assert_contains "$verifier_output" "README.md documents 91 skills but the payload contains 92"
 
 if [ "$failures" -gt 0 ]; then
   exit 1

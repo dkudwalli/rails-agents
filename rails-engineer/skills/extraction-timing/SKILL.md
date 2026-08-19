@@ -6,9 +6,9 @@ description: >-
   extract code, choosing between patterns (service vs concern vs query),
   evaluating if a base class or abstraction is needed, or when user mentions
   refactoring, extraction, code organization, or "where should this go."
-  WHEN NOT: Implementing a specific pattern already decided on (use specialist
-  agents like service-agent, query-agent, or model-agent), writing tests
-  (use rspec-agent), architecture-level design (use rails-architecture), or
+  WHEN NOT: Implementing a specific pattern already decided on (use skills such
+  as service-patterns, query-patterns, or rails-models), writing tests
+  (use rails-testing), architecture-level design (use rails-architecture), or
   planning the order of work across a whole legacy codebase (use
   layered-legacy-migration).
 user-invocable: true

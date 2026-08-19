@@ -4,16 +4,21 @@ description: >-
   Run mutant, read mutation reports, fix alive mutations, and verify coverage.
   Use when running mutation testing, responding to alive mutations, or improving
   test quality. Triggers: "mutation testing", "mutant", "alive mutation", "mutation coverage".
-  WHEN NOT: Writing tests from scratch (use rspec-agent), fixing failing tests, or general code review.
-context: fork
-agent: general-purpose
-model: sonnet
-allowed-tools: Read, Write, Edit, Grep, Glob, Bash
+  WHEN NOT: Writing tests from scratch (use rails-testing), fixing failing tests, or general code review.
 user-invocable: true
-argument-hint: "[subject expression, e.g. Entities::CreateService#call]"
+argument-hint: "[subject expression, e.g. Card#close]"
 ---
 
 # Mutation Testing with Mutant
+
+## Profile routing
+
+Read the target application's `AGENTS.md` and its Rails Engineer Profile before choosing a subject,
+test file, or verification command. If the profile is absent, use `rails-onboard` and stop. Use
+`rails-architecture` to locate the subject, `rails-testing` to select RSpec or Minitest, and
+`rails-access` when a mutation affects an authorization boundary. Layered subjects may be services,
+queries, policies, or models; rich-models subjects may be models, concerns, controllers, or scoped
+associations. Do not introduce the other architecture merely to kill a mutation.
 
 ## When to Activate
 
@@ -107,7 +112,7 @@ the original and mutated code.
 
 ### 2. Investigate
 
-Read the source file and existing spec file for the subject.
+Read the source file and existing test or spec file for the subject.
 Ask: **"Is the mutated code acceptable for all valid inputs?"**
 
 ### 3. Decide and Act
@@ -124,7 +129,8 @@ Re-run mutant (step 1) until 100%. If the same mutation survives after
 2 attempts, evaluate whether it is unkillable.
 
 ```bash
-bundle exec rspec  # full suite must pass
+bundle exec rspec # when Testing: rspec
+bin/rails test    # when Testing: minitest
 ```
 
 ### 5. Commit
@@ -224,7 +230,8 @@ its alive mutations. Commit each fix with the ignore list removal included.
 
 - [ ] Each alive mutation has a clear action: add test or simplify code.
 - [ ] New tests fail against the mutated code, not just pass against the original.
-- [ ] Full RSpec suite passes after each change (`bundle exec rspec`).
+- [ ] The full profile-selected suite passes after each change (`bundle exec rspec` or
+      `bin/rails test`).
 - [ ] Each commit touches one subject only.
 - [ ] Unkillable mutations are in the ignore list with a comment.
 - [ ] Report: which mutation survived, which option was chosen, and why.

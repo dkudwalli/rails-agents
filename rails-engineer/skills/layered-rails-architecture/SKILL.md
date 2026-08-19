@@ -6,10 +6,8 @@ description: >-
   concerns vs query objects), designing feature architecture, refactoring
   for better organization, or when user mentions architecture, code
   organization, design patterns, or layered design. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-rails-architecture. Implementing
-  specific patterns (use specialist agents like service-agent or query-agent),
+  specific patterns (use specialist skills like service-patterns or query-patterns),
   writing tests, or debugging runtime errors.
-model: sonnet
-effort: high
 ---
 
 # Modern Rails 8 Architecture Patterns
@@ -19,19 +17,19 @@ effort: high
 ```
 Where should this code go?
 |
-+- View/display formatting?       -> Presenter (@presenter-agent)
-+- Complex business logic?        -> Service Object (@service-agent)
-+- Complex database query?        -> Query Object (@query-agent)
-+- Shared behavior across models? -> Concern (/rails-concern skill)
-+- Authorization logic?           -> Policy (@policy-agent)
-+- Reusable UI with logic?        -> ViewComponent (@viewcomponent-agent)
-+- Async/background work?         -> Job (@job-agent, /solid-queue-setup skill)
-+- Complex form (multi-model)?    -> Form Object (@form-agent)
-+- Transactional email?           -> Mailer (@mailer-agent)
-+- Real-time/WebSocket?           -> Channel (/action-cable-patterns skill)
-+- Data validation only?          -> Model (@model-agent)
-+- HTTP request/response only?    -> Controller (@controller-agent)
-+- Already written, feels wrong?  -> Diagnose placement (/specification-test skill)
++- View/display formatting?       -> Presenter (presenter-patterns)
++- Complex business logic?        -> Service Object (service-patterns)
++- Complex database query?        -> Query Object (query-patterns)
++- Shared behavior across models? -> Concern (rails-concern)
++- Authorization logic?           -> Policy (rails-access)
++- Reusable UI with logic?        -> ViewComponent (viewcomponent-patterns)
++- Async/background work?         -> Job (layered-job-patterns, solid-queue-setup)
++- Complex form (multi-model)?    -> Form Object (form-patterns)
++- Transactional email?           -> Mailer (layered-mailer-patterns)
++- Real-time/WebSocket?           -> Channel (action-cable-patterns)
++- Data validation only?          -> Model (rails-models)
++- HTTP request/response only?    -> Controller (controller-patterns)
++- Already written, feels wrong?  -> Diagnose placement (specification-test)
 ```
 
 ## Layer Responsibilities
@@ -141,12 +139,12 @@ end
 
 ## Rails 8 Specific Features
 
-| Feature | Purpose | Skill/Agent |
+| Feature | Purpose | Skill |
 |---------|---------|-------------|
-| Authentication | `has_secure_password` generator | /authentication-flow |
-| Background Jobs | Solid Queue (database-backed) | /solid-queue-setup, @job-agent |
-| Real-time | Action Cable + Solid Cable | /action-cable-patterns |
-| Caching | Solid Cache (database-backed) | /caching-strategies |
+| Authentication | `has_secure_password` generator | authentication-flow |
+| Background Jobs | Solid Queue (database-backed) | solid-queue-setup, layered-job-patterns |
+| Real-time | Action Cable + Solid Cable | action-cable-patterns |
+| Caching | Solid Cache (database-backed) | caching-strategies |
 | Assets | Propshaft + Import Maps | (built-in) |
 | Deployment | Kamal 2 + Thruster | (built-in) |
 
@@ -159,15 +157,15 @@ targets, and the table of which skill holds each layer's worked specs.
 
 ## New Feature Checklist
 
-1. **Model** - Define data structure (@migration-agent, @model-agent)
-2. **Policy** - Add authorization rules (@policy-agent)
-3. **Service** - Create for complex logic (@service-agent)
-4. **Query** - Add for complex queries (@query-agent)
-5. **Controller** - Keep it thin (@controller-agent)
-6. **Presenter** - Format for display (@presenter-agent)
-7. **Component** - Build reusable UI (@viewcomponent-agent)
-8. **Mailer** - Add transactional emails (@mailer-agent)
-9. **Job** - Add background processing (@job-agent)
+1. **Model** - Define data structure (rails-database, rails-models)
+2. **Policy** - Add authorization rules (rails-access)
+3. **Service** - Create for complex logic (service-patterns)
+4. **Query** - Add for complex queries (query-patterns)
+5. **Controller** - Keep it thin (controller-patterns)
+6. **Presenter** - Format for display (presenter-patterns)
+7. **Component** - Build reusable UI (rails-frontend)
+8. **Mailer** - Add transactional emails (layered-mailer-patterns)
+9. **Job** - Add background processing (layered-job-patterns)
 
 ## References
 

@@ -1,7 +1,7 @@
 ---
 name: review-artifact
 argument-hint: <review-notes|diff-file|pr-url|branch|report-file>
-description: Creates one polished, self-contained HTML artifact from review findings, audit notes, PR feedback, code review output, security review notes, design review notes, QA reports, or implementation assessments.
+description: Creates one polished, self-contained HTML artifact from review findings, audit notes, PR feedback, code review output, security review notes, design review notes, QA reports, or implementation assessments. Use when findings need a visual presentation. WHEN NOT: Conducting the review itself or implementing fixes.
 user-invocable: true
 ---
 

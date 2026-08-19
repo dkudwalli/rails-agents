@@ -122,7 +122,7 @@ end
 
 ## Pattern 2: Jbuilder Templates
 
-See @references/jbuilder-templates.md for full details.
+See [Jbuilder templates](references/jbuilder-templates.md) for full details.
 
 ```ruby
 # app/views/boards/index.json.jbuilder
@@ -152,7 +152,7 @@ json.url board_card_url(card.board, card, format: :json)
 
 ## Pattern 3: API Token Authentication
 
-See @references/api-auth.md for full details.
+See [API authentication](references/api-auth.md) for full details.
 
 ```ruby
 # app/models/api_token.rb
@@ -291,7 +291,7 @@ end
 
 ## Pattern 6: Pagination
 
-See @references/api-versioning.md for versioning details.
+See [API versioning](references/api-versioning.md) for versioning details.
 
 ```ruby
 def index

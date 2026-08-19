@@ -2,24 +2,34 @@
 name: security-audit
 description: >-
   Audits Rails application security against OWASP Top 10, detects
-  vulnerabilities with Brakeman, and verifies Pundit authorization policies.
+  vulnerabilities with Brakeman, and verifies the profile-selected authorization model.
   Use when the user wants a security audit, vulnerability scan, or when user
   mentions security, OWASP, Brakeman, XSS, SQL injection, or authorization.
-  WHEN NOT: Implementing security fixes (use specialist agents), setting up
-  authentication (use authentication-flow), or writing Pundit policies (use
-  policy-agent).
-context: fork
-agent: Explore
-model: opus
-effort: high
-allowed-tools: Read, Grep, Glob, Bash
+  WHEN NOT: Implementing security fixes (use rails-guide),
+  setting up authentication (use rails-access), or implementing authorization
+  rules (use rails-access).
 user-invocable: true
 argument-hint: "[file or directory path]"
 ---
 
 # Security Audit
 
-You are an expert in Rails application security, OWASP Top 10, and common web vulnerabilities.
+## Profile routing
+
+Read the target application's `AGENTS.md` and its Rails Engineer Profile before auditing. If the
+profile is absent, use `rails-onboard` and stop. Use `rails-access` to select authentication and
+authorization checks, `rails-testing` to select the test command, and `rails-architecture` to
+select application paths. In particular:
+
+- `Authorization: pundit` — inspect policies, scopes, and `authorize` coverage.
+- `Authorization: scoped-model` — inspect account-scoped finders, membership checks, and the
+  authorization reference selected by `rails-access`; do not require Pundit.
+- `Testing: rspec` runs the relevant policy/request specs. `Testing: minitest` runs the relevant
+  policy/controller/integration tests with `bin/rails test`.
+- A layered app may have services, queries, forms, and policies. A rich-models app may keep the
+  same behavior in models, concerns, controllers, and scoped associations. Audit the paths that
+  exist for the selected architecture.
+
 You NEVER modify credentials, secrets, or production files.
 
 ## Audit Process
@@ -29,13 +39,14 @@ You NEVER modify credentials, secrets, or production files.
 ```bash
 bin/brakeman
 bin/bundler-audit check --update
-bundle exec rspec spec/policies/
+# Then run the profile-selected focused test command from rails-testing.
 ```
 
 ### Step 2: Manual Code Review
 
-Audit all files in `app/controllers/`, `app/models/`, `app/services/`,
-`app/queries/`, `app/forms/`, `app/views/`, `app/policies/`, `config/`.
+Audit `app/controllers/`, `app/models/`, `app/views/`, and `config/`, plus the selected
+architecture's existing domain paths. Include `app/policies/` only when the authorization profile
+or a recorded divergence uses policies.
 
 ### Step 3: Report Findings
 
@@ -88,9 +99,12 @@ Nokogiri::XML(user_input) { |config| config.nonet.noent }
 # Bad — No authorization
 @entity = Entity.find(params[:id])
 
-# Good — Pundit
+# Good when Authorization: pundit
 @entity = Entity.find(params[:id])
 authorize @entity
+
+# Good when Authorization: scoped-model
+@entity = Current.account.entities.find(params[:id])
 ```
 
 ### 6. Security Misconfiguration
@@ -140,7 +154,7 @@ Rails.logger.warn("Failed login for #{email} from #{request.remote_ip}")
 
 ### Code
 - [ ] Strong Parameters on all controllers
-- [ ] Pundit `authorize` on all actions
+- [ ] Profile-selected authorization enforced on every protected action
 - [ ] No `html_safe`/`raw` on user input
 - [ ] Parameterized SQL queries only
 - [ ] File upload validation

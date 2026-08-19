@@ -7,12 +7,19 @@ description: >-
   optimization, or Bullet gem. WHEN NOT: Caching-specific patterns (use
   caching-strategies), adding new features, or general code quality
   improvements unrelated to speed.
-context: fork
-agent: Explore
-allowed-tools: Read, Grep, Glob, Bash
 ---
 
 # Performance Optimization for Rails 8
+
+## Profile routing
+
+Read the target application's `AGENTS.md` and its Rails Engineer Profile before profiling or
+recommending changes. If the profile is absent, use `rails-onboard` and stop. Use
+`rails-architecture` to locate query behavior, `rails-database` for adapter-specific plans and
+indexes, `rails-testing` for regression and benchmark tests, and `rails-access` to preserve account
+scoping and authorization. A layered app may place query work in query objects or services; a
+rich-models app may place it in scopes, models, or concerns. Optimize the selected shape without
+introducing the other architecture, bypassing scoped-model lookup, or changing test frameworks.
 
 ## Overview
 
@@ -47,7 +54,8 @@ N+1 queries occur when code loads a collection then makes a separate query for e
 | `eager_load` | Filtering on association, need single query |
 | `joins` | Only need to filter, don't need association data |
 
-Key patterns: Bullet configuration, eager loading methods, scoped eager loading, counter caches, N+1 specs with query count assertions.
+Key patterns: Bullet configuration, eager loading methods, scoped eager loading, counter caches,
+and query-count assertions in the profile-selected test framework.
 
 See [references/n-plus-one.md](references/n-plus-one.md) for all code examples and patterns.
 

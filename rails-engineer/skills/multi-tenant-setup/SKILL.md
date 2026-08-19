@@ -63,7 +63,7 @@ rails generate migration AddAccountToCards account:references
 
 ## Pattern 1: Account Model and Memberships
 
-See @references/membership-patterns.md for full details.
+See [membership patterns](references/membership-patterns.md) for full details.
 
 ```ruby
 # app/models/account.rb
@@ -224,7 +224,7 @@ account_board_cards_path(@account, @board) # => /123/boards/456/cards
 
 ## Pattern 4: Account-Scoped Models
 
-See @references/account-scoping.md for full details.
+See [account scoping](references/account-scoping.md) for full details.
 
 ```ruby
 # app/models/concerns/account_scoped.rb

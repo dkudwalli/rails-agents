@@ -9,10 +9,9 @@ description: >-
   slow specs, or heavy mocking. WHEN NOT: Choosing what test type to write for a
   layer you already decided on (use rails-architecture), deciding whether code is
   big enough to extract (use extraction-timing), or writing the actual tests
-  (use rspec-agent).
+  (use rails-testing).
 user-invocable: true
 argument-hint: "[file path]"
-allowed-tools: Read, Grep, Glob
 ---
 
 You diagnose layer placement by looking at tests. Given a file, generate the spec skeleton it would need for

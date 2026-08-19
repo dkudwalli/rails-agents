@@ -125,7 +125,7 @@ skill_description() {
 }
 
 check_skills() {
-  local skill name description names actual duplicates
+  local skill name description names actual duplicates boundary documented
 
   names=""
   while IFS= read -r skill; do
@@ -138,9 +138,27 @@ check_skills() {
       fail "$skill name '$name' does not match its directory"
     fi
 
+    if [ -n "$name" ] && { [ "${#name}" -gt 64 ] || [[ ! "$name" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; }; then
+      fail "skill name '$name' is invalid in ${skill#"$PACK/skills/"}: use 1-64 lowercase letters, numbers, and single hyphens"
+    fi
+
     if [ -z "$description" ]; then
       fail "$skill is missing frontmatter description"
     else
+      if [ "${#description}" -gt 1024 ]; then
+        fail "${skill#"$PACK/skills/"} description exceeds 1024 characters"
+      fi
+
+      if [[ "$description" != *"WHEN NOT:"* ]]; then
+        fail "${skill#"$PACK/skills/"} description is missing a meaningful WHEN NOT boundary"
+      else
+        boundary=${description#*WHEN NOT:}
+        boundary=${boundary#"${boundary%%[![:space:]]*}"}
+        if [ "${#boundary}" -lt 12 ]; then
+          fail "${skill#"$PACK/skills/"} description is missing a meaningful WHEN NOT boundary"
+        fi
+      fi
+
       check_profile_gate "$skill" "$name" "$description"
     fi
 
@@ -152,6 +170,13 @@ check_skills() {
     fail "$PACK has no skills"
   fi
 
+  documented=$(sed -n 's/.*ships \([0-9][0-9]*\) portable skills.*/\1/p' README.md)
+  if [ -z "$documented" ]; then
+    fail "README.md does not document the portable skill count"
+  elif [ "$documented" != "$actual" ]; then
+    fail "README.md documents $documented skills but the payload contains $actual"
+  fi
+
   duplicates=$(printf '%s' "$names" | sed '/^$/d' | sort | uniq -d)
   if [ -n "$duplicates" ]; then
     fail "$PACK has duplicate skill names: $(echo "$duplicates" | tr '\n' ' ')"
@@ -159,13 +184,29 @@ check_skills() {
 }
 
 check_portability() {
-  local matches
+  local matches skill key file line token
 
   matches=$(rg -n --glob SKILL.md '\$ARGUMENTS|\$\{CLAUDE_PLUGIN_ROOT\}|(^|[[:space:]])!`' "$PACK" || true)
   if [ -n "$matches" ]; then
     echo "$matches" >&2
     fail "skill bodies contain a non-portable Claude-only substitution or load-time command"
   fi
+
+  while IFS= read -r skill; do
+    for key in agent model context allowed-tools effort; do
+      if sed -n '2,/^---$/p' "$skill" | rg -q "^$key:"; then
+        fail "${skill#"$PACK/skills/"} has non-portable frontmatter key: $key"
+      fi
+    done
+  done < <(find "$PACK/skills" -mindepth 2 -maxdepth 2 -type f -name SKILL.md | sort)
+
+  while IFS=: read -r file line token; do
+    fail "legacy agent reference in ${file#"$PACK/skills/"}: $token"
+  done < <(rg --pcre2 -n -o --glob '*.md' '@?[a-z0-9]+(?:-[a-z0-9]+)*-agent(?![a-z0-9-])' "$PACK/skills" || true)
+
+  while IFS=: read -r file line token; do
+    fail "legacy reference pointer in ${file#"$PACK/skills/"}: $token"
+  done < <(rg -n -o --glob '*.md' '@references/[a-zA-Z0-9_./-]+' "$PACK/skills" || true)
 }
 
 check_links() {

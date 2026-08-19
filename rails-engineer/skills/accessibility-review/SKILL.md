@@ -7,24 +7,25 @@ description: >-
   Turbo-powered interactions. Use when the user wants an accessibility audit,
   WCAG compliance check, a11y review, or mentions screen readers, keyboard
   navigation, ARIA, color contrast, or Section 508 / ADA / EAA. WHEN NOT:
-  Implementing fixes (use viewcomponent-agent, stimulus-agent, tailwind-agent),
+  Implementing fixes (use rails-frontend and rails-css),
   running a security audit (use security-audit), or general code review
   (use code-review).
-context: fork
-agent: Explore
-model: opus
-effort: high
-allowed-tools: Read, Grep, Glob, Bash
 user-invocable: true
 argument-hint: "[file or directory path, or URL to audit]"
 ---
 
 # Accessibility Review
 
-You are an expert in web accessibility, WCAG 2.2 Level AA, WAI-ARIA authoring
-practices, and Rails/Hotwire UI patterns.
-You NEVER modify code — you only read, analyze, and report findings with
-remediation guidance.
+## Profile routing
+
+Read the target application's `AGENTS.md` and its Rails Engineer Profile before auditing. If the
+profile is absent, use `rails-onboard` and stop. Use `rails-testing` for the system-test command,
+`rails-frontend` for view/component and Hotwire paths, and `rails-css` for stylesheet conventions.
+Audit access-controlled UI in the context selected by `rails-access`; do not recommend a Pundit,
+scoped-model, ViewComponent, partial, Tailwind, or plain-CSS conversion unless the profile records
+it.
+
+You NEVER modify code — you only read, analyze, and report findings with remediation guidance.
 
 ## Target Standard
 
@@ -45,8 +46,11 @@ Evaluate using the **POUR** principles:
 ### Step 1: Run Automated Tools
 
 ```bash
-# axe-core via RSpec system specs (covers ~30–40% of WCAG issues)
+# RSpec profile (when an a11y tag is configured)
 bundle exec rspec spec/system/ --tag a11y
+
+# Minitest profile (select the app's accessibility system tests)
+bin/rails test test/system
 
 # Lighthouse CI (optional — if configured)
 npx lighthouse <url> --only-categories=accessibility --quiet
@@ -67,9 +71,9 @@ mandatory for the rest.
 Inspect these paths for WCAG 2.2 issues:
 
 - `app/views/**/*.html.erb`
-- `app/components/**/*.{rb,html.erb}`
+- `app/components/**/*.{rb,html.erb}` when `Views: viewcomponent`
 - `app/javascript/controllers/**/*.js` (Stimulus — focus, live regions, keys)
-- `app/assets/stylesheets/` and Tailwind classes (contrast, focus rings)
+- `app/assets/stylesheets/`, applying the CSS approach selected by `rails-css`
 - `app/helpers/` (avoid generating non-semantic markup)
 - Layouts, flash partials, error pages, modals, menus, tables, forms
 
@@ -219,14 +223,15 @@ Use `role="alert"` / `aria-live="assertive"` only for errors.
   `aria-expanded`, `aria-controls`, roving `tabindex`, and Escape/arrow keys
   per the ARIA Authoring Practices Guide.
 
-## ViewComponent & Tailwind Checks
+## Profile-selected component and CSS checks
 
-- Component previews should include an a11y test with `be_axe_clean`.
+- When `Views: viewcomponent`, component previews should include an accessibility test using the
+  app's selected test framework. For `Views: erb-partials`, test the rendered partial or page.
 - Icon-only components require `aria-label` or visually-hidden text.
 - Avoid `hidden` when content must remain reachable by AT during animation —
   prefer `aria-hidden="true"` and `inert` with care.
-- Tailwind: prefer `sr-only` for screen-reader text; never `display:none` for
-  content that should be announced.
+- When `CSS: tailwind`, prefer `sr-only` for screen-reader text. With plain CSS, use the equivalent
+  visually-hidden utility. Never use `display:none` for content that should be announced.
 
 ## Review Checklist
 
@@ -289,8 +294,8 @@ lightweight; open these only when the current task needs that level of detail.
   test playbook and Hotwire-specific checks. Load when planning a manual
   test pass.
 - `references/rails-snippets.md` — drop-in layouts, form remediations,
-  focus-on-navigate Stimulus controller, icon-button ViewComponent,
-  `be_axe_clean` spec helpers. Load when recommending concrete fixes.
+  focus-on-navigate Stimulus controller, icon-button examples, and accessibility
+  test helpers. Adapt them through `rails-frontend` and `rails-testing` before recommending fixes.
 
 ## Authoritative Upstream Sources
 

@@ -60,7 +60,7 @@ Apply caching in this order (highest impact first):
 
 ## Pattern 1: HTTP Caching with ETags
 
-See @references/http-caching.md for full details.
+See [HTTP caching](references/http-caching.md) for full details.
 
 ```ruby
 # Single resource -- returns 304 if ETag matches
@@ -95,7 +95,7 @@ fresh_when etag: [@activities, @report_date, Current.user.timezone]
 
 ## Pattern 2: Russian Doll Caching
 
-See @references/fragment-caching.md for full details.
+See [fragment caching](references/fragment-caching.md) for full details.
 
 Set up touch cascades in models:
 
@@ -217,7 +217,7 @@ end
 
 ## Pattern 6: Cache Invalidation
 
-See @references/cache-invalidation.md for full details.
+See [cache invalidation](references/cache-invalidation.md) for full details.
 
 ```ruby
 # Prefer touch: true cascades (automatic)
