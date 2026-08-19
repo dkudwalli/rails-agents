@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+# shellcheck source=profile_contract.sh
+. "$SCRIPT_DIR/profile_contract.sh"
+
 usage() {
   echo "Usage: $0 --architecture <layered|rich-models> ..." >&2
   exit 2
@@ -19,6 +23,10 @@ valid_choice() {
   return 1
 }
 
+contains_cr_or_lf() {
+  [[ "$1" == *$'\r'* || "$1" == *$'\n'* ]]
+}
+
 value_for() {
   case "$1" in
     architecture) printf '%s' "$architecture" ;;
@@ -35,25 +43,6 @@ value_for() {
     deployment) printf '%s' "$deployment" ;;
     workflow) printf '%s' "$workflow" ;;
     app_kind) printf '%s' "$app_kind" ;;
-  esac
-}
-
-allowed_for() {
-  case "$1" in
-    architecture) printf '%s' 'layered rich-models' ;;
-    testing) printf '%s' 'rspec minitest' ;;
-    css) printf '%s' 'tailwind plain' ;;
-    views) printf '%s' 'viewcomponent erb-partials' ;;
-    database) printf '%s' 'postgres sqlite mysql' ;;
-    ids) printf '%s' 'uuidv7 integer' ;;
-    authorization) printf '%s' 'pundit scoped-model' ;;
-    authentication) printf '%s' 'secure-password session-record' ;;
-    runtime) printf '%s' 'solid redis-resque' ;;
-    assets) printf '%s' 'importmap node-bundler' ;;
-    tenancy) printf '%s' 'single multi' ;;
-    deployment) printf '%s' 'kamal docker-procfile' ;;
-    workflow) printf '%s' 'sdd conventional' ;;
-    app_kind) printf '%s' 'new existing' ;;
   esac
 }
 
@@ -78,6 +67,7 @@ while [ "$#" -gt 0 ]; do
   case "$1" in
     --divergence)
       [ "$#" -ge 2 ] && [ -n "$2" ] || fail 'Missing value for --divergence'
+      contains_cr_or_lf "$2" && fail 'Invalid value for --divergence: must not contain CR or LF'
       if [ -n "$divergences" ]; then
         divergences="${divergences}
 $2"
@@ -88,6 +78,7 @@ $2"
       ;;
     --reason)
       [ "$#" -ge 2 ] && [ -n "$2" ] || fail 'Missing value for --reason'
+      contains_cr_or_lf "$2" && fail 'Invalid value for --reason: must not contain CR or LF'
       reason="$2"
       shift 2
       ;;
@@ -117,11 +108,11 @@ $2"
   esac
 done
 
-for key in architecture testing css views database ids authorization authentication runtime assets tenancy deployment workflow app_kind; do
+for key in "${PROFILE_FIELDS[@]}"; do
   option="--${key//_/-}"
   value=$(value_for "$key")
   [ -n "$value" ] || fail "Missing required option: $option"
-  valid_choice "$value" "$(allowed_for "$key")" || fail "Invalid value for $option: $value"
+  valid_choice "$value" "$(profile_allowed_values "$key")" || fail "Invalid value for $option: $value"
 done
 
 [ -n "$reason" ] || fail 'Missing required option: --reason'

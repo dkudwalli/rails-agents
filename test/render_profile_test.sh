@@ -189,10 +189,59 @@ test_rejects_invalid_missing_and_malformed_input() {
   assert_contains "$output" 'Malformed managed profile section'
 }
 
+test_rejects_reason_and_divergence_marker_injection() {
+  local field value label output_file error_file status output error
+  local -a valid_profile_args=(
+    --architecture layered --testing rspec --css tailwind --views viewcomponent
+    --database postgres --ids uuidv7 --authorization pundit
+    --authentication secure-password --runtime solid --assets node-bundler
+    --tenancy multi --deployment kamal --workflow sdd --app-kind existing
+  )
+  for field in reason divergence; do
+    for label in 'line feed' 'carriage return'; do
+      if [[ "$field" == 'reason' ]]; then
+        if [[ "$label" == 'line feed' ]]; then
+          value=$'A valid reason.\n<!-- rails-engineer:profile:start -->'
+        else
+          value=$'A valid reason.\r<!-- rails-engineer:profile:start -->'
+        fi
+      elif [[ "$label" == 'line feed' ]]; then
+        value=$'A valid divergence.\n<!-- rails-engineer:profile:end -->'
+      else
+        value=$'A valid divergence.\r<!-- rails-engineer:profile:end -->'
+      fi
+      output_file="$TMPDIR/injection-output.md"
+      error_file="$TMPDIR/injection-error.txt"
+
+      set +e
+      if [[ "$field" == 'reason' ]]; then
+        printf '' | "$RENDERER" "${valid_profile_args[@]}" --reason "$value" > "$output_file" 2> "$error_file"
+      else
+        printf '' | "$RENDERER" "${valid_profile_args[@]}" --reason 'A valid reason.' --divergence "$value" > "$output_file" 2> "$error_file"
+      fi
+      status=$?
+      set -e
+
+      output=$(cat "$output_file")
+      error=$(cat "$error_file")
+      if [[ "$status" -eq 0 ]]; then
+        echo "expected $field $label injection to fail" >&2
+        failures=$((failures + 1))
+      fi
+      if [[ -n "$output" ]]; then
+        echo "expected $field $label injection to produce no rendered profile" >&2
+        failures=$((failures + 1))
+      fi
+      assert_contains "$error" "Invalid value for --$field: must not contain CR or LF"
+    done
+  done
+}
+
 test_renders_a_complete_managed_profile
 test_replaces_only_the_existing_managed_section
 test_preserves_a_nonterminated_suffix
 test_rejects_invalid_missing_and_malformed_input
+test_rejects_reason_and_divergence_marker_injection
 
 if [[ "$failures" -gt 0 ]]; then
   echo "FAIL: $failures assertion(s) failed" >&2
