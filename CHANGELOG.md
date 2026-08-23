@@ -7,7 +7,7 @@ no manifest.
 
 After upgrading a Claude Code install, run `/plugin marketplace update rails-engineer`.
 
-## Unreleased
+## 2.2.0
 
 ### Added
 

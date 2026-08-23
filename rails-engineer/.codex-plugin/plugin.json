@@ -1,6 +1,6 @@
 {
   "name": "rails-engineer",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Profile-aware Rails guidance: onboard one coherent stack, then use rails-guide to reach the right layered or rich-model conventions.",
   "author": { "name": "Dhishan", "url": "https://github.com/dkudwalli" },
   "homepage": "https://github.com/dkudwalli/rails-agents",
