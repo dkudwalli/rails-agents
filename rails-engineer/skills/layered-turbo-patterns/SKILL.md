@@ -2,7 +2,6 @@
 name: layered-turbo-patterns
 description: >-
   Implements Turbo Drive, Turbo Frames, Turbo Streams, and broadcasts for fast page updates with minimal JavaScript. Use when adding partial page updates, live updates, inline editing, morphing, or prefetch, or when the user mentions Turbo, frames, or streams. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-turbo-patterns. Complex client-side behaviour needing a Stimulus controller (see rails-frontend), API-only JSON endpoints (see api-versioning), or static pages.
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

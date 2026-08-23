@@ -9,7 +9,6 @@ description: >-
   WHEN NOT: A layered-architecture profile app — use caching-strategies. For
   Turbo Stream real-time updates (use rails-frontend), for background job cache
   warming logic (use rails-runtime).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Solid Cache
 ---
 

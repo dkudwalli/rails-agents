@@ -9,7 +9,6 @@ description: >-
   operability.
   WHEN NOT: Writing application code (use the pattern skills), database schema
   design (use rails-database), or test authoring (use rails-testing).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Docker
 ---
 

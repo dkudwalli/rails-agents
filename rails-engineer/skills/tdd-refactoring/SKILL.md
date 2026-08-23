@@ -2,7 +2,6 @@
 name: tdd-refactoring
 description: >-
   Refactors Rails code under green tests: extracting methods and objects, removing duplication, and reducing complexity without changing behaviour. Use when the user asks to refactor, clean up, or simplify existing code that has test coverage. WHEN NOT: Writing new behaviour, deciding whether an extraction is warranted yet (see extraction-timing), or planning the order of work across a whole legacy codebase, which is `layered-legacy-migration`.
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

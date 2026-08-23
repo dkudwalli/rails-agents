@@ -8,7 +8,6 @@ description: >-
   attachments, uploads, or portability.
   WHEN NOT: Static assets and CSS (use css-design), background job structure
   (use rails-runtime), or schema design (use rails-database).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Action Text, Active Storage
 ---
 

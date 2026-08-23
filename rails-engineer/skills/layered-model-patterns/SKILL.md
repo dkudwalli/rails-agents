@@ -2,7 +2,6 @@
 name: layered-model-patterns
 description: >-
   Worked ActiveRecord model implementations: enums, polymorphic associations, custom validations, scopes, callbacks, delegations, and JSONB, plus model specs and FactoryBot factories. Use when writing or testing a concrete model. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-model-patterns. The model-layer rules themselves (see layered-conventions) or deciding whether a callback should be extracted (see extraction-timing).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

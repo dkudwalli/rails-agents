@@ -8,7 +8,6 @@ description: >-
   Applies only in a rich-models profile app.
   WHEN NOT: A layered profile app — use layered-mailer-patterns. For background job scheduling (use rails-runtime), for event-driven
   triggers (use event-tracking).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Action Mailer, Solid Queue
 ---
 

@@ -7,7 +7,6 @@ description: >-
   Applies only in a rich-models profile app.
   WHEN NOT: A layered profile app — use layered-stimulus-patterns. For Turbo Stream/Frame patterns (see rails-frontend). For
   server-side view logic (see [views reference](../37signals-conventions/references/views.md)).
-license: MIT
 compatibility: Stimulus 3.2+, Turbo 8.0+, Importmap
 ---
 

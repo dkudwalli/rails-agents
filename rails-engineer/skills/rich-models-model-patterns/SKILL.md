@@ -8,7 +8,6 @@ description: >-
   Applies only in a rich-models profile app.
   WHEN NOT: A layered profile app — use layered-model-patterns. Controller/routing work (use crud-patterns), concern extraction
   (use concern-patterns), state record design (use state-records).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

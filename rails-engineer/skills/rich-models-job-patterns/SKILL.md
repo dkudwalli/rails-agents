@@ -7,7 +7,6 @@ description: >-
   Applies only in a rich-models profile app.
   WHEN NOT: A layered profile app — use layered-job-patterns. Business logic implementation (use rails-models), controller
   work (use crud-patterns), or mailer delivery (use rich-models-mailer-patterns).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Solid Queue
 ---
 

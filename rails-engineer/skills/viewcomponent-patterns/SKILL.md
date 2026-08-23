@@ -2,7 +2,6 @@
 name: viewcomponent-patterns
 description: >-
   Builds tested, reusable UI components with the ViewComponent gem, including previews. Use when markup repeats across views, a UI element needs its own tests, or the user mentions ViewComponent, component previews, or design system components. WHEN NOT: One-off markup (use a partial) or pure formatting of an existing object (see presenter-patterns).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

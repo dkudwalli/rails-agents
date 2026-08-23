@@ -2,7 +2,6 @@
 name: service-patterns
 description: >-
   Worked service-object implementations: CRUD, transactional, calculation, and dependency-injected services with the Result type, plus their RSpec specs. Use when writing or testing a concrete service class. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-rails-architecture. Deciding which layer a responsibility belongs to (see rails-architecture), the service-layer rules themselves (see layered-conventions), or whether an extraction is warranted yet (see extraction-timing).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

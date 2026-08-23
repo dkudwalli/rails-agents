@@ -10,7 +10,6 @@ description: >-
   rather than the code. Also not for simple `WHERE ... LIKE` filters (use a model
   scope), schema design (use rails-database), or query caching (use
   caching-strategies).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, SQLite or MySQL
 ---
 

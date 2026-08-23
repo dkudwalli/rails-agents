@@ -7,7 +7,6 @@ description: >-
   are the fallback.
   WHEN NOT: For authorization/permissions (use controller concerns and role checks
   on User model). For multi-tenancy account scoping (see multi-tenant-setup skill).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

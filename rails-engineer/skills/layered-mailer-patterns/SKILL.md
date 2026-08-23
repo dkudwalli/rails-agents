@@ -2,7 +2,6 @@
 name: layered-mailer-patterns
 description: >-
   Writes Action Mailer classes, email templates, previews, and their specs. Use when sending transactional or notification email, building multipart templates, or when the user mentions mailers, email previews, or deliver_later. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-mailer-patterns. In-app notifications with no email, or background job structure itself (see layered-job-patterns).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

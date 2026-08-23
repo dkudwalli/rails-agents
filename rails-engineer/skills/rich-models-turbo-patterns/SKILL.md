@@ -7,7 +7,6 @@ description: >-
   Applies only in a rich-models profile app.
   WHEN NOT: A layered profile app — use layered-turbo-patterns. For Stimulus JavaScript controllers (see rails-frontend).
   For general view conventions (see [views reference](../37signals-conventions/references/views.md)).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Turbo 8+
 ---
 

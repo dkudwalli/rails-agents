@@ -2,7 +2,6 @@
 name: refactoring-patterns
 description: >-
   Refactors vanilla Rails code toward the 37signals shape: splitting a fat model into namespaced concerns, turning a boolean or timestamp into a state record, renaming a verb endpoint as the noun it creates. Use when the user asks to refactor, clean up, or restructure existing code, or mentions extracting concerns or promoting state to a record. WHEN NOT: Writing new behaviour; adding a service layer, which this profile does not have; or planning the order of work across a whole legacy codebase, which is `rich-models-legacy-migration`.
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

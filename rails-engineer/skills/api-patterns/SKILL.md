@@ -7,7 +7,6 @@ description: >-
   user mentions API, JSON, REST, or Jbuilder.
   WHEN NOT: For HTML-only controllers (use crud-patterns), for webhook delivery
   (use event-tracking).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Jbuilder
 ---
 

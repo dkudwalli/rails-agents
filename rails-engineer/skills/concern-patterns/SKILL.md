@@ -7,7 +7,6 @@ description: >-
   Applies only in a rich-models profile app.
   WHEN NOT: A layered profile app — use rails-concern. Logic used by only one model (keep in place), service object
   extraction (use rails-models), or job organization (use rails-runtime).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

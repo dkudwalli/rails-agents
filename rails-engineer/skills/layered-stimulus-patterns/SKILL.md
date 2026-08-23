@@ -2,7 +2,6 @@
 name: layered-stimulus-patterns
 description: >-
   Writes Stimulus controllers with targets, values, actions, and outlets for client-side behaviour Turbo alone cannot express. Use when adding interactive JavaScript, keyboard handling, debouncing, or third-party JS integration. Applies only in a layered profile app. WHEN NOT: A rich-models profile app — use rich-models-stimulus-patterns. Server-rendered partial updates, which belong to Turbo (see layered-turbo-patterns), or pure CSS interactions.
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

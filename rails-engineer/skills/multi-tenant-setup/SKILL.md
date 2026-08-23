@@ -7,7 +7,6 @@ description: >-
   user mentions multi-tenancy, accounts, or tenant separation.
   WHEN NOT: For basic model setup without tenancy (use rails-models), for
   auth/session setup (use auth-setup).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

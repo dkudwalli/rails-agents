@@ -2,7 +2,6 @@
 name: controller-patterns
 description: >-
   Worked controller implementations: RESTful actions, strong parameters, Pundit authorization, Turbo responses, and error handling, plus request specs. Use when writing or testing a concrete controller. WHEN NOT: The controller-layer rules themselves (see layered-conventions) or deciding what belongs in a controller at all (see rails-architecture).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

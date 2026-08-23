@@ -2,7 +2,6 @@
 name: review-patterns
 description: >-
   Reviews Rails code against the 37signals playbook: conceptual compression, everything-is-CRUD naming, state as records, authorization by scoping, expanded conditionals. Use when reviewing a diff, PR, or file for playbook conformance, or when the user mentions a review pass or anti-patterns. WHEN NOT: The layered profile, whose service and policy layers this explicitly rejects.
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

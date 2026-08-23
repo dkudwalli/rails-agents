@@ -7,7 +7,6 @@ description: >-
   Applies only in a rich-models profile app.
   WHEN NOT: A layered profile app — use layered-migration-patterns. For model business logic (see rails-models). For multi-tenant
   scoping logic (see multi-tenant-setup skill).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, PostgreSQL/MySQL/SQLite
 ---
 

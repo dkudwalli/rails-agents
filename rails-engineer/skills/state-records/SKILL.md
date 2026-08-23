@@ -6,7 +6,6 @@ description: >-
   state, or when user mentions state records, closures, publications, or
   toggling state. Applies only in a rich-models profile app. WHEN NOT: A layered profile app — use layered-rails-architecture. Technical flags like cached/processed (use booleans),
   concern extraction (use concern-patterns), general model work (use rails-models).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 

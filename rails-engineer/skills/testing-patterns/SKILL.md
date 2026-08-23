@@ -7,7 +7,6 @@ description: >-
   WHEN NOT: The app's suite is RSpec — write the new test in the framework already
   there; converting a green suite is `rich-models-legacy-migration` phase 6, "last, or never".
   Also not for test configuration or CI setup (see `tooling-ci-deploy`).
-license: MIT
 compatibility: Ruby 3.3+, Rails 8.0+, Minitest
 ---
 
