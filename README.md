@@ -94,6 +94,7 @@ Alternatively, inside a clone run `scripts/sync_skills_to_agents_dir.sh`. The wo
 | [37signals Rails Playbook](rails-engineer/docs/37signals-playbook/PLAYBOOK.md) | Conditional rich-model reference extracted from `fizzy`, `once-campfire`, and `writebook` |
 | [Your First SDD Feature](docs/your-first-sdd-feature.md) | Step-by-step onboarding walkthrough for the optional SDD workflow |
 | [`AGENTS.md`](AGENTS.md) | Repository authoring, portability, release, and verification guide |
+| [`CHANGELOG.md`](CHANGELOG.md) | What changed in each release |
 
 For prompting technique and Model Context Protocol setup, use the official [Claude Code documentation](https://docs.claude.com/en/docs/claude-code) and [MCP specification](https://modelcontextprotocol.io); copied guidance drifts.
 

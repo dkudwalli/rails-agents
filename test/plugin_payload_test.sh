@@ -25,6 +25,7 @@ verification_fixture() {
   cp -a "$ROOT/scripts" "$path/scripts"
   cp "$ROOT/AGENTS.md" "$path/AGENTS.md"
   cp "$ROOT/README.md" "$path/README.md"
+  cp "$ROOT/CHANGELOG.md" "$path/CHANGELOG.md"
   cp -a "$ROOT/docs" "$path/docs"
 
   printf '%s' "$path"
