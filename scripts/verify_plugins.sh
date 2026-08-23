@@ -53,6 +53,17 @@ implementation-workflow
 state-records
 "
 
+# The same contract on the profile's *CSS* field. The two skills below answer the same question --
+# "how do I style this view?" -- with mutually exclusive stacks, and a leaf description can match
+# "styling", "design system", or "dark mode" on its own without a router ever being consulted.
+TAILWIND_ONLY_SKILLS="
+tailwind-patterns
+"
+
+PLAIN_CSS_ONLY_SKILLS="
+css-design
+"
+
 fail() {
   echo "FAIL: $*" >&2
   failures=$((failures + 1))
@@ -100,6 +111,12 @@ check_profile_gate() {
   elif contains " $name " " $(echo "$RICH_MODELS_ONLY_SKILLS" | tr '\n' ' ') "; then
     own="rich-models"
     opposite="layered"
+  elif contains " $name " " $(echo "$TAILWIND_ONLY_SKILLS" | tr '\n' ' ') "; then
+    own="tailwind"
+    opposite="plain-css"
+  elif contains " $name " " $(echo "$PLAIN_CSS_ONLY_SKILLS" | tr '\n' ' ') "; then
+    own="plain-css"
+    opposite="tailwind"
   else
     return 0
   fi

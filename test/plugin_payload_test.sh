@@ -205,6 +205,8 @@ accessibility="$fixture/rails-engineer/skills/accessibility-review/SKILL.md"
 accessibility_failures="$fixture/rails-engineer/skills/accessibility-review/references/common-failures.md"
 accessibility_snippets="$fixture/rails-engineer/skills/accessibility-review/references/rails-snippets.md"
 frontend="$fixture/rails-engineer/skills/rails-frontend/SKILL.md"
+service_patterns="$fixture/rails-engineer/skills/service-patterns/SKILL.md"
+tailwind="$fixture/rails-engineer/skills/tailwind-patterns/SKILL.md"
 
 printf '\nRegression probe: use imaginary-agent and @ghost-agent.\n' >> "$guide"
 printf '\nRegression probe: use reference-only-agent.\n' >> \
@@ -225,6 +227,10 @@ sed -i '/Profile adaptation:.*rails-testing.*rails-css.*rails-frontend/d' "$acce
 sed -i '/Profile routing:.*rails-testing.*rails-css.*rails-frontend/d' "$accessibility_snippets"
 # rails-frontend carries the only inbound edge to i18n-patterns; severing it must strand the skill.
 sed -i 's/select i18n-patterns/select the locale reference/' "$frontend"
+# Strip the profile boundary from one skill on each guarded axis. Without these the two halves of a
+# profile choice can match the same trigger words and hand an app the other stack's guidance.
+sed -i 's/ Applies only in a layered profile app\.//' "$service_patterns"
+sed -i 's/ Applies only in a tailwind profile app\.//' "$tailwind"
 
 set +e
 verifier_output=$(cd "$fixture" && scripts/verify_plugins.sh 2>&1)
@@ -249,6 +255,8 @@ assert_contains "$verifier_output" "accessibility-review/SKILL.md contains ungua
 assert_contains "$verifier_output" "accessibility-review/references/common-failures.md lacks profile adaptation through rails-testing, rails-css, and rails-frontend"
 assert_contains "$verifier_output" "accessibility-review/references/rails-snippets.md lacks profile routing through rails-testing, rails-css, and rails-frontend"
 assert_contains "$verifier_output" "unreachable skill: i18n-patterns is named by no router or reachable skill and is not user-invocable"
+assert_contains "$verifier_output" "service-patterns/SKILL.md is profile-bound but its description never says it applies only in a layered profile app"
+assert_contains "$verifier_output" "tailwind-patterns/SKILL.md is profile-bound but its description never says it applies only in a tailwind profile app"
 
 if [ "$failures" -gt 0 ]; then
   exit 1

@@ -5,9 +5,9 @@ description: >-
   accessibility baseline — no Tailwind, Sass, or PostCSS. Use when styling views,
   building a design system, adding dark mode, defining color or spacing tokens, or
   when user mentions CSS, styling, theming, design tokens, or responsive design.
-  WHEN NOT: For ERB structure and partials (use rails-frontend), for JavaScript
-  behavior (use rails-frontend), for Turbo updates (use rails-frontend).
-license: MIT
+  Applies only in a plain-css profile app. WHEN NOT: A tailwind profile app — use
+  tailwind-patterns. ERB structure and partials, JavaScript behavior, or Turbo
+  updates (use rails-frontend).
 compatibility: Rails 8.0+, Propshaft, modern browsers
 ---
 

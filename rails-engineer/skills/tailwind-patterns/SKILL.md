@@ -1,8 +1,10 @@
 ---
 name: tailwind-patterns
 description: >-
-  Builds accessible, responsive UI with Tailwind utility classes and extracted component classes. Use when styling views, building a design system, or when the user mentions Tailwind, responsive layout, or dark mode. WHEN NOT: The rich-models pack, which uses plain CSS and forbids Tailwind, or component structure itself (see viewcomponent-patterns).
-license: MIT
+  Builds accessible, responsive UI with Tailwind utility classes and extracted component classes.
+  Use when styling views, building a design system, or when the user mentions Tailwind, responsive
+  layout, or dark mode. Applies only in a tailwind profile app. WHEN NOT: A plain-css profile app —
+  use css-design. Component structure itself (see viewcomponent-patterns).
 compatibility: Ruby 3.3+, Rails 8.0+
 ---
 
