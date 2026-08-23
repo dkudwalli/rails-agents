@@ -5,6 +5,8 @@ description: >-
   Use when user pastes a Dependabot PR URL, asks about a gem version bump, or wants to audit open
   dependency PRs ("which dep PRs are safe to merge", "audit our deps", "check dependabot").
   WHEN NOT: Non-Dependabot PRs, npm/yarn upgrades, or general code review.
+user-invocable: true
+argument-hint: "[Dependabot PR URL or number]"
 ---
 
 # Dependabot Gem Upgrade Review

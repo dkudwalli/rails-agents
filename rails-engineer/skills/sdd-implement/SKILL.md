@@ -220,3 +220,5 @@ You **MUST** consider it before proceeding. If they gave none, continue without 
    - Create the file with its standard header if it does not exist
 
 Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `sdd-tasks` first to regenerate the task list.
+
+When implementation is complete, run `sdd-validate` to confirm the delivered code matches spec.md.

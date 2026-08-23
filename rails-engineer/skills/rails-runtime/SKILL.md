@@ -12,5 +12,6 @@ Read AGENTS.md and its Rails Engineer Profile first. Runtime: solid selects soli
 layered-job-patterns or rich-models-job-patterns according to architecture. Runtime: redis-resque
 selects the conditional 37signals playbook runtime material and rich-models-job-patterns. For
 caching, a layered architecture selects caching-strategies and a rich-models architecture selects
-caching-patterns, regardless of runtime. Keep the selected runtime coherent; no installer or
-migration is implied.
+caching-patterns, regardless of runtime. For file uploads, attachments, variants, or direct
+uploads, select active-storage-setup; a rich-models profile also has the content-storage playbook
+material. Keep the selected runtime coherent; no installer or migration is implied.

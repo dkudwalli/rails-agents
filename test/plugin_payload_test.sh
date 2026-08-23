@@ -181,8 +181,11 @@ limit_skill="$limit_fixture/rails-engineer/skills/pr-artifact/SKILL.md"
 limit_boundary="WHEN NOT: skip this workflow"
 limit_padding=$((1024 - ${#limit_boundary} - 1))
 limit_description="$(printf 'x%.0s' $(seq 1 "$limit_padding")) $limit_boundary"
-sed -i '/^user-invocable: true$/d' "$limit_skill"
-sed -i "s|^description:.*|description: $limit_description|" "$limit_skill"
+# Move the description below every other key instead of deleting one: the check under test reads
+# from `description:` to the next top-level key, and dropping `user-invocable` here would strand the
+# skill from the reachability closure, failing on the wrong contract.
+sed -i '/^description:/d' "$limit_skill"
+sed -i "/^user-invocable: true$/a description: $limit_description" "$limit_skill"
 
 set +e
 limit_output=$(cd "$limit_fixture" && scripts/verify_plugins.sh 2>&1)
@@ -201,6 +204,7 @@ performance_n_plus_one="$fixture/rails-engineer/skills/performance-optimization/
 accessibility="$fixture/rails-engineer/skills/accessibility-review/SKILL.md"
 accessibility_failures="$fixture/rails-engineer/skills/accessibility-review/references/common-failures.md"
 accessibility_snippets="$fixture/rails-engineer/skills/accessibility-review/references/rails-snippets.md"
+frontend="$fixture/rails-engineer/skills/rails-frontend/SKILL.md"
 
 printf '\nRegression probe: use imaginary-agent and @ghost-agent.\n' >> "$guide"
 printf '\nRegression probe: use reference-only-agent.\n' >> \
@@ -219,6 +223,8 @@ sed -i '/Testing: minitest.*rails-testing/d' "$performance_n_plus_one"
 printf '\nRegression probe: axe-core specs run in CI.\n' >> "$accessibility"
 sed -i '/Profile adaptation:.*rails-testing.*rails-css.*rails-frontend/d' "$accessibility_failures"
 sed -i '/Profile routing:.*rails-testing.*rails-css.*rails-frontend/d' "$accessibility_snippets"
+# rails-frontend carries the only inbound edge to i18n-patterns; severing it must strand the skill.
+sed -i 's/select i18n-patterns/select the locale reference/' "$frontend"
 
 set +e
 verifier_output=$(cd "$fixture" && scripts/verify_plugins.sh 2>&1)
@@ -242,6 +248,7 @@ assert_contains "$verifier_output" "performance-optimization/references/n-plus-o
 assert_contains "$verifier_output" "accessibility-review/SKILL.md contains unguarded axe-core specs wording"
 assert_contains "$verifier_output" "accessibility-review/references/common-failures.md lacks profile adaptation through rails-testing, rails-css, and rails-frontend"
 assert_contains "$verifier_output" "accessibility-review/references/rails-snippets.md lacks profile routing through rails-testing, rails-css, and rails-frontend"
+assert_contains "$verifier_output" "unreachable skill: i18n-patterns is named by no router or reachable skill and is not user-invocable"
 
 if [ "$failures" -gt 0 ]; then
   exit 1

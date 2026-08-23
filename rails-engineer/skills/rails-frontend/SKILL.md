@@ -12,4 +12,5 @@ Read AGENTS.md and its Rails Engineer Profile first. Views: viewcomponent select
 viewcomponent-patterns; Views: erb-partials selects the 37signals views reference. Use
 layered-turbo-patterns and layered-stimulus-patterns for a layered profile and
 rich-models-turbo-patterns and rich-models-stimulus-patterns for rich-models. Assets: importmap
-uses the app's importmap conventions; node-bundler uses the existing bundler configuration.
+uses the app's importmap conventions; node-bundler uses the existing bundler configuration. For
+user-facing translations, locales, or localized dates and currencies, select i18n-patterns.

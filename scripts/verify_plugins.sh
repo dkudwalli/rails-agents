@@ -242,6 +242,49 @@ check_profiled_review_guidance() {
   fi
 }
 
+# Every skill must be reachable, or nothing can route an agent to it. Seeds are the entrypoints a
+# user hits directly: the stable rails-* routers and every user-invocable skill. From there, follow
+# skill names mentioned anywhere in a reached skill's directory -- body or references -- until the
+# set stops growing. A skill outside that closure is dead payload: it costs description tokens in
+# every session and no path leads to it.
+#
+# There is no exemption list by design. A skill meant to be reached only when the user asks for it
+# by name declares `user-invocable: true`, which already makes it a seed.
+check_reachability() {
+  local all reached frontier skill missing
+
+  all=$(find "$PACK/skills" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort)
+
+  reached=$(
+    {
+      printf '%s\n' "$all" |
+        rg '^rails-(guide|architecture|models|testing|css|database|access|runtime|frontend|tenancy|deployment|workflow)$'
+      while IFS= read -r skill; do
+        if sed -n '2,/^---$/p' "$PACK/skills/$skill/SKILL.md" | rg -q '^user-invocable: *true'; then
+          printf '%s\n' "$skill"
+        fi
+      done <<<"$all"
+    } | sort -u
+  )
+
+  while :; do
+    frontier=$(
+      while IFS= read -r skill; do
+        rg -oNI --no-messages -w -f <(printf '%s\n' "$all") "$PACK/skills/$skill" || true
+      done <<<"$reached" | sort -u
+    )
+    frontier=$(printf '%s\n%s\n' "$reached" "$frontier" | sort -u)
+    [ "$frontier" = "$reached" ] && break
+    reached="$frontier"
+  done
+
+  missing=$(comm -23 <(printf '%s\n' "$all") <(printf '%s\n' "$reached"))
+  while IFS= read -r skill; do
+    [ -n "$skill" ] || continue
+    fail "unreachable skill: $skill is named by no router or reachable skill and is not user-invocable"
+  done <<<"$missing"
+}
+
 check_links() {
   local file link target
 
@@ -282,6 +325,7 @@ scripts/check_versions.sh
 check_skills
 check_portability
 check_profiled_review_guidance
+check_reachability
 check_links
 check_host_validators
 
