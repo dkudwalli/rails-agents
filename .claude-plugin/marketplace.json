@@ -5,20 +5,20 @@
     "url": "https://github.com/dkudwalli"
   },
   "metadata": {
-    "description": "One profile-aware Rails guidance pack for Claude Code: onboard an application's stack, then use rails-guide to find the matching layered or rich-model conventions.",
-    "version": "2.2.0"
+    "description": "ChannelBay-only Rails 7.1 guidance for Claude Code.",
+    "version": "3.0.0"
   },
   "plugins": [
     {
       "name": "rails-engineer",
-      "description": "Profile-aware Rails guidance with portable skills for layered and rich-model applications. Start with rails-onboard, then use rails-guide to find the right router for each task.",
-      "version": "2.2.0",
+      "description": "ChannelBay implementation, integration, testing, and operations guidance.",
+      "version": "3.0.0",
       "author": {
         "name": "Dhishan",
         "url": "https://github.com/dkudwalli"
       },
       "homepage": "https://github.com/dkudwalli/rails-agents",
-      "tags": ["rails", "ruby", "profile", "onboarding", "workflow", "layered", "rich-models", "rspec", "minitest", "sdd"],
+      "tags": ["rails", "ruby", "channelbay", "shopify", "amazon", "solid-queue", "minitest"],
       "source": "./rails-engineer"
     }
   ]

@@ -1,11 +1,11 @@
 {
   "name": "rails-engineer",
-  "version": "2.2.0",
-  "description": "Profile-aware Rails guidance: onboard one coherent stack, then use rails-guide to reach the right layered or rich-model conventions.",
+  "version": "3.0.0",
+  "description": "ChannelBay-specific Rails 7.1 implementation, integration, testing, and operations guidance.",
   "author": { "name": "Dhishan", "url": "https://github.com/dkudwalli" },
   "homepage": "https://github.com/dkudwalli/rails-agents",
   "repository": "https://github.com/dkudwalli/rails-agents",
   "license": "MIT",
-  "keywords": ["rails", "profile", "onboarding", "workflow", "layered", "rich-models", "rspec", "minitest"],
+  "keywords": ["rails", "channelbay", "shopify", "amazon", "solid-queue", "minitest"],
   "skills": "./skills/"
 }

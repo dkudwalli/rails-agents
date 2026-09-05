@@ -23,8 +23,6 @@ run() {
 run git diff --check
 run scripts/check_versions.sh
 run scripts/verify_plugins.sh
-run bash test/render_profile_test.sh
-run bash test/profile_contract_test.sh
 run bash test/plugin_payload_test.sh
 
 if [ "${_RAILS_ENGINEER_RELEASE_CHECK_UNDER_TEST:-}" != "1" ]; then
