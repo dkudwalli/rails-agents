@@ -2,6 +2,11 @@
 
 Notable changes to the Rails Engineer pack. Versioned manifests must agree before release.
 
+## 3.1.0
+
+- Release the ChannelBay-focused 37signals conventions and incremental service-to-model
+  modernization guidance.
+
 ## 3.0.0
 
 ### Changed
