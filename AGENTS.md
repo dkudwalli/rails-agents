@@ -14,8 +14,8 @@ release tooling, not a Rails application. The supported hosts are Claude Code an
 | rails-engineer/.codex-plugin/plugin.json | Codex plugin manifest |
 
 The package remains named rails-engineer for marketplace continuity, but its content applies only to
-ChannelBay. It ships eight skills: rails-guide plus ChannelBay backend, frontend, async,
-integrations, operations, testing, and review playbooks.
+ChannelBay. It ships nine skills: rails-guide, 37signals-conventions, plus ChannelBay backend,
+frontend, async, integrations, operations, testing, and review playbooks.
 
 ## Source of truth
 
@@ -30,6 +30,9 @@ advice.
 - Keep descriptions concise, name the ChannelBay task boundary with WHEN NOT, and route every
   non-user-invocable skill from rails-guide.
 - Do not use load-time commands, CLAUDE_PLUGIN_ROOT substitution, or ARGUMENTS in skill bodies.
+- 37signals-style rich models and resourceful CRUD are the default for new local domain behavior and
+  incremental modernization. Preserve ChannelBay platform choices; do not treat its service-heavy
+  history as a required architecture.
 - Do not add alternative Rails stacks, profile selection, onboarding, SDD workflows, Antigravity, or
   opencode support. Those are deliberately out of scope.
 - References inside a skill must resolve from the ChannelBay checkout or companion documentation, not

@@ -8,7 +8,11 @@ Notable changes to the Rails Engineer pack. Versioned manifests must agree befor
 
 - Rebuilt Rails Engineer as a ChannelBay-only guidance pack while keeping the rails-engineer package
   name for existing Claude Code and Codex marketplace users.
-- Replaced profile selection and broad Rails alternatives with eight focused ChannelBay skills.
+- Replaced profile selection and broad Rails alternatives with nine focused ChannelBay skills.
+- Restored 37signals-style rich models, resourceful CRUD, shallow jobs, and model-namespaced
+  concerns as the design direction for new work and incremental refactoring of service-heavy code.
+- Kept ChannelBay's PostgreSQL, Tailwind, ViewComponent, Devise, CarrierWave, Docker, and
+  integration boundaries as explicit compatibility constraints.
 - Made the ChannelBay checkout AGENTS.md and ~/Projects/cb-dev-docs/docs/ the canonical detailed
   guidance sources.
 

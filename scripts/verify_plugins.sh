@@ -66,7 +66,7 @@ check_skills() {
   done < <(find "$PACK/skills" -mindepth 2 -maxdepth 2 -type f -name SKILL.md | sort)
 
   count=$(printf '%s' "$names" | sed '/^$/d' | wc -l | tr -d ' ')
-  [ "$count" -eq 8 ] || fail "expected 8 focused skills, found $count"
+  [ "$count" -eq 9 ] || fail "expected 9 focused skills, found $count"
   documented=$(sed -n 's/.*ships \([0-9][0-9]*\) portable skills.*/\1/p' README.md)
   [ "$documented" = "$count" ] ||
     fail "README.md documents $documented skills but the payload contains $count"
@@ -80,7 +80,7 @@ check_routing() {
   [ -f "$guide" ] || { fail "rails-guide is missing"; return; }
   rg -q '^user-invocable: true$' "$guide" || fail "rails-guide must be user-invocable"
 
-  for skill in channel-bay-backend channel-bay-frontend channel-bay-async \
+  for skill in 37signals-conventions channel-bay-backend channel-bay-frontend channel-bay-async \
     channel-bay-integrations channel-bay-operations channel-bay-testing channel-bay-review; do
     rg -q "$skill" "$guide" || fail "rails-guide must route to $skill"
   done

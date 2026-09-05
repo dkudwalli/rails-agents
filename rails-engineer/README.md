@@ -8,6 +8,7 @@ Rails applications. Start each task in the ChannelBay checkout and invoke rails-
 | Need | Skill |
 |---|---|
 | Find the right playbook and required docs | rails-guide |
+| Rich models, resourceful CRUD, service-layer modernization | 37signals-conventions |
 | Controllers, models, services, migrations, tenant scope | channel-bay-backend |
 | ViewComponents, Tailwind, Turbo, Stimulus, esbuild | channel-bay-frontend |
 | Solid Queue, recurring work, Solid Cable | channel-bay-async |
@@ -30,6 +31,14 @@ Read the target checkout's AGENTS.md first. Consult the companion documentation 
 - view-components/ and modules/ for established UI and integration patterns.
 
 The skills point to these sources instead of duplicating fast-changing runbooks.
+
+## Rails design direction
+
+37signals-style Rails is the default for new domain behavior and incremental refactoring: rich models,
+model-namespaced concerns, state as records when history matters, resourceful controllers, and shallow
+jobs. ChannelBay keeps its deliberate platform choices—PostgreSQL, Tailwind, ViewComponents, Devise,
+CarrierWave, Docker, Solid Queue/Cable, and external integration boundaries. Existing services are
+refactored a coherent slice at a time, not preserved as the default domain layer or removed wholesale.
 
 ## Host compatibility
 

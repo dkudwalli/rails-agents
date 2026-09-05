@@ -17,6 +17,7 @@ Then read the narrowest applicable document in ~/Projects/cb-dev-docs/docs/:
 
 | Request | Start with |
 |---|---|
+| New domain behavior or gradual service-to-model modernization | 37signals-conventions |
 | Controllers, models, services, schema, permissions, uploads | channel-bay-backend |
 | Components, ERB, Tailwind, Turbo, Stimulus, JavaScript | channel-bay-frontend |
 | Jobs, queues, recurring work, sync progress, Cable | channel-bay-async |
@@ -25,6 +26,7 @@ Then read the narrowest applicable document in ~/Projects/cb-dev-docs/docs/:
 | New or repaired tests and verification | channel-bay-testing |
 | Review, security, tenant safety, regression risk | channel-bay-review |
 
-For work spanning rows, name a primary skill and consult secondary skills in execution order. Do not
-offer generic Rails onboarding, alternate stack selection, or migration away from ChannelBay's
-recorded dependencies.
+For work spanning rows, name a primary skill and consult secondary skills in execution order. Start
+with 37signals-conventions for new local domain behavior or service-heavy code being touched, then
+pair it with the relevant ChannelBay specialist. Do not offer generic Rails onboarding, alternate
+stack selection, or migration away from ChannelBay's recorded platform dependencies.

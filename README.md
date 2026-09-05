@@ -20,12 +20,13 @@ Codex:
     codex plugin marketplace add dkudwalli/rails-agents
     codex plugin add rails-engineer@rails-engineer
 
-Rails Engineer ships 8 portable skills. They assume ChannelBay's Rails 7.1, Docker-first,
+Rails Engineer ships 9 portable skills. They assume ChannelBay's Rails 7.1, Docker-first,
 multi-merchant application and direct work to the project instructions plus the companion developer
 documentation in ~/Projects/cb-dev-docs/docs/.
 
-The rails-guide entrypoint routes to focused backend, frontend, async, integration, operations,
-testing, and review guidance. It does not onboard arbitrary Rails applications or offer alternative
+The rails-guide entrypoint applies 37signals-style Rails design to new and incrementally modernized
+ChannelBay code, then routes to focused backend, frontend, async, integration, operations, testing,
+and review guidance. It does not onboard arbitrary Rails applications or offer alternative
 architecture stacks.
 
 ## Documentation and release
