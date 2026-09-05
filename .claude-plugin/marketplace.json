@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "ChannelBay-only Rails 7.1 guidance for Claude Code.",
-    "version": "3.1.0"
+    "version": "3.2.0"
   },
   "plugins": [
     {
       "name": "rails-engineer",
       "description": "ChannelBay implementation, integration, testing, and operations guidance.",
-      "version": "3.1.0",
+      "version": "3.2.0",
       "author": {
         "name": "Dhishan",
         "url": "https://github.com/dkudwalli"

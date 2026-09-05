@@ -7,8 +7,10 @@ description: >-
 
 # ChannelBay testing
 
-Read AGENTS.md, ~/Projects/cb-dev-docs/docs/reference/testing-guide.md, and
-modules/testing-checklist.md before adding or selecting coverage.
+Read AGENTS.md, then these companion documents, before adding or selecting coverage:
+
+- ~/Projects/cb-dev-docs/docs/reference/testing-guide.md
+- ~/Projects/cb-dev-docs/docs/modules/testing-checklist.md
 
 - Add new Ruby tests under test/; Minitest is the only suite for new coverage. Do not add files
   under spec/; port an adjacent legacy spec when touching it.
@@ -17,8 +19,9 @@ modules/testing-checklist.md before adding or selecting coverage.
 - Test services, jobs, components, request/Turbo responses, and system behavior at the narrowest
   layer that proves the changed contract. Include duplicate/retry cases for asynchronous provider
   work when behavior can recur.
-- Run all checks through Docker: RuboCop via web, ESLint and Node tests via esbuild, and Rails tests
-  via web. Use bin/frontend-check and bin/frontend-audit --check for frontend changes.
+- Run the project's own verification gate rather than assembling a command list here: the /verify
+  skill where the checkout provides one, otherwise the verification order recorded in AGENTS.md.
+  Every command runs through Docker Compose; never against Docker-owned host assets.
 - The shared remote test database can be unavailable; follow the recorded local DATABASE_URL fallback
   rather than changing test configuration.
 

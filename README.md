@@ -29,6 +29,14 @@ ChannelBay code, then routes to focused backend, frontend, async, integration, o
 and review guidance. It does not onboard arbitrary Rails applications or offer alternative
 architecture stacks.
 
+## Upgrading from 2.x
+
+3.0.0 removed the profile system, the 37signals playbook, and the `37signals-conventions/references/`
+set. If the application checkout copied any of that — most commonly into `.claude/rules/`, plus a
+`rails-engineer:profile` block in its `AGENTS.md` and `skillOverrides` naming removed skills — delete
+those copies. They are orphaned and contradict the checkout's own recorded constraints. CHANGELOG.md
+lists exactly what to remove.
+
 ## Documentation and release
 
 The pack guide at rails-engineer/README.md explains the skill map. The application checkout's

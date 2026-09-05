@@ -26,6 +26,8 @@ Prioritize findings that can:
 - bypass product-mapping identity and inventory event semantics;
 - break Turbo/Stimulus contracts, frontend accessibility, or existing test and operational evidence.
 
-Use reference/contributing.md, reference/testing-guide.md, and reference/where-to-find-things.md to
-validate local conventions and coverage. Report concrete, file-backed findings in severity order;
+Use ~/Projects/cb-dev-docs/docs/reference/contributing.md,
+~/Projects/cb-dev-docs/docs/reference/testing-guide.md, and
+~/Projects/cb-dev-docs/docs/reference/where-to-find-things.md to validate local conventions
+and coverage. Report concrete, file-backed findings in severity order;
 use the specialist skill to implement an approved fix.

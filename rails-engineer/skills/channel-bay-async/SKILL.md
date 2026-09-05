@@ -8,8 +8,11 @@ description: >-
 
 # ChannelBay asynchronous work
 
-Read AGENTS.md, ~/Projects/cb-dev-docs/docs/guides/background-jobs.md, and
-architecture/solid-queue-tables.md before editing jobs, queue configuration, or realtime updates.
+Read AGENTS.md, then these companion documents, before editing jobs, queue configuration, or
+realtime updates:
+
+- ~/Projects/cb-dev-docs/docs/guides/background-jobs.md
+- ~/Projects/cb-dev-docs/docs/architecture/solid-queue-tables.md
 
 - Use perform_later from request code. Jobs select an explicit queue, guard records deleted before
   execution, and use limits_concurrency when duplicate work would corrupt state or duplicate

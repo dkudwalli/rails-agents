@@ -7,8 +7,12 @@ description: >-
 
 # ChannelBay operations
 
-Read AGENTS.md, ~/Projects/cb-dev-docs/docs/reference/where-to-find-things.md,
-reference/common-errors.md, guides/background-jobs.md, and architecture/solid-queue-tables.md.
+Read AGENTS.md, then these companion documents:
+
+- ~/Projects/cb-dev-docs/docs/reference/where-to-find-things.md
+- ~/Projects/cb-dev-docs/docs/reference/common-errors.md
+- ~/Projects/cb-dev-docs/docs/guides/background-jobs.md
+- ~/Projects/cb-dev-docs/docs/architecture/solid-queue-tables.md
 
 Start with evidence, not a repair:
 

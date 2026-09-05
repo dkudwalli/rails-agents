@@ -1,6 +1,6 @@
 {
   "name": "rails-engineer",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "ChannelBay-specific Rails 7.1 implementation, integration, testing, and operations guidance.",
   "author": { "name": "Dhishan", "url": "https://github.com/dkudwalli" },
   "homepage": "https://github.com/dkudwalli/rails-agents",

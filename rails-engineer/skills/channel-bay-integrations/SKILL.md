@@ -7,8 +7,11 @@ description: >-
 
 # ChannelBay integrations
 
-Read AGENTS.md, then ~/Projects/cb-dev-docs/docs/guides/integrations.md,
-guides/api-and-webhooks.md, and the relevant modules page before implementation.
+Read AGENTS.md, then these companion documents and the relevant ~/Projects/cb-dev-docs/docs/modules/ page, before
+implementation:
+
+- ~/Projects/cb-dev-docs/docs/guides/integrations.md
+- ~/Projects/cb-dev-docs/docs/guides/api-and-webhooks.md
 
 - Keep provider work merchant- and channel-scoped. Preserve credentials and channel polymorphism;
   do not bypass the existing token, channel, and onboarding flows.

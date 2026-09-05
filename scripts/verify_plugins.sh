@@ -5,6 +5,8 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 PACK="rails-engineer"
+CB_DOCS_ROOT="${CB_DOCS_ROOT:-$HOME/Projects/cb-dev-docs/docs}"
+DOCS_PREFIX="~/Projects/cb-dev-docs/docs/"
 failures=0
 
 fail() {
@@ -124,6 +126,38 @@ check_links() {
   done < <(find . -path ./.git -prune -o -type f -name '*.md' -print)
 }
 
+# Skill bodies point at documentation as bare prose paths, which check_links cannot see.
+# Two contracts are enforced here:
+#   1. A companion-doc path carries the full ~/Projects/cb-dev-docs/docs/ prefix. Bare
+#      reference/x.md is one character from skill-local references/x.md and reads as either.
+#   2. Every path resolves — skill-local first, then the companion docs root.
+check_doc_paths() {
+  local skill line path rel
+
+  while IFS= read -r skill; do
+    while IFS= read -r line; do
+      [ -n "$line" ] || continue
+      fail "companion-doc path is missing the $DOCS_PREFIX prefix: $skill -> $line"
+    done < <(sed "s|~/Projects/cb-dev-docs/docs/[A-Za-z0-9._/-]*||g" "$skill" |
+      grep -oE '(^|[^/A-Za-z-])(architecture|guides|reference|modules|view-components|frontend|getting-started)/[a-z0-9-]+\.md' |
+      sed 's/^[^A-Za-z]*//' | sort -u)
+  done < <(find "$PACK/skills" -mindepth 2 -maxdepth 2 -type f -name SKILL.md | sort)
+
+  if [ ! -d "$CB_DOCS_ROOT" ]; then
+    echo "SKIP: companion docs absent at $CB_DOCS_ROOT; doc-path resolution not checked"
+    return
+  fi
+
+  while IFS= read -r skill; do
+    while IFS= read -r path; do
+      [ -n "$path" ] || continue
+      rel="${path#\~/Projects/cb-dev-docs/docs/}"
+      [ -e "$(dirname "$skill")/$rel" ] || [ -e "$CB_DOCS_ROOT/$rel" ] ||
+        fail "doc path resolves neither skill-locally nor under $CB_DOCS_ROOT: $skill -> $path"
+    done < <(grep -oE '(~/Projects/cb-dev-docs/docs/|references/)[A-Za-z0-9._/-]*\.md' "$skill" | sort -u)
+  done < <(find "$PACK/skills" -mindepth 2 -maxdepth 2 -type f -name SKILL.md | sort)
+}
+
 check_host_validator() {
   if [ "${RAILS_ENGINEER_SKIP_HOST_VALIDATORS:-}" = "1" ]; then
     echo "SKIP: host validation disabled for payload contract test"
@@ -145,6 +179,7 @@ check_routing
 check_portability
 check_channel_bay_scope
 check_links
+check_doc_paths
 check_host_validator
 
 if [ "$failures" -gt 0 ]; then

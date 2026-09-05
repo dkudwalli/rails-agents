@@ -8,8 +8,12 @@ description: >-
 
 # ChannelBay backend
 
-Read AGENTS.md, 37signals-conventions, then ~/Projects/cb-dev-docs/docs/architecture/overview.md,
-architecture/core-concepts.md, and architecture/database-guide.md before changing domain code.
+Read AGENTS.md and 37signals-conventions, then these companion documents, before changing domain
+code:
+
+- ~/Projects/cb-dev-docs/docs/architecture/overview.md
+- ~/Projects/cb-dev-docs/docs/architecture/core-concepts.md
+- ~/Projects/cb-dev-docs/docs/architecture/database-guide.md
 
 - Scope every merchant-owned read and write from current_merchant or the explicit merchant passed to
   a service. Never replace a scoped lookup with a global find.
@@ -25,7 +29,8 @@ architecture/core-concepts.md, and architecture/database-guide.md before changin
 - Use PostgreSQL-aware Rails 7.1 migrations. Add tenant-aware indexes for new merchant-owned query
   paths and inspect nearby migrations before choosing constraints or defaults.
 - For inventory, channels, mappings, orders, and onboarding behavior, read the relevant domain
-  section and reference/where-to-find-things.md before selecting files. Product mappings use
+  section and ~/Projects/cb-dev-docs/docs/reference/where-to-find-things.md before selecting
+  files. Product mappings use
   source_variant_id and mapping configuration; SKU is not a universal identity key.
 
 Run backend commands through Docker Compose web. Use channel-bay-testing for the required proof.
