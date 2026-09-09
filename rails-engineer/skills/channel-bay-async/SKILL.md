@@ -14,6 +14,9 @@ realtime updates:
 - ~/Projects/cb-dev-docs/docs/guides/background-jobs.md
 - ~/Projects/cb-dev-docs/docs/architecture/solid-queue-tables.md
 
+AGENTS.md is gitignored; if it is absent, say so and ask for it rather than assuming its
+constraints.
+
 - Use perform_later from request code. Jobs select an explicit queue, guard records deleted before
   execution, and use limits_concurrency when duplicate work would corrupt state or duplicate
   external calls. Keep a job shallow: after resolving persisted context, delegate to the model-owned

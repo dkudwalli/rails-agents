@@ -14,6 +14,9 @@ Read AGENTS.md, then these companion documents:
 - ~/Projects/cb-dev-docs/docs/guides/background-jobs.md
 - ~/Projects/cb-dev-docs/docs/architecture/solid-queue-tables.md
 
+AGENTS.md is gitignored; if it is absent, say so and ask for it rather than assuming its
+constraints.
+
 Start with evidence, not a repair:
 
 1. Identify the merchant, channel, provider, time window, and user-visible symptom.

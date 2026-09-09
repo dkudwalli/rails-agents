@@ -2,7 +2,8 @@
 name: channel-bay-integrations
 description: >-
   Guides ChannelBay Shopify, Amazon/SP-API, ShipStation, webhook, SQS, and Python Thrift boundary
-  changes. WHEN NOT: the task is not changing or investigating an external-system boundary.
+  changes. WHEN NOT: the task is not changing an external-system boundary, or a provider, queue, or
+  sync is already failing and the failure mode is unproven — that is channel-bay-operations.
 ---
 
 # ChannelBay integrations
@@ -12,6 +13,9 @@ implementation:
 
 - ~/Projects/cb-dev-docs/docs/guides/integrations.md
 - ~/Projects/cb-dev-docs/docs/guides/api-and-webhooks.md
+
+AGENTS.md is gitignored; if it is absent, say so and ask for it rather than assuming its
+constraints.
 
 - Keep provider work merchant- and channel-scoped. Preserve credentials and channel polymorphism;
   do not bypass the existing token, channel, and onboarding flows.

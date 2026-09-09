@@ -12,6 +12,9 @@ Read AGENTS.md and the relevant companion documents before reviewing. Start with
 merchant, channel, job, provider, and UI boundaries rather than applying generic Rails style rules.
 Use 37signals-conventions as the default architecture standard for new or modernized domain code.
 
+AGENTS.md is gitignored; if it is absent, say so and ask for it rather than assuming its
+constraints.
+
 Prioritize findings that can:
 
 - cross merchant or staff-workspace boundaries, weaken Devise/webhook authentication, or expose

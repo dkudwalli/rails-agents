@@ -69,6 +69,34 @@ test_missing_boundary_fails() {
   assert_contains "$output" "missing a WHEN NOT boundary"
 }
 
+test_router_without_invoke_instruction_fails() {
+  local path output status
+  path=$(fixture no-invoke)
+  # Naming the specialists is not routing to them. Strip every invoke instruction while leaving
+  # the table itself intact — the payload must not pass on a table of bare skill names.
+  sed -i 's/[Ii]nvoke/name/g' "$path/rails-engineer/skills/rails-guide/SKILL.md"
+  set +e
+  output=$(cd "$path" && RAILS_ENGINEER_SKIP_HOST_VALIDATORS=1 scripts/verify_plugins.sh 2>&1)
+  status=$?
+  set -e
+  [ "$status" -ne 0 ] || fail "router without an invoke instruction unexpectedly passed"
+  assert_contains "$output" "must tell the agent to invoke the routed skill"
+}
+
+test_missing_absent_source_clause_fails() {
+  local path output status
+  path=$(fixture no-absent-source)
+  # The clause wraps onto a second line; drop both.
+  sed -i '/gitignored; if it is absent/,+1d' \
+    "$path/rails-engineer/skills/channel-bay-backend/SKILL.md"
+  set +e
+  output=$(cd "$path" && RAILS_ENGINEER_SKIP_HOST_VALIDATORS=1 scripts/verify_plugins.sh 2>&1)
+  status=$?
+  set -e
+  [ "$status" -ne 0 ] || fail "skill citing AGENTS.md without the absent-source clause passed"
+  assert_contains "$output" "cites AGENTS.md without the absent-source clause"
+}
+
 test_retired_host_payload_fails() {
   local path output status
   path=$(fixture retired-host)
@@ -85,6 +113,8 @@ test_baseline_passes
 test_invalid_skill_name_fails
 test_missing_router_target_fails
 test_missing_boundary_fails
+test_router_without_invoke_instruction_fails
+test_missing_absent_source_clause_fails
 test_retired_host_payload_fails
 
 if [ "$failures" -gt 0 ]; then

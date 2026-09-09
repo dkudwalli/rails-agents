@@ -14,6 +14,11 @@ code:
 - ~/Projects/cb-dev-docs/docs/architecture/overview.md
 - ~/Projects/cb-dev-docs/docs/architecture/core-concepts.md
 - ~/Projects/cb-dev-docs/docs/architecture/database-guide.md
+- ~/Projects/cb-dev-docs/docs/guides/workflows.md
+- ~/Projects/cb-dev-docs/docs/guides/staff-permissions.md
+
+AGENTS.md is gitignored; if it is absent, say so and ask for it rather than assuming its
+constraints.
 
 - Scope every merchant-owned read and write from current_merchant or the explicit merchant passed to
   a service. Never replace a scoped lookup with a global find.

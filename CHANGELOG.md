@@ -2,6 +2,57 @@
 
 Notable changes to the Rails Engineer pack. Versioned manifests must agree before release.
 
+## 3.3.0
+
+### Fixed
+
+- `rails-guide` now routes. Its body promised "the narrowest applicable document in
+  `~/Projects/cb-dev-docs/docs/`" and then presented a table of *skill names* — skills do not live in
+  that tree — and never told the agent to invoke anything. Routing is the skill's only job and it is
+  the user-invocable entrypoint. The table now says Invoke, a Sources section carries the
+  documentation root on its own line, and an added note resolves the operations-vs-integrations
+  overlap: an operational symptom routes to `channel-bay-operations` first even when the failing
+  subsystem is a provider, a queue, or the sync-progress UI.
+- `channel-bay-integrations` claimed "changing **or investigating**" a provider boundary, so it
+  matched every failing-Shopify-sync prompt and could fire *instead of* `rails-guide` — meaning the
+  precedence note above was never loaded. Descriptions are what the host matches on, so the
+  boundary has to be stated there too, not only in the router. It now defers an unproven failure to
+  `channel-bay-operations`.
+- Every skill opened "Read AGENTS.md" without saying what to do when that file is missing. The
+  application checkout gitignores `AGENTS.md` deliberately, so it resolves on an authoring machine
+  and nowhere else — a fresh clone, container, teammate, or cloud session gave all nine skills a
+  dangling first instruction and the agent proceeded on recalled constraints instead. All nine now
+  carry one verbatim clause: it is gitignored, ask for it rather than assume it.
+- `rails-guide` states which documentation tree wins. `AGENTS.md` still points readers at the
+  checkout's own numbered `docs/`, which is now a mirror; `~/Projects/cb-dev-docs/docs/` is the
+  current copy.
+- `channel-bay-backend` claimed permissions and workflow scope in its description but routed to
+  neither document. Added `guides/staff-permissions.md` and `guides/workflows.md` — the latter was
+  advertised in the pack README and reachable from no skill.
+- `channel-bay-frontend` never mentioned `bin/frontend-audit --check`, which `AGENTS.md` includes in
+  the verification order.
+- `README.md` gave the Claude Code entrypoint as `/rails-guide`. Installed plugin skills are
+  addressed as `plugin:skill`; the Codex row in the same table already said so.
+
+### Added
+
+- Two verifier assertions, each with a negative case in `test/plugin_payload_test.sh`.
+  `check_routing` requires an invoke instruction in `rails-guide` — `check_channel_bay_scope`'s
+  docs-prefix grep had passed on the very sentence that routed nowhere. `check_skills` requires any
+  skill citing `AGENTS.md` to carry the absent-source clause, pinned verbatim so nine files cannot
+  drift against whichever wording a single grep happened to match.
+- `rails-engineer/evals/` — routing cases for `claude plugin eval`. Nothing previously verified that
+  the nine descriptions fire or that overlapping ones resolve in the intended order, which for a
+  plugin that is nine descriptions and prose is the product itself. Run manually; the cases cost
+  model calls and are not wired into CI.
+
+### Changed
+
+- The `.gitignore` comment above `.agents/skills/` pointed at
+  `scripts/sync_skills_to_agents_dir.sh`, a script `verify_plugins.sh` asserts must not exist. The
+  ignore rule itself stays: a 2.x checkout still has that mirror's symlink tree on disk, and
+  un-ignoring it dirties the worktree `release_check.sh` requires to be clean.
+
 ## 3.2.0
 
 ### Changed
