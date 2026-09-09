@@ -12,6 +12,9 @@ Read AGENTS.md, then these companion documents, before adding or selecting cover
 - ~/Projects/cb-dev-docs/docs/reference/testing-guide.md
 - ~/Projects/cb-dev-docs/docs/modules/testing-checklist.md
 
+AGENTS.md is gitignored; if it is absent, say so and ask for it rather than assuming its
+constraints.
+
 - Add new Ruby tests under test/; Minitest is the only suite for new coverage. Do not add files
   under spec/; port an adjacent legacy spec when touching it.
 - Reuse nearby inline-record and test/support helpers rather than introducing fixtures or FactoryBot

@@ -19,18 +19,22 @@ Rails applications. Start each task in the ChannelBay checkout and invoke rails-
 
 ## Source of truth
 
-Read the target checkout's AGENTS.md first. Consult the companion documentation at
-~/Projects/cb-dev-docs/docs/ for detail:
+Read the target checkout's AGENTS.md first. It is gitignored, so it exists only where someone has
+authored it; every skill says to ask for it rather than assume its constraints. Consult the companion
+documentation at ~/Projects/cb-dev-docs/docs/ for detail:
 
 - architecture/overview.md, architecture/core-concepts.md, and architecture/database-guide.md for
   domain and persistence.
 - guides/workflows.md, guides/background-jobs.md, guides/integrations.md, and
-  guides/api-and-webhooks.md for lifecycle and external-system work.
+  guides/api-and-webhooks.md for lifecycle and external-system work, plus
+  guides/staff-permissions.md for access boundaries.
 - reference/where-to-find-things.md, reference/common-errors.md, and reference/testing-guide.md for
   diagnosis and verification.
 - view-components/ and modules/ for established UI and integration patterns.
 
-The skills point to these sources instead of duplicating fast-changing runbooks.
+The skills point to these sources instead of duplicating fast-changing runbooks. The checkout's own
+docs/ directory mirrors this tree under numbered filenames; ~/Projects/cb-dev-docs/docs/ is the
+current copy and wins where the two disagree.
 
 ## Rails design direction
 

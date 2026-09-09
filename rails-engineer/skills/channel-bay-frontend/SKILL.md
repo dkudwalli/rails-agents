@@ -8,8 +8,13 @@ description: >-
 
 # ChannelBay frontend
 
-Read AGENTS.md, ~/Projects/cb-dev-docs/docs/view-components/overview.md, and the matching component
-or frontend document before changing UI behavior.
+Read AGENTS.md, ~/Projects/cb-dev-docs/docs/view-components/overview.md, and the matching
+component or frontend document before changing UI behavior. Frontend work is gated by
+bin/frontend-audit --check, so run that gate before proposing a change to shared markup or
+component structure.
+
+AGENTS.md is gitignored; if it is absent, say so and ask for it rather than assuming its
+constraints.
 
 - Reuse app/components primitives and established domain components before adding markup or a new
   component. Keep ERB server-rendered and make accessibility part of the component contract.

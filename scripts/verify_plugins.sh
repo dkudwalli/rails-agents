@@ -64,6 +64,13 @@ check_skills() {
     [ -n "$description" ] || fail "$skill is missing frontmatter description"
     [[ "$description" == *"WHEN NOT:"* ]] ||
       fail "$skill description is missing a WHEN NOT boundary"
+    # AGENTS.md is gitignored in the application checkout, so it resolves on an authoring machine
+    # and nowhere else. A skill that cites it must say what to do when it is missing, or the agent
+    # silently substitutes recalled constraints. Pinned verbatim so all skills state it identically.
+    if rg -q 'AGENTS\.md' "$skill" &&
+      ! rg -qF 'gitignored; if it is absent, say so and ask for it' "$skill"; then
+      fail "$skill cites AGENTS.md without the absent-source clause"
+    fi
     names+="$name"$'\n'
   done < <(find "$PACK/skills" -mindepth 2 -maxdepth 2 -type f -name SKILL.md | sort)
 
@@ -81,6 +88,9 @@ check_routing() {
   guide="$PACK/skills/rails-guide/SKILL.md"
   [ -f "$guide" ] || { fail "rails-guide is missing"; return; }
   rg -q '^user-invocable: true$' "$guide" || fail "rails-guide must be user-invocable"
+  # The routing table lists skill names. Naming them is not routing; check_channel_bay_scope's
+  # docs-prefix grep once passed on a sentence that promised a document and delivered this table.
+  rg -qi 'invoke' "$guide" || fail "rails-guide must tell the agent to invoke the routed skill"
 
   for skill in 37signals-conventions channel-bay-backend channel-bay-frontend channel-bay-async \
     channel-bay-integrations channel-bay-operations channel-bay-testing channel-bay-review; do

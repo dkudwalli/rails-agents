@@ -7,7 +7,7 @@ and OpenAI Codex while retaining the established rails-engineer marketplace iden
 
 | Host | Install | Start a task |
 |---|---|---|
-| Claude Code | Add the marketplace, then install rails-engineer at rails-engineer. | Run /rails-guide from the ChannelBay checkout. |
+| Claude Code | Add the marketplace, then install rails-engineer at rails-engineer. | Run /rails-engineer:rails-guide from the ChannelBay checkout. |
 | OpenAI Codex | Add the marketplace, then add rails-engineer at rails-engineer. | Ask for rails-engineer:rails-guide. |
 
 Claude Code:
@@ -41,7 +41,9 @@ lists exactly what to remove.
 
 The pack guide at rails-engineer/README.md explains the skill map. The application checkout's
 AGENTS.md is authoritative for active constraints; ~/Projects/cb-dev-docs/docs/ is the detailed
-technical reference. This repository's AGENTS.md and CHANGELOG.md cover maintaining the plugin.
+technical reference. Note that the checkout's AGENTS.md is gitignored, so it resolves only where
+someone has authored it — the skills say to ask for it rather than assume its contents. This
+repository's AGENTS.md and CHANGELOG.md cover maintaining the plugin.
 
 Run scripts/release_check.sh from a clean worktree before tagging a release. It validates the
 Claude/Codex manifests, skill payload, links, and release contract.

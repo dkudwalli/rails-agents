@@ -10,10 +10,11 @@
 *.swo
 *~
 
+# Retired 2.x skill mirror. Its generating script is gone — verify_plugins.sh asserts it
+# must not come back — but a 2.x checkout still has the symlink tree on disk.
+.agents/skills/
+
 # Claude Code local state
 .claude/projects/
 .claude/todos/
 .claude/settings.local.json
-
-# Generated skill mirror — one pack at a time, see scripts/sync_skills_to_agents_dir.sh
-.agents/skills/

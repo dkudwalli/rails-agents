@@ -13,6 +13,9 @@ This is the default design direction for ChannelBay, including new behavior and 
 existing code. Read AGENTS.md and the relevant ChannelBay documentation first. Rails 7.1 compatibility
 and the explicit platform exceptions below are constraints, not competing architectures.
 
+AGENTS.md is gitignored; if it is absent, say so and ask for it rather than assuming its
+constraints.
+
 ## Default Rails shape
 
 - Give domain behavior to the owning Active Record model. Keep its associations, scopes, state
